@@ -24,7 +24,7 @@ class DevelopmentConfig(BaseConfig):
     DB_HOST = environ.get("DB_HOST", "localhost")
     DB_USER = environ.get("DB_USER", "root")
     DB_PASS = environ.get("DB_PASS", "")
-    DB_NAME = environ.get("DB_NAME", "proyecto")
+    DB_NAME = environ.get("DB_NAME", "grupo37")
 
 
 class TestingConfig(BaseConfig):
