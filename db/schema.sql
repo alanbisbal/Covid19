@@ -1,6 +1,6 @@
 -- MariaDB dump 10.17  Distrib 10.4.7-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: proyecto
+-- Host: localhost    Database: grupo37
 -- ------------------------------------------------------
 -- Server version	10.4.7-MariaDB-1:10.4.7+maria~bionic
 
@@ -16,7 +16,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `proyecto`
+-- Current Database: `grupo37`
 --
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `grupo37` /*!40100 DEFAULT CHARACTER SET latin1 */;
