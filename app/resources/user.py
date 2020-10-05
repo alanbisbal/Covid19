@@ -26,5 +26,6 @@ def create():
         abort(401)
 
     conn = connection()
+    
     User.create(conn, request.form)
     return redirect(url_for("user_index"))

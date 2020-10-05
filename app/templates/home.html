@@ -13,7 +13,7 @@
 <div class="dropdown-menu">
 <a class="dropdown-item" href="#">Perfil</a>
 <div class="dropdown-divider"></div>
-<a class="dropdown-item" href="#">Cerrar Sesión</a>
+<a class="dropdown-item" href="{{ url_for('auth_logout') }}">Cerrar Sesión</a>
 </div>
 {% endblock %}
 {% block navbar %}
@@ -31,7 +31,7 @@
   {% endif %}
  <!--CREO EL FORMULARIO: (lo que esta antes se deberia borrar xq ya no sirve menos el cerrar sesion,
   no toque nada basicamente xq capaz cuando hagas la funcionalidad te sirva para entenderlo)-->
-  
+
   <div class="mx-auto" style="width: 500px;">
     <h3>Configuración del Sitema</h3>
     <form>
@@ -59,11 +59,11 @@
         <div class="custom-control custom-switch">
           <input type="checkbox" class="custom-control-input" id="customSwitch1">
           <label class="custom-control-label" for="customSwitch1">Web habilitada</label>
-        </div> 
+        </div>
       <div class="card-body d-flex justify-content-between align-items-center"></div>
         <button type="submit" class="btn btn-primary my-1">Guardar</button>
       </div>
-      </div>   
+      </div>
     </form>
   </div>
 {% endblock %}

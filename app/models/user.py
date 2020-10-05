@@ -9,6 +9,7 @@ class User(object):
 
     @classmethod
     def create(cls, conn, data):
+
         sql = """
             INSERT INTO users (email, password, first_name, last_name)
             VALUES (%s, %s, %s, %s)
@@ -26,9 +27,6 @@ class User(object):
             SELECT * FROM users AS u
             WHERE u.email = %s AND u.password = %s
         """
-
         cursor = conn.cursor()
         cursor.execute(sql, (email, password))
-
         return cursor.fetchone()
-
