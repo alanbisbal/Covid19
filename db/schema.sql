@@ -1,299 +1,145 @@
--- phpMyAdmin SQL Dump
--- version 4.9.0.1
--- https://www.phpmyadmin.net/
+-- MariaDB dump 10.17  Distrib 10.4.7-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 05-10-2020 a las 21:03:36
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.3.8
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: grupo37
+-- ------------------------------------------------------
+-- Server version	10.4.7-MariaDB-1:10.4.7+maria~bionic
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de datos: `grupo37`
+-- Current Database: `grupo37`
 --
 
--- --------------------------------------------------------
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `grupo37` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `grupo37`;
 
 --
--- Estructura de tabla para la tabla `categories`
+-- Table structure for table `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `name` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `categories`
+-- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Bug'),
-(2, 'Question');
-
--- --------------------------------------------------------
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Bug'),(2,'Question');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `issues`
+-- Table structure for table `issues`
 --
 
+DROP TABLE IF EXISTS `issues`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `issues` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(30) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `category_id` int(10) NOT NULL,
-  `status_id` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status_id` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`),
+  KEY `status_id` (`status_id`),
+  CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+  CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `issues`
+-- Dumping data for table `issues`
 --
 
-INSERT INTO `issues` (`id`, `email`, `description`, `category_id`, `status_id`) VALUES
-(1, 'fede@mail.com', 'No puedo iniciar sesión correctamente', 1, 1),
-(2, 'jose@mail.com', 'El sistema de dice que hay un error', 1, 2),
-(4, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1),
-(5, 'alan@123', '123', 1, 1),
-(6, 'admin123', 'asd123', 1, 1);
-
--- --------------------------------------------------------
+LOCK TABLES `issues` WRITE;
+/*!40000 ALTER TABLE `issues` DISABLE KEYS */;
+INSERT INTO `issues` VALUES (1,'fede@mail.com','No puedo iniciar sesión correctamente',1,1),(2,'jose@mail.com','El sistema de dice que hay un error',1,2),(4,'maria@mail.com','No tengo acceso al sistema',1,1);
+/*!40000 ALTER TABLE `issues` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `permisos`
+-- Table structure for table `statuses`
 --
 
-CREATE TABLE `permisos` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rols`
---
-
-CREATE TABLE `rols` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `rol_permisos`
---
-
-CREATE TABLE `rol_permisos` (
-  `id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL,
-  `rol_permiso` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `statuses`
---
-
+DROP TABLE IF EXISTS `statuses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `statuses` (
-  `id` int(11) NOT NULL,
-  `name` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `statuses`
+-- Dumping data for table `statuses`
 --
 
-INSERT INTO `statuses` (`id`, `name`) VALUES
-(1, 'New'),
-(2, 'Todo'),
-(3, 'In progress');
-
--- --------------------------------------------------------
+LOCK TABLES `statuses` WRITE;
+/*!40000 ALTER TABLE `statuses` DISABLE KEYS */;
+INSERT INTO `statuses` VALUES (1,'New'),(2,'Todo'),(3,'In progress');
+/*!40000 ALTER TABLE `statuses` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
--- Estructura de tabla para la tabla `users`
+-- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `perfil` blob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(30) NOT NULL,
+  `password` varchar(30) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `password` (`password`),
+  UNIQUE KEY `first_name` (`first_name`),
+  UNIQUE KEY `last_name` (`last_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `password`, `activo`, `perfil`) VALUES
-(1, '', 'admin', 'cosme', 'fulanito', '123123', 0, '');
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin','123123','Cosme','Fulanito');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users_rols`
---
-
-CREATE TABLE `users_rols` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `issues`
---
-ALTER TABLE `issues`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `status_id` (`status_id`);
-
---
--- Indices de la tabla `permisos`
---
-ALTER TABLE `permisos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `rols`
---
-ALTER TABLE `rols`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `rol_permisos`
---
-ALTER TABLE `rol_permisos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `rol_permisos` (`rol_id`),
-  ADD KEY `permisos-rol` (`rol_permiso`);
-
---
--- Indices de la tabla `statuses`
---
-ALTER TABLE `statuses`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- Indices de la tabla `users_rols`
---
-ALTER TABLE `users_rols`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `users-rols` (`user_id`),
-  ADD KEY `rols-users` (`rol_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `issues`
---
-ALTER TABLE `issues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `permisos`
---
-ALTER TABLE `permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `rols`
---
-ALTER TABLE `rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `rol_permisos`
---
-ALTER TABLE `rol_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `statuses`
---
-ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `users_rols`
---
-ALTER TABLE `users_rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `issues`
---
-ALTER TABLE `issues`
-  ADD CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`);
-
---
--- Filtros para la tabla `rol_permisos`
---
-ALTER TABLE `rol_permisos`
-  ADD CONSTRAINT `permisos-rol` FOREIGN KEY (`rol_permiso`) REFERENCES `permisos` (`id`),
-  ADD CONSTRAINT `rol_permisos` FOREIGN KEY (`rol_id`) REFERENCES `rols` (`id`);
-
---
--- Filtros para la tabla `users_rols`
---
-ALTER TABLE `users_rols`
-  ADD CONSTRAINT `rols-users` FOREIGN KEY (`rol_id`) REFERENCES `rols` (`id`),
-  ADD CONSTRAINT `users-rols` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-09-08 21:44:24

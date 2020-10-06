@@ -7,17 +7,16 @@ from app.helpers.auth import authenticated
 def index():
     if not authenticated(session):
         abort(401)
-
-    conn = connection()
-    users = User.all(conn)
-
+    users = User.all()
+    print ("esto es un test que imprime los valores")
+    for row in users:
+        print ("Name: ",row.first_name)
     return render_template("user/index.html", users=users)
 
 
 def new():
     if not authenticated(session):
         abort(401)
-
     return render_template("user/new.html")
 
 
@@ -26,6 +25,6 @@ def create():
         abort(401)
 
     conn = connection()
-    
+
     User.create(conn, request.form)
     return redirect(url_for("user_index"))
