@@ -11,7 +11,10 @@ class User(db.Model):
     activo = db.Column(db.Boolean)
     perfil = db.Column(db.String(255))
 
-    def __repr__(self):
+
+
+    @classmethod
+    def __str__(self):
         return '<User {}>'.format(self.username)
 
     @classmethod

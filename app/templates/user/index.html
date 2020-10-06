@@ -3,29 +3,46 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-
+{% block inicio %}<a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>{% endblock %}
 {% block itemnavbar %}
 <a class="p-2 text-dark" href="#">Solicitudes de sitio</a>
-<a class="p-2 text-dark" href="#">Cargar Usuarios</a>
+<a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
 {% endblock %}
 {% block perfil %}
 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido admin!</a>
 <div class="dropdown-menu">
 <a class="dropdown-item" href="#">Perfil</a>
 <div class="dropdown-divider"></div>
-<a class="dropdown-item" href="#">Cerrar Sesión</a>
+<a class="dropdown-item" href="{{ url_for('auth_logout') }}">Cerrar Sesión</a>
 </div>
 {% endblock %}
 {% block navbar %}
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>Usuarios</h1>
-  {% for user in users %}
-  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
-  {% endfor %}
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
-  <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
+<h1>Usuarios</h1>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Contraseña</th>
+    </tr>
+  </thead>
+  <tbody>
+     {% for user in users %}
+    <tr>
+      <td>{{ user.first_name }}</td>
+      <td>{{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.password }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  <a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
+  <a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
 {% endblock %}
 {% block scripts %}
    {{ super() }}
