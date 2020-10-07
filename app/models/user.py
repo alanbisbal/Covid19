@@ -12,19 +12,22 @@ class User(db.Model):
     perfil = db.Column(db.String(255))
 
 
-
     @classmethod
     def __str__(self):
         return '<User {}>'.format(self.username)
 
     @classmethod
-    def all(cls):
+    def all(self):
         return db.session.query(User).all()
+
+    @classmethod
+    def find_by_id(slef,id):
+        return db.session.query(User).get(id)
 
 
     @classmethod
 
-    def create(cls, conn, data):
+    def create(self, conn, data):
 
         sql = """
             INSERT INTO users (email, password, first_name, last_name)
@@ -38,7 +41,7 @@ class User(db.Model):
         return True
 
     @classmethod
-    def find_by_email_and_pass(cls, conn, email, password):
+    def find_by_email_and_pass(self, conn, email, password):
         sql = """
             SELECT * FROM users AS u
             WHERE u.email = %s AND u.password = %s
@@ -46,3 +49,18 @@ class User(db.Model):
         cursor = conn.cursor()
         cursor.execute(sql, (email, password))
         return cursor.fetchone()
+
+    @classmethod
+    def update(self,data):
+        if self.first_name != data.first_name:
+            self.first_name = data.first_name
+        if self.username != data.username:
+            self.username = data.username
+        if self.first_name != data.first_name:
+            self.first_name = data.first_name
+        if self.last_name != data.last_name:
+            self.last_name = data.last_name
+        if self.activo != data.activo:
+            self.activo = data.activo
+        self.save()
+        db.session.commit()

@@ -10,12 +10,14 @@
 <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
 {% endblock %}
 {% block perfil %}
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido admin!</a>
+{% if is_authenticated(session) %}
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido {{session.user}}</a>
 <div class="dropdown-menu">
 <a class="dropdown-item" href="#">Perfil</a>
 <div class="dropdown-divider"></div>
 <a class="dropdown-item" href="{{ url_for('auth_logout') }}">Cerrar Sesión</a>
 </div>
+{% endif %}
 {% endblock %}
 
 {% block navbar %}
@@ -24,10 +26,8 @@
 {% block content %}
   <!--<h1>Este es el inicio</h1>
   <p>Página de inicio de la aplicación</p> -->
-  <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
-  {% if is_authenticated(session) %}
-    <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
-  {% else %}
+
+  {% if not is_authenticated(session) %}
     <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
   {% endif %}
  <!--CREO EL FORMULARIO: (lo que esta antes se deberia borrar xq ya no sirve menos el cerrar sesion,

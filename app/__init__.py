@@ -26,7 +26,7 @@ def create_app(environment="development"):
     Session(app)
 
     # Configure db
-    
+
     db = SQLAlchemy(app)
     with app.app_context():
         db.create_all()
@@ -49,6 +49,8 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    app.add_url_rule("/usuarios/update/<user_id>", "user_update", user.update)
+    app.add_url_rule("/usuarios/update/<user_id>", "user_update_new", user.update_new, methods=["POST"])
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
