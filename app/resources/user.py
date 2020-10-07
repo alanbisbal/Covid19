@@ -23,8 +23,6 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-
-    conn = connection()
-
-    User.create(conn, request.form)
+    print(request)
+    User.create()
     return redirect(url_for("user_index"))

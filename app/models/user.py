@@ -11,31 +11,34 @@ class User(db.Model):
     activo = db.Column(db.Boolean)
     perfil = db.Column(db.String(255))
 
+
+    def __init__( request):
+           self.stuff = []
+
+    @db.reconstructor
+    def init_on_load(self):
+        self.stuff = []
+
+    @classmethod
+    def all(self):
+        return db.session.query(User).all()
+
+    @classmethod
     def __str__(self):
         return '<User {}>'.format(self.username)
 
     @classmethod
-    def all(cls):
-        return db.session.query(User).all()
+    def create(request):
+        print (request)
+        usuario = User(request)
 
-
-    @classmethod
-
-    def create(cls, conn, data):
-
-        sql = """
-            INSERT INTO users (email, password, first_name, last_name)
-            VALUES (%s, %s, %s, %s)
-        """
-
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
+        db.session.add(usuario)
+        db.session.commit()
 
         return True
 
     @classmethod
-    def find_by_email_and_pass(cls, conn, email, password):
+    def find_by_email_and_pass(self, conn, email, password):
         sql = """
             SELECT * FROM users AS u
             WHERE u.email = %s AND u.password = %s
