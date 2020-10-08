@@ -12,12 +12,18 @@ class User(db.Model):
     perfil = db.Column(db.String(255))
 
 
-    def __init__( request):
-           self.stuff = []
+    @classmethod
+    def __str__(self):
+        return '<User {}>'.format(self.username)
 
-    @db.reconstructor
-    def init_on_load(self):
-        self.stuff = []
+    @classmethod
+    def all(self):
+        return db.session.query(User).all()
+
+    @classmethod
+    def find_by_id(slef,id):
+        return db.session.query(User).get(id)
+
 
     @classmethod
     def all(self):
@@ -46,3 +52,18 @@ class User(db.Model):
         cursor = conn.cursor()
         cursor.execute(sql, (email, password))
         return cursor.fetchone()
+
+    @classmethod
+    def update(self,data):
+        if self.first_name != data.first_name:
+            self.first_name = data.first_name
+        if self.username != data.username:
+            self.username = data.username
+        if self.first_name != data.first_name:
+            self.first_name = data.first_name
+        if self.last_name != data.last_name:
+            self.last_name = data.last_name
+        if self.activo != data.activo:
+            self.activo = data.activo
+        self.save()
+        db.session.commit()
