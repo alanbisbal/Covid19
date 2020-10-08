@@ -8,8 +8,16 @@
   <h3>Crear Usuario</h3>
   <form action="{{ url_for('user_create') }}" method="POST">
     <div class="form-group">
-      <label for="exampleInputEmail1">user_id</label>
-      <input type="user_id" class="form-control" name="user_id" placeholder="user_id">
+      <label for="formGroupExampleInput">Nombre</label>
+      <input type="text" class="form-control" name="first_name" placeholder="Nombre"/>
+    </div>
+    <div class="form-group">
+      <label for="formGroupExampleInput" >Apellido</label>
+      <input type="text" class="form-control" name="last_name" placeholder="Apellido"/>
+    </div>
+    <div class="form-group">
+      <label for="formGroupExampleInput" >Nombre de Usuario</label>
+      <input type="text" class="form-control" name="username" placeholder="Nombre de usuario"/>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">Email</label>
@@ -18,14 +26,6 @@
     <div class="form-group">
       <label >Clave</label>
       <input type="password" name="password" placeholder="Clave" class="form-control"/>
-    </div>
-    <div class="form-group">
-      <label for="formGroupExampleInput">Nombre</label>
-      <input type="text" class="form-control" name="first_name" placeholder="Nombre"/>
-    </div>
-    <div class="form-group">
-      <label for="formGroupExampleInput" >Apellido</label>
-      <input type="text" class="form-control" name="last_name" placeholder="Apellido"/>
     </div>
   <div class="form-inline">
         <a href="{{ url_for('user_index') }}" class="btn btn-primary my-1" >Volver</a>

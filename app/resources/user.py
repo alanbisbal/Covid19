@@ -21,10 +21,8 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-
-    conn = connection()
-
-    User.create(conn, request.form)
+    print(request)
+    User.create(request.form)
     return redirect(url_for("user_index"))
 
 
@@ -39,4 +37,11 @@ def update_new():
         abort(401)
     data = request.form
     User.update(data,data['user_id'])
+    return redirect(url_for('user_index'))
+
+def delete():
+    if not authenticated(session):
+        abort(401)
+    data =request.form
+    User.delete(data['user_id'])
     return redirect(url_for('user_index'))

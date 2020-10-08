@@ -12,6 +12,17 @@ class User(db.Model):
     activo = db.Column(db.Boolean)
     perfil = db.Column(db.String(255))
 
+    def __init__(self, data):
+        self.first_name = data['first_name']
+        self.username = data['username']
+        self.first_name = data['first_name']
+        self.last_name = data['last_name']
+        self.email = data['email']
+        self.password = data['password']
+        self.activo = 1
+
+        db.session.commit()
+
 
     @classmethod
     def __str__(self):
@@ -27,18 +38,19 @@ class User(db.Model):
 
 
     @classmethod
+    def all(self):
+        return db.session.query(User).all()
 
-    def create(self, conn, data):
+    @classmethod
+    def __str__(self):
+        return '<User {}>'.format(self.username)
 
-        sql = """
-            INSERT INTO users (email, password, first_name, last_name)
-            VALUES (%s, %s, %s, %s)
-        """
-
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
-
+    @classmethod
+    def create(self, request):
+        print (request)
+        usuario = User(request)
+        db.session.add(usuario)
+        db.session.commit()
         return True
 
     @classmethod
@@ -64,4 +76,12 @@ class User(db.Model):
             user.email = data['email']
 
         db.session.commit()
+        return True
+
+    @classmethod
+    def delete(self, id):
+        user = db.session.query(User).get(id)
+        db.session.delete(user)
+        db.session.commit()
+
         return True
