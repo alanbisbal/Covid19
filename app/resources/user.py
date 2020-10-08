@@ -35,10 +35,9 @@ def update(user_id):
     user = User.find_by_id(user_id)
     return render_template("user/update.html",user = user)
 
-def update_new(user_id):
+def update_new():
     if not authenticated(session):
         abort(401)
-    print (user_id)
-    user = User.find_by_id(user_id)
-    user.update(request.form)
-    return render_template("home")
+    data =request.form
+    User.update(data,data['user_id'])
+    return redirect(url_for('user_index'))

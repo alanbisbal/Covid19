@@ -21,34 +21,28 @@
 {% endblock %}
 {% block content %}
 
-{{user.first_name}}
-{{user.last_name}}
+<form action="{{ url_for('user_update_new') }}" method ="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="user_id">ID:</label>
+    <input type="text" class="form-control"  id="user_id" name="user_id" value="{{user.id}}">
+  </div>
+  <div class="form-group">
+    <label for="username">Nombre de usuario:</label>
+    <input type="text" class="form-control" id="username" name="username" value="{{user.username}}">
+  </div>
+  <div class="form-group">
+    <label for="first_name">Nombre:</label>
+    <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}">
+  </div>
+  <div class="form-group">
+    <label for="last_name">Apellido:</label>
+    <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}">
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="text" class="form-control" id="email" name="email" value="{{user.email}}">
+  </div>
 
-<form action="user_update_new" METHOD="POST">
-  <div class="form-group">
-    <label for="userId">ID:</label>
-    <input type="text" class="form-control" id="userId"value="{{user.id}}">
-  </div>
-  <div class="form-group">
-    <label for="userId">Nombre de usuario:</label>
-    <input type="text" class="form-control" id="userId" value="{{user.username}}">
-  </div>
-  <div class="form-group">
-    <label for="userId">Nombre:</label>
-    <input type="text" class="form-control" id="userId" value="{{user.first_name}}">
-  </div>
-  <div class="form-group">
-    <label for="userId">Apellido:</label>
-    <input type="text" class="form-control" id="userId" value="{{user.last_name}}">
-  </div>
-  <div class="form-group">
-    <label for="userId">Email:</label>
-    <input type="text" class="form-control" id="userId" value="{{user.email}}">
-  </div>
-  <div class="form-group">
-    <label for="userId">Estado:</label>
-    <input type="text" class="form-control" id="userId" value="{{user.activo}}">
-  </div>
 
 
 
