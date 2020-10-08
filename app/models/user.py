@@ -1,4 +1,5 @@
 from app import db
+from flask import request
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -54,16 +55,19 @@ class User(db.Model):
         return cursor.fetchone()
 
     @classmethod
-    def update(self,data):
-        if self.first_name != data.first_name:
-            self.first_name = data.first_name
-        if self.username != data.username:
-            self.username = data.username
-        if self.first_name != data.first_name:
-            self.first_name = data.first_name
-        if self.last_name != data.last_name:
-            self.last_name = data.last_name
-        if self.activo != data.activo:
-            self.activo = data.activo
-        self.save()
+    def update(self,data,id):
+        user = db.session.query(User).get(id)
+        if user.first_name != data['first_name']:
+            user.first_name = data['first_name']
+        if user.username != data['username']:
+            user.username = data['username']
+        if user.first_name != data['first_name']:
+            user.first_name = data['first_name']
+        if user.last_name != data['last_name']:
+            user.last_name = data['last_name']
+        if user.email != data['email']:
+            user.email = data['email']
+
+
         db.session.commit()
+        return True
