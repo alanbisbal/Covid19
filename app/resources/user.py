@@ -31,13 +31,12 @@ def create():
 def update(user_id):
     if not authenticated(session):
         abort(401)
-
     user = User.find_by_id(user_id)
     return render_template("user/update.html",user = user)
 
 def update_new():
     if not authenticated(session):
         abort(401)
-    data =request.form
+    data = request.form
     User.update(data,data['user_id'])
     return redirect(url_for('user_index'))

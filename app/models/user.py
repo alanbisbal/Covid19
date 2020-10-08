@@ -58,13 +58,10 @@ class User(db.Model):
             user.first_name = data['first_name']
         if user.username != data['username']:
             user.username = data['username']
-        if user.first_name != data['first_name']:
-            user.first_name = data['first_name']
         if user.last_name != data['last_name']:
             user.last_name = data['last_name']
         if user.email != data['email']:
             user.email = data['email']
-
 
         db.session.commit()
         return True
