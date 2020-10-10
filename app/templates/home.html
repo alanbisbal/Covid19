@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "layout.html" %} {% block title %}Inicio{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block inicio %}<a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>{% endblock %} {% block itemnavbar %}
 <a class="p-2 text-dark" href="#">Solicitudes de sitio</a> {% if 1 == 1 %}
 <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a> {% endif %} {% endblock %} {% block perfil %} {% if is_authenticated(session) %}
@@ -9,6 +10,20 @@
 </div>
 {% endif %} {% endblock %} {% block navbar %} {{ super() }} {% endblock %} {% block content %}
 <!--<h1>Este es el inicio</h1>
+=======
+{% extends "layout.html" %}
+{% block title %}Inicio{% endblock %}
+{% block head %}
+ {{ super() }}
+{% endblock %}
+
+
+{% block navbar %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+  <!--<h1>Este es el inicio</h1>
+>>>>>>> 7245939d5b23cfd4ebf2e425a32357a351a0374b
   <p>Página de inicio de la aplicación</p> -->
 
 {% if not is_authenticated(session) %}
