@@ -1,22 +1,24 @@
-class Issue(object):
-    @classmethod
-    def all(cls, conn):
-        sql = "SELECT * FROM issues"
+from app import db
+from flask import request
 
-        cursor = conn.cursor()
-        cursor.execute(sql)
 
-        return cursor.fetchall()
+class Issue(db.Model):
+    ____tablename__ = 'issues'
+    id = db.Column(db.Integer,primary_key = True)
+    email = db.Column(db.String(255))
+    description = db.Column(db.String(255))
+    category = db.Column(db.Integer)
+    status_id = db.Column(db.Integer)
 
-    @classmethod
-    def create(cls, conn, data):
-        sql = """
-            INSERT INTO issues (email, description, category_id, status_id)
-            VALUES (%s, %s, %s, %s)
-        """
+def __init__(self, data):
+    self.email = data['email']
+    self.description = data['description']
+    self.description = data['description']
+    self.category = data['category']
+    self.status_id = data['status_id']
+    db.session.commit()
 
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
 
-        return True
+@classmethod
+def __str__(self):
+    return '<issues {}>'.format(self.email)
