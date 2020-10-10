@@ -33,7 +33,7 @@ def create_app(environment="development"):
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
-    # Autenticación
+    # Autenticación    A DONDE ME LLEVA  NOM DE LA VISTA  LA FUNCION DEL RECURSO A EJECUTAR
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule(
