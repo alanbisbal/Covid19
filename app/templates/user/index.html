@@ -5,8 +5,7 @@
 {% endblock %}
 {% block inicio %}<a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>{% endblock %}
 {% block itemnavbar %}
-<a class="p-2 text-dark" href="#">Solicitudes de sitio</a>
-<a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
+
 {% endblock %}
 {% block perfil %}
 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido admin!</a>
@@ -20,23 +19,36 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
+<form class="form-inline md-form mr-auto mb-4" action="{{ url_for('user_search') }}">
 
+<input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Search" aria-label="Search">
+  <select class='form-control mr-sm-2' name='estado'>
+    <option value='---' selected>---</option>
+    <option value='activo'>Activo</option>
+    <option value='inactivo'>Inactivo</option>
+  </select>
+  <button class="btn btn-outline-warning btn-rounded btn-sm my-0" type="submit">Search</button>
+
+</form>
   <a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
   <a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
 <h1>Usuarios</h1>
   <table class="table">
   <thead>
     <tr>
+      <th scope="col">Nombre de usuario</th>
       <th scope="col">Nombre</th>
       <th scope="col">Apellido</th>
       <th scope="col">Correo</th>
       <th scope="col">Estado</th>
-      <th scope="col"></th>
+      <th scope="col">opciones</th>
     </tr>
   </thead>
+
   <tbody>
      {% for user in users %}
     <tr>
+      <td>{{ user.username }}</td>
       <td>{{ user.first_name }}</td>
       <td>{{ user.last_name }}</td>
       <td>{{ user.email }}</td>
@@ -56,6 +68,7 @@
     </tr>
     {% endfor %}
   </tbody>
+
 </table>
 {% endblock %}
 {% block scripts %}
