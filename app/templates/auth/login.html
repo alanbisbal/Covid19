@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "home.html" %}
 {% block title %}Donaciones Covid19{% endblock %}
 {% block head %}
   {{ super() }}
@@ -7,28 +7,18 @@
 {% block navbar %}
   {{ super() }}
 {% endblock %}
-{% block content %}
-<h1>Iniciar sesión</h1>
-<form action="{{ url_for('auth_authenticate') }}" method="POST">
-  <input name="email" placeholder="Correo" required/>
-  <input type="password" name="password" placeholder="Clave" required/>
-  <input type="submit" value="Login">
-</form>
-<br>
-<div class="jumbotron">
-  <div class="container">
-    <h1 class="display-4">Donaciones Covid19</h1>
-    <h5>En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados <br>
-       Solicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano. <br>
-       También podes recibir donaciones en caso de necesitarlo
-    </h5>
-    <br>
-    <h4>Ayudanos a ayudar respetando el distanciamiento social.</h4> 
-    <br>
-    <h6>Contacto: Covid19@donaciones.com</h6>
-  </div>
-</div>
 
+{% block iniciarSesion %}
+<h1>Iniciar sesión</h1>
+<form action="{{ url_for('auth_authenticate') }}" method="POST" class="form-inline">
+  <input class="form-control mb-2 mr-sm-2" name="email" placeholder="Correo" required/>
+  <input class="form-control mb-2 mr-sm-2" type="password" name="password" placeholder="Clave" required/>
+  <input type="submit" value="Login" class="btn btn-outline-primary">
+  
+</form>
+{% endblock %}
+{% block content %}
+{{ super() }}
 {% endblock %}
 {% block scripts %}
    {{ super() }}
