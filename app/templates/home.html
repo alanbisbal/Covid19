@@ -4,31 +4,17 @@
  {{ super() }}
 {% endblock %}
 
-{% block inicio %}<a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>{% endblock %}
-{% block itemnavbar %}
-
-
-{% endblock %}
-{% block perfil %}
-{% if is_authenticated(session) %}
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido {{session.username}}</a>
-<div class="dropdown-menu">
-<a class="dropdown-item" href="#">Perfil</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item" href="{{ url_for('auth_logout') }}">Cerrar Sesión</a>
-</div>
-{% endif %}
-{% endblock %}
 
 {% block navbar %}
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <!--<h1>Este es el inicio</h1>
-  <p>Página de inicio de la aplicación</p> -->
+{% block iniciarSesion %}
+
+{% endblock %}
 
   {% if not is_authenticated(session) %}
-    <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
+   <!--boton de iniciar sesion-->
     <br>
     <div class="jumbotron">
       <div class="container">
@@ -74,7 +60,7 @@
     <div class="form-inline">
         <div class="custom-control custom-switch">
           <input type="checkbox" class="custom-control-input" id="customSwitch1">
-          <label class="custom-control-label" for="customSwitch1">Web habilitada</label>
+          <label class="custom-control-label" for="customSwitch1">Web Deshabilitada</label>
         </div>
       <div class="card-body d-flex justify-content-between align-items-center"></div>
         <button type="submit" class="btn btn-primary my-1">Guardar</button>
