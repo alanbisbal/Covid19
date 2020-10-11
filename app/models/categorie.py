@@ -7,11 +7,11 @@ class Categorie(db.Model):
     id = db.Column(db.Integer,primary_key = True)
 
 
-def __init__(self, data):
-    self.name = data['name']
-    db.session.commit()
+    def __init__(self, data):
+        self.name = data['name']
+        db.session.commit()
 
 
-@classmethod
-def __str__(self):
-    return '<categories {}>'.format(self.name)
+    @classmethod
+    def __str__(self):
+        return '<categories {}>'.format(self.name)
