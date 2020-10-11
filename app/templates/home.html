@@ -9,8 +9,9 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-  <!--<h1>Este es el inicio</h1>
-  <p>Página de inicio de la aplicación</p> -->
+{% block iniciarSesion %}
+
+{% endblock %}
 
   {% if not is_authenticated(session) %}
    <!--boton de iniciar sesion-->

@@ -24,11 +24,7 @@
           </a>
         <nav class="my-2 my-md-0 mr-md-3">
           <!--si el usuario es admin debera tener ademas de la seccion inicio un href diferente-->
-          {% if is_authenticated(session) %}
-             <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
-          {% else %}
-          <a class="p-2 text-dark" href="">Inicio</a>
-          {% endif %} 
+          <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
           <a class="p-2 text-dark" href="#">Centros de Ayuda</a>
           <a class="p-2 text-dark" href="#">Turnos</a>
 
