@@ -7,11 +7,7 @@ from app import db
 # Protected resources
 def index():
     if not authenticated(session):
-        abort(401)
-<<<<<<< HEAD
-    #if session['username'] == 'admin'    
-=======
->>>>>>> 32a019d81740f94f415a068e19062eb45fc551c5
+        abort(401)       
     users = db.session.query(User).all()
     return render_template("user/index.html", users=users)
     return render_template("home.html")
