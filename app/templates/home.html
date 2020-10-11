@@ -13,8 +13,23 @@
   <p>Página de inicio de la aplicación</p> -->
 
   {% if not is_authenticated(session) %}
-    <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
-  {% endif %}
+   <!--boton de iniciar sesion-->
+    <br>
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-4">Donaciones Covid19</h1>
+        <h5>En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados <br>
+           Solicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano. <br>
+           También podes recibir donaciones en caso de necesitarlo
+        </h5>
+        <br>
+        <h4>Ayudanos a ayudar respetando el distanciamiento social.</h4>
+        <br>
+        <h6>Contacto: Covid19@donaciones.com</h6>
+      </div>
+    </div>
+
+  {% else %}
  <!--CREO EL FORMULARIO: (lo que esta antes se deberia borrar xq ya no sirve menos el cerrar sesion,
   no toque nada basicamente xq capaz cuando hagas la funcionalidad te sirva para entenderlo)-->
 
@@ -44,7 +59,7 @@
     <div class="form-inline">
         <div class="custom-control custom-switch">
           <input type="checkbox" class="custom-control-input" id="customSwitch1">
-          <label class="custom-control-label" for="customSwitch1">Web habilitada</label>
+          <label class="custom-control-label" for="customSwitch1">Web Deshabilitada</label>
         </div>
       <div class="card-body d-flex justify-content-between align-items-center"></div>
         <button type="submit" class="btn btn-primary my-1">Guardar</button>
@@ -52,6 +67,7 @@
 
     </form>
   </div>
+  {% endif %}
 {% endblock %}
 
 {% block scripts %}

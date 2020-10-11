@@ -8,7 +8,7 @@ from app import db
 def index():
     if not authenticated(session):
         abort(401)
-    users = User.all()
+    users = db.session.query(User).all()
     return render_template("user/index.html", users=users)
 
 
@@ -21,27 +21,57 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-    print(request)
-    User.create(request.form)
+    db.session.add(User(request.form))
+    db.session.commit()
     return redirect(url_for("user_index"))
+
 
 
 def update(user_id):
     if not authenticated(session):
         abort(401)
-    user = User.find_by_id(user_id)
+    user = db.session.query(User).filter_by(id= user_id).first()
     return render_template("user/update.html",user = user)
+
+
 
 def update_new():
     if not authenticated(session):
         abort(401)
     data = request.form
-    User.update(data,data['user_id'])
+    user = db.session.query(User).get(data['user_id'])
+    if user.first_name != data['first_name']:
+        user.first_name = data['first_name']
+    if user.username != data['username']:
+        user.username = data['username']
+    if user.last_name != data['last_name']:
+        user.last_name = data['last_name']
+    if user.email != data['email']:
+        user.email = data['email']
+    db.session.commit()
     return redirect(url_for('user_index'))
+
+
 
 def delete():
     if not authenticated(session):
         abort(401)
-    data =request.form
-    User.delete(data['user_id'])
+    user = db.session.query(User).get(request.form['user_id'])
+    db.session.delete(user)
+    db.session.commit()
     return redirect(url_for('user_index'))
+
+def search():
+    if not authenticated(session):
+        abort(401)
+    estado = request.args.get("estado")
+    filtro = request.args.get("filtro")
+    if estado == '---':
+        users = db.session.query(User).filter(User.username.contains(filtro))
+        return render_template("user/index.html", users=users)
+
+    if estado == 'activo':
+        users = db.session.query(User).filter(User.activo == True,User.username.contains(filtro))
+        return render_template("user/index.html", users=users)
+    users = db.session.query(User).filter(User.activo == False).filter(User.username.contains(filtro))
+    return render_template("user/index.html", users=users)
