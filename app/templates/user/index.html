@@ -4,9 +4,6 @@
   {{ super() }}
 {% endblock %}
 
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
 {% block content %}
 <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('user_search') }}">
   <h1 class="my-0 mr-md-auto font-weight-normal">Usuarios</h1>
@@ -65,6 +62,4 @@
 <a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
 <a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
 {% endblock %}
-{% block scripts %}
-   {{ super() }}
-{% endblock %}
+
