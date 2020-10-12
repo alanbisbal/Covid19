@@ -27,19 +27,20 @@
           <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
           <a class="p-2 text-dark" href="#">Centros de Ayuda</a>
           <a class="p-2 text-dark" href="#">Turnos</a>
+          <a class="p-2 text-dark" href="{{ url_for('issue_index') }}">Consultas</a>
 
           <!--si el usuario es admin ademas vera estas secciones :-->
           {% if is_authenticated(session) %}
               <a class="p-2 text-dark" href="#">Solicitudes de sitio</a>
               <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
-          {% else %}    
+          {% else %}
             <a href="{{ url_for('auth_login') }}" class="btn btn-link">Iniciar sesión</a>
-              
+
           {% endif %}
-        
+
         </nav>
          {% if is_authenticated(session) %}
-         
+
          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido {{session.username}}</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Perfil</a>
