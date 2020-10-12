@@ -1,25 +1,11 @@
-{% extends "layout.html" %} {% block title %}Inicio{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block inicio %}<a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>{% endblock %} {% block itemnavbar %}
-<a class="p-2 text-dark" href="#">Solicitudes de sitio</a>
-<a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a> {% endif %} {% endblock %} {% block perfil %} {% if is_authenticated(session) %}
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido {{session.username}}</a>
-<div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Perfil</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="{{ url_for('auth_logout') }}">Cerrar Sesión</a>
-</div>
-{% endif %} {% endblock %} {% block navbar %} {{ super() }} {% endblock %} {% block content %}
-
-
-<!--<h1>Este es el inicio</h1
-
-
-{% block navbar %}
-  {{ super() }}
+{% extends "layout.html" %}
+{% block title %}Inicio{% endblock %}
+{% block head %}
+ {{ super() }}
 {% endblock %}
+
 {% block content %}
-{% block iniciarSesion %}
-
-{% endblock %}
+{% block iniciarSesion %}{% endblock %}
 
   {% if not is_authenticated(session) %}
    <!--boton de iniciar sesion-->
@@ -77,8 +63,4 @@
     </form>
   </div>
   {% endif %}
-{% endblock %}
-
-{% block scripts %}
-   {{ super() }}
 {% endblock %}
