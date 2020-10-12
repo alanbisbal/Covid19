@@ -13,7 +13,6 @@ class User(db.Model):
     perfil = db.Column(db.String(255))
 
     def __init__(self, data):
-        self.first_name = data['first_name']
         self.username = data['username']
         self.first_name = data['first_name']
         self.last_name = data['last_name']
