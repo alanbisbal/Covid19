@@ -32,6 +32,7 @@
           <!--si el usuario es admin ademas vera estas secciones :-->
           {% if is_authenticated(session) %}
               <a class="p-2 text-dark" href="#">Solicitudes de sitio</a>
+              <a class="p-2 text-dark" href="#">Roles y permisos</a>
               <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
           {% else %}
             <a href="{{ url_for('auth_login') }}" class="btn btn-link">Iniciar sesión</a>
