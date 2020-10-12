@@ -28,8 +28,6 @@
  <!--CREO EL FORMULARIO: (lo que esta antes se deberia borrar xq ya no sirve menos el cerrar sesion,
   no toque nada basicamente xq capaz cuando hagas la funcionalidad te sirva para entenderlo)-->
 
-  {% if session['username'] == 'admin' %}
-
   <div class="mx-auto" style="width: 500px;">
     <h3>Configuración del Sitema</h3>
     <form>
@@ -64,6 +62,5 @@
 
     </form>
   </div>
-  {% endif %}
   {% endif %}
 {% endblock %}
