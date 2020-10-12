@@ -1,6 +1,12 @@
-from app import db
-from flask import request
+class Issue(object):
+    @classmethod
+    def all(cls, conn):
+        sql = "SELECT * FROM issues"
 
+        cursor = conn.cursor()
+        cursor.execute(sql)
+
+        return cursor.fetchall()
 
     @classmethod
     def create(cls, conn, data):
@@ -9,5 +15,8 @@ from flask import request
             VALUES (%s, %s, %s, %s)
         """
 
+        cursor = conn.cursor()
+        cursor.execute(sql, list(data.values()))
+        conn.commit()
 
         return True
