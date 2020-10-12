@@ -76,3 +76,8 @@ def search():
         return render_template("user/index.html", users=users)
     users = db.session.query(User).filter(User.activo == False).filter(User.username.contains(filtro))
     return render_template("user/index.html", users=users)
+
+
+def show(user_id):
+    user = db.session.query(User).filter_by(id= user_id).first()
+    return render_template("user/show.html",user = user)

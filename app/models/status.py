@@ -8,11 +8,11 @@ class Status(db.Model):
     name = db.Column(db.String(255))
 
 
-def __init__(self, data):
-    self.name = data['name']
-    db.session.commit()
+    def __init__(self, data):
+        self.name = data['name']
+        db.session.commit()
 
 
-@classmethod
-def __str__(self):
-    return '<statuses {}>'.format(self.name)
+    @classmethod
+    def __str__(self):
+        return '<statuses {}>'.format(self.name)
