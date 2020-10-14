@@ -2,13 +2,15 @@ from os import path, environ
 from flask import Flask, render_template, g
 from flask_session import Session
 from config import config
-from app import db
+from app.db import db
 from app.resources import issue
 from app.resources import user
 from app.resources import auth
 from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
+from flask_sqlalchemy import SQLAlchemy
+
 
 
 def create_app(environment="development"):
@@ -24,8 +26,10 @@ def create_app(environment="development"):
     Session(app)
 
     # Configure db
-    db.init_app(app)
 
+    db = SQLAlchemy(app)
+    with app.app_context():
+        db.create_all()
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
@@ -45,6 +49,9 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    app.add_url_rule("/usuarios/update/<user_id>", "user_update", user.update)
+    app.add_url_rule("/usuarios/update", "user_update_new", user.update_new, methods=["POST"])
+    app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
