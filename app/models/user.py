@@ -1,16 +1,18 @@
 from app import db
 from flask import request
+from sqlalchemy.orm import relationship
+from sqlalchemy import Table, Column, Integer, ForeignKey
 
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255))
-    email = db.Column(db.String(255))
-    first_name = db.Column(db.String(255))
-    last_name = db.Column(db.String(255))
-    password = db.Column(db.String(255))
-    activo = db.Column(db.Boolean)
-    perfil = db.Column(db.String(255))
+    username = db.Column(db.String(255), nullable=False, unique = True )
+    email = db.Column(db.String(255), nullable=False, unique = True)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    activo = db.Column(db.Boolean, nullable=False)
+    rols = db.relationship("Rol" , secondary="users_rols")
 
     def __init__(self, data):
         self.first_name = data['first_name']

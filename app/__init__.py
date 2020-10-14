@@ -10,8 +10,7 @@ from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
-
-
+from app.models from user as User_table
 
 def create_app(environment="development"):
     # Configuración inicial de la app
@@ -28,7 +27,9 @@ def create_app(environment="development"):
     # Configure db
 
     db = SQLAlchemy(app)
+
     with app.app_context():
+
         db.create_all()
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
