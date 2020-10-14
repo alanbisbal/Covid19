@@ -10,8 +10,7 @@ from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
-
-
+from app.models.categorie import Categorie
 
 def create_app(environment="development"):
     # Configuración inicial de la app
@@ -28,7 +27,9 @@ def create_app(environment="development"):
     # Configure db
 
     db = SQLAlchemy(app)
+
     with app.app_context():
+
         db.create_all()
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
@@ -52,6 +53,7 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/update/<user_id>", "user_update", user.update)
     app.add_url_rule("/usuarios/update", "user_update_new", user.update_new, methods=["POST"])
     app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
+    app.add_url_rule("/usuarios/search", "user_search", user.search)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

@@ -60,3 +60,18 @@ def delete():
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('user_index'))
+
+def search():
+    if not authenticated(session):
+        abort(401)
+    estado = request.args.get("estado")
+    filtro = request.args.get("filtro")
+    if estado == '---':
+        users = db.session.query(User).filter(User.username.contains(filtro))
+        return render_template("user/index.html", users=users)
+
+    if estado == 'activo':
+        users = db.session.query(User).filter(User.activo == True,User.username.contains(filtro))
+        return render_template("user/index.html", users=users)
+    users = db.session.query(User).filter(User.activo == False).filter(User.username.contains(filtro))
+    return render_template("user/index.html", users=users)
