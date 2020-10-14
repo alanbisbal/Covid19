@@ -10,7 +10,7 @@ from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
-from app.models from user as User_table
+from app.models.categorie import Categorie
 
 def create_app(environment="development"):
     # Configuración inicial de la app
