@@ -1,11 +1,13 @@
 from app import db
 from flask import request
-
-class Permisos(db.Model):
+from sqlalchemy.orm import relationship
+from sqlalchemy import Table, Column, Integer, ForeignKey
+class Permiso(db.Model):
     __tablename__ = 'permisos'
     id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
+    name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255))
+    rols = relationship("Rol", secondary="rols_permisos")
 
     def __init__(self, data):
         self.name = data['name']
@@ -15,4 +17,4 @@ class Permisos(db.Model):
 
     @classmethod
     def __str__(self):
-        return '<permisos {}>'.format(self.name)
+        return '<Permiso {}>'.format(self.name)
