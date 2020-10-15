@@ -1,7 +1,6 @@
 from app import db
 from flask import request
-from sqlalchemy.orm import relationship
-from app.models import categorie
+from app.models import categorie, status
 from sqlalchemy import Table, Column, Integer, ForeignKey
 
 class Issue(db.Model):
@@ -9,8 +8,8 @@ class Issue(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255))
-    categorie = db.relationship('Categorie',backref='recordowner')
-    status =  db.relationship('Status',backref='recordowner')
+    categorie_id = db.Column(db.Integer, db.ForeignKey('categorie.id'))
+    status_id = db.Column(db.Integer, db.ForeignKey('status.id'))
 
     def __init__(self, data):
         self.email = data['email']
