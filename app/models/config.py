@@ -1,8 +1,8 @@
-from app import db
 from flask import request
+from sqlalchemy.orm import relationship
+from app.models import issue
+from app.db import db
 from sqlalchemy import Table, Column, Integer, ForeignKey
-
-
 
 class Config(db.Model):
     __tablename__ = 'configs'
