@@ -6,7 +6,7 @@ class Users_rols(db.Model):
     ____tablename__ = 'users_rols'
     id = db.Column(db.Integer,primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    rol_id = db.Column(db.Integer, db.ForeingKey('rols.id'))
+    rol_id = db.Column(db.Integer, db.ForeignKey('rols.id'))
     user = relationship(user, backref=backref("users_rols,cascade=all, delete-orphan"))
     rol = relationship(rol, backref=backref("users_rols,cascade=all, delete-orphan"))
 

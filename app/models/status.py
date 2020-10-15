@@ -6,7 +6,7 @@ class Status(db.Model):
     ____tablename__ = 'statuses'
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255), nullable=False)
-    issue_id = db.Column(db.Integer, db.ForeingKey('issues.id'))
+    issue_id = db.Column(db.Integer, db.ForeignKey('issues.id'))
 
     def __init__(self, data):
         self.name = data['name']
