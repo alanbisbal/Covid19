@@ -4,7 +4,7 @@ from app.models import categorie, status
 from sqlalchemy import Table, Column, Integer, ForeignKey
 
 class Issue(db.Model):
-    ____tablename__ = 'issues'
+    __tablename__ = 'issues'
     id = db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255))
