@@ -7,7 +7,7 @@ class Categorie(db.Model):
     ____tablename__ = 'categories'
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255), nullable=False)
-#    issue_id = db.Column(db.Integer, db.ForeignKey('issues.id'))
+#    issue_id = db.Column(db.Integer, db.ForeingKey('issues.id'))
 
     def __init__(self, data):
         self.name = data['name']

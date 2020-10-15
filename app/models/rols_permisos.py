@@ -1,7 +1,7 @@
 from app import db
 from flask import request
 from sqlalchemy.orm import relationship
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Table, Column, Integer, ForeingKey
 
 class Rols_permisos(db.Model):
     ____tablename__ = 'rols_permisos'

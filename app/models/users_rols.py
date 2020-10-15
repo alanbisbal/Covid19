@@ -1,7 +1,7 @@
 from app import db
 from flask import request
 from sqlalchemy.orm import relationship
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Table, Column, Integer, ForeingKey
 class Users_rols(db.Model):
     ____tablename__ = 'users_rols'
     id = db.Column(db.Integer,primary_key = True)
