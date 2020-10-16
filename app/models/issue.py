@@ -19,8 +19,15 @@ class Issue(db.Model):
         self.status_id = data['status_id']
         db.session.commit()
 
-    
+
 
     @classmethod
     def __str__(self):
         return '<Issue {}>'.format(self.email)
+
+    def all():
+        return db.session.query(Issue).all()
+
+    def add(data):
+        db.session.add(Issue(data))
+        db.session.commit()

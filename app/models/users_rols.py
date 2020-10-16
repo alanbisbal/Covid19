@@ -16,3 +16,7 @@ class Users_rols(db.Model):
         self.user_id = user_id
         self.rol_id = rol
         db.session.commit()
+
+    def add(user_id,rol_id):
+        db.session.add(Users_rols(user_id,rol_id))
+        db.session.commit()
