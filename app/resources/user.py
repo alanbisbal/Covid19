@@ -3,6 +3,7 @@ from app.db import connection
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app import db
+from app.models.config import Config
 
 # Protected resources
 def index():
@@ -148,3 +149,13 @@ def activated(user_id):
     db.session.commit()
 
     return redirect(url_for('user_index'))
+
+
+def configuracion():
+    if not authenticated(session):
+        abort(401)
+    #validacion de acceso administrador
+
+    #retorna una vista con el id del usuario enviado por parametro
+    configuracion = db.session.query(Config).first()
+    return render_template("config/configuracion.html", config=configuracion )
