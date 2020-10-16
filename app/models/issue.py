@@ -15,12 +15,11 @@ class Issue(db.Model):
     def __init__(self, data):
         self.email = data['email']
         self.description = data['description']
-        self.description = data['description']
+        self.categorie_id = data['category_id']
+        self.status_id = data['status_id']
         db.session.commit()
 
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
+    
 
     @classmethod
     def __str__(self):

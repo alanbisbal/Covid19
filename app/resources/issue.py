@@ -12,7 +12,7 @@ def new():
 
 
 def create():
-    db.session.add(User(request.form))
+    db.session.add(Issue(request.form))
     db.session.commit()
 
     return redirect(url_for("issue_index"))
