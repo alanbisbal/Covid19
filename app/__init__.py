@@ -10,6 +10,7 @@ from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
+from app.models.config import Config
 
 db = SQLAlchemy()
 
@@ -32,7 +33,7 @@ def create_app(environment="development"):
    # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
-    # Autenticación
+    # Autenticación    A DONDE ME LLEVA  NOM DE LA VISTA  LA FUNCION DEL RECURSO A EJECUTAR
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
@@ -51,11 +52,15 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/update", "user_update_new", user.update_new, methods=["POST"])
     app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
     app.add_url_rule("/usuarios/search", "user_search", user.search)
+    app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
+    app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
-        return render_template("home.html")
+        configuracion = db.session.query(Config).first()
+        return render_template("home.html", config=configuracion )
+
 
     # Rutas de API-rest
     app.add_url_rule("/api/consultas", "api_issue_index", api_issue.index)

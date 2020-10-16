@@ -4,44 +4,18 @@
   {{ super() }}
 {% endblock %}
 
-{% block navbar %}
-  {{ super() }}
-{% endblock %}
 {% block content %}
-<div class="mx-auto" style="width: 500px;">
-  <h3>PERFIL</h3>
 
-
-  <div class="form-group">
-    <label for="username">Nombre de usuario:</label>
-    </br>
-    <input id="username" name="username" value="{{user.username}}" readonly>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4"> Perfil</h1>
+    <hr class="my-4">
+    <p class="lead">Nombre de usuario:   {{user.username}}</p>
+    <p class="lead">Email:   {{user.email }}</p>
+    <p class="lead">Nombre: {{user.first_name }}</p>
+    <p class="lead">Apellido: {{user.last_name }}</p>
   </div>
-  </br>
-
-  <div class="form-group">
-    <label for="email">Email:</label>
-    </br>
-    <input id="email" name="email" value="  {{user.email }}" readonly>
-  </div>
-  </br>
-
-  <div class="form-group">
-    <label for="first_name">Nombre:</label>
-    </br>
-    <input id="first_name" name="first_name" value="{{user.first_name }}" readonly>
-  </div>
-  </br>
-
-  <div class="form-group">
-    <label for="last_name">Apellido:</label>
-    </br>
-    <input id="last_name" name="last_name" value="{{user.last_name }}" readonly>
-  </div>
-  </br>
-
 </div>
+
 {% endblock %}
-{% block scripts %}
-   {{ super() }}
-{% endblock %}
+

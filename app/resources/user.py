@@ -5,6 +5,7 @@ from app.models.rol import Rol
 from app.models.users_rols import Users_rols
 from app.helpers.auth import authenticated
 from app import db
+from app.models.config import Config
 
 # Protected resources
 def index():
@@ -13,6 +14,7 @@ def index():
     #retorna todos los usuarios
     users = db.session.query(User).all()
     return render_template("user/index.html", users=users)
+    return render_template("home.html")
 
 
 def new():
@@ -139,3 +141,26 @@ def show(user_id):
     return render_template("user/show.html",user = user)
     #validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
     #---completar para futura entrega--#
+
+def activated(user_id):
+    if not authenticated(session):
+        abort(401)
+
+    user = db.session.query(User).filter_by(id= user_id).first()
+    if user.activo == False:
+        user.activo = True
+    else:
+        user.activo = False
+    db.session.commit()
+
+    return redirect(url_for('user_index'))
+
+
+def configuracion():
+    if not authenticated(session):
+        abort(401)
+    #validacion de acceso administrador
+
+    #retorna una vista con el id del usuario enviado por parametro
+    configuracion = db.session.query(Config).first()
+    return render_template("config/configuracion.html", config=configuracion )
