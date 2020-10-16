@@ -11,7 +11,7 @@ from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 
-
+db = SQLAlchemy()
 
 def create_app(environment="development"):
     # Configuración inicial de la app
@@ -27,10 +27,9 @@ def create_app(environment="development"):
 
     # Configure db
 
-    db = SQLAlchemy(app)
-    with app.app_context():
-        db.create_all()
-    # Funciones que se exportan al contexto de Jinja2
+    db.init_app(app)
+
+   # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
     # Autenticación    A DONDE ME LLEVA  NOM DE LA VISTA  LA FUNCION DEL RECURSO A EJECUTAR

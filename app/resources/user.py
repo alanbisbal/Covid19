@@ -37,8 +37,8 @@ def create():
         flash("El nombre de usuario ya existe en el sistema.")
         return redirect(request.referrer)
     #insercion a la base de datos.
-    db.session.add(User(data))
-    db.session.commit()
+    db.add(User(data))
+    db.commit()
     flash("Insercion exitosa")
     return redirect(url_for("user_index"))
 
@@ -63,6 +63,16 @@ def update_new():
     data = request.form
     #Se controla los campos unicos.
     user = db.session.query(User).get(data['user_id'])
+
+
+    """
+    test sobre que permisos tiene el usuario
+    for rol in user.rols:
+        for permiso in rol.permisos:
+            print(permiso.name)
+    """
+
+
     user_with_email = db.session.query(User).filter_by(email = data['email']).first()
     user_with_username = db.session.query(User).filter_by(username = data['username']).first()
     if user_with_email and user_with_email.id != user.id:
