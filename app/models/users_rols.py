@@ -12,6 +12,7 @@ class Users_rols(db.Model):
     user = db.relationship('User', backref=db.backref("users_rols",cascade="all, delete-orphan"))
     rol = db.relationship('Rol', backref=db.backref("users_rols",cascade="all, delete-orphan"))
 
-    def __init__(self, data):
-        self.name = data['name']
+    def __init__(self, user_id,rol):
+        self.user_id = user_id
+        self.rol_id = rol
         db.session.commit()

@@ -35,9 +35,7 @@ def create_app(environment="development"):
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
-    app.add_url_rule(
-        "/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"]
-    )
+    app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
 
     # Rutas de Consultas
     app.add_url_rule("/consultas", "issue_index", issue.index)

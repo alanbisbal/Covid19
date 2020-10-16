@@ -1,6 +1,8 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.db import connection
 from app.models.user import User
+from app.models.rol import Rol
+from app.models.users_rols import Users_rols
 from app.helpers.auth import authenticated
 from app import db
 
@@ -16,8 +18,9 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
+    rols = db.session.query(Rol).all()
     #retorna vista de creacion de usuario
-    return render_template("user/new.html")
+    return render_template("user/new.html",rols=rols)
 
 
 def create():
@@ -35,9 +38,11 @@ def create():
     if user_with_username:
         flash("El nombre de usuario ya existe en el sistema.")
         return redirect(request.referrer)
-    #insercion a la base de datos.
-    db.add(User(data))
-    db.commit()
+    #insercion a la base de datos
+    db.session.add(User(data))
+    user = db.session.query(User).filter_by(email = data['email']).first()
+    db.session.add(Users_rols(user.id,data['rol']))
+    db.session.commit()
     flash("Insercion exitosa")
     return redirect(url_for("user_index"))
 
