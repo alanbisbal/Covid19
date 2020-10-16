@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-10-2020 a las 22:00:41
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.3.8
+-- Tiempo de generación: 16-10-2020 a las 05:55:51
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `categories`
@@ -44,27 +43,47 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `configs`
+--
+
+CREATE TABLE `configs` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `elementos` int(11) NOT NULL,
+  `estado` tinyint(1) NOT NULL
+) ;
+
+--
+-- Volcado de datos para la tabla `configs`
+--
+
+INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
+(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 10, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `issues`
 --
 
 CREATE TABLE `issues` (
   `id` int(11) NOT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `category_id` int(10) NOT NULL,
-  `status_id` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `email` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `categorie_id` int(11) DEFAULT NULL,
+  `status_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `issues`
 --
 
-INSERT INTO `issues` (`id`, `email`, `description`, `category_id`, `status_id`) VALUES
+INSERT INTO `issues` (`id`, `email`, `description`, `categorie_id`, `status_id`) VALUES
 (1, 'fede@mail.com', 'No puedo iniciar sesión correctamente', 1, 1),
 (2, 'jose@mail.com', 'El sistema de dice que hay un error', 1, 2),
-(4, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1),
-(5, 'alan@123', '123', 1, 1),
-(6, 'admin123', 'asd123', 1, 1);
+(3, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -74,8 +93,20 @@ INSERT INTO `issues` (`id`, `email`, `description`, `category_id`, `status_id`) 
 
 CREATE TABLE `permisos` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `permisos`
+--
+
+INSERT INTO `permisos` (`id`, `name`, `description`) VALUES
+(1, 'user_index', 'permite acceder al index (listado) del módulo'),
+(2, 'user_new', ' permite cargar un usuario'),
+(3, 'user_destroy', 'permite borrar un usuario'),
+(4, 'user_update', 'permite actualizar un usuario.\r\n'),
+(5, 'user_show', 'permite visualizar un usuario');
 
 -- --------------------------------------------------------
 
@@ -85,37 +116,58 @@ CREATE TABLE `permisos` (
 
 CREATE TABLE `rols` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `rols`
+--
+
+INSERT INTO `rols` (`id`, `name`, `description`) VALUES
+(1, 'Administrador\r\n', 'Administrador general'),
+(2, 'Operador', 'Administrador de centros');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `rol_permisos`
+-- Estructura de tabla para la tabla `rols_permisos`
 --
 
-CREATE TABLE `rol_permisos` (
+CREATE TABLE `rols_permisos` (
   `id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL,
-  `rol_permiso` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `rol_id` int(11) DEFAULT NULL,
+  `permiso_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `rols_permisos`
+--
+
+INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 2, 5);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `statuses`
+-- Estructura de tabla para la tabla `status`
 --
 
-CREATE TABLE `statuses` (
+CREATE TABLE `status` (
   `id` int(11) NOT NULL,
-  `name` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `statuses`
+-- Volcado de datos para la tabla `status`
 --
 
-INSERT INTO `statuses` (`id`, `name`) VALUES
+INSERT INTO `status` (`id`, `name`) VALUES
 (1, 'New'),
 (2, 'Todo'),
 (3, 'In progress');
@@ -133,16 +185,16 @@ CREATE TABLE `users` (
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `activo` tinyint(1) NOT NULL,
-  `perfil` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `activo` tinyint(1) NOT NULL
+) ;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `password`, `activo`, `perfil`) VALUES
-(1, '', 'admin', 'cosme', 'fulanito', '123123', 0, '');
+INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `password`, `activo`) VALUES
+(1, 'Admin', 'admin', 'Cosme', 'Fulanito', '123123', 1),
+(2, 'Operador', 'operador@gmail.com', 'Lalo', 'Landa', '123123', 1);
 
 -- --------------------------------------------------------
 
@@ -152,9 +204,17 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `pass
 
 CREATE TABLE `users_rols` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `rol_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id` int(11) DEFAULT NULL,
+  `rol_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `users_rols`
+--
+
+INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
+(1, 1, 1),
+(2, 2, 2);
 
 --
 -- Índices para tablas volcadas
@@ -167,11 +227,17 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `configs`
+--
+ALTER TABLE `configs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `issues`
 --
 ALTER TABLE `issues`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`),
+  ADD KEY `categorie_id` (`categorie_id`),
   ADD KEY `status_id` (`status_id`);
 
 --
@@ -187,17 +253,17 @@ ALTER TABLE `rols`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `rol_permisos`
+-- Indices de la tabla `rols_permisos`
 --
-ALTER TABLE `rol_permisos`
+ALTER TABLE `rols_permisos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `rol_permisos` (`rol_id`),
-  ADD KEY `permisos-rol` (`rol_permiso`);
+  ADD KEY `rol_id` (`rol_id`),
+  ADD KEY `permiso_id` (`permiso_id`);
 
 --
--- Indices de la tabla `statuses`
+-- Indices de la tabla `status`
 --
-ALTER TABLE `statuses`
+ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -205,16 +271,16 @@ ALTER TABLE `statuses`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indices de la tabla `users_rols`
 --
 ALTER TABLE `users_rols`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `users-rols` (`user_id`),
-  ADD KEY `rols-users` (`rol_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `rol_id` (`rol_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -224,49 +290,55 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `configs`
+--
+ALTER TABLE `configs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `issues`
 --
 ALTER TABLE `issues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `rols`
 --
 ALTER TABLE `rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `rol_permisos`
+-- AUTO_INCREMENT de la tabla `rols_permisos`
 --
-ALTER TABLE `rol_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `rols_permisos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `statuses`
+-- AUTO_INCREMENT de la tabla `status`
 --
-ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users_rols`
 --
 ALTER TABLE `users_rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -276,22 +348,22 @@ ALTER TABLE `users_rols`
 -- Filtros para la tabla `issues`
 --
 ALTER TABLE `issues`
-  ADD CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`);
+  ADD CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`);
 
 --
--- Filtros para la tabla `rol_permisos`
+-- Filtros para la tabla `rols_permisos`
 --
-ALTER TABLE `rol_permisos`
-  ADD CONSTRAINT `permisos-rol` FOREIGN KEY (`rol_permiso`) REFERENCES `permisos` (`id`),
-  ADD CONSTRAINT `rol_permisos` FOREIGN KEY (`rol_id`) REFERENCES `rols` (`id`);
+ALTER TABLE `rols_permisos`
+  ADD CONSTRAINT `rols_permisos_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `rols` (`id`),
+  ADD CONSTRAINT `rols_permisos_ibfk_2` FOREIGN KEY (`permiso_id`) REFERENCES `permisos` (`id`);
 
 --
 -- Filtros para la tabla `users_rols`
 --
 ALTER TABLE `users_rols`
-  ADD CONSTRAINT `rols-users` FOREIGN KEY (`rol_id`) REFERENCES `rols` (`id`),
-  ADD CONSTRAINT `users-rols` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `users_rols_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `users_rols_ibfk_2` FOREIGN KEY (`rol_id`) REFERENCES `rols` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
