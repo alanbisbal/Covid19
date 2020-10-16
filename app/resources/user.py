@@ -37,8 +37,8 @@ def create():
         flash("El nombre de usuario ya existe en el sistema.")
         return redirect(request.referrer)
     #insercion a la base de datos.
-    db.add(User(data))
-    db.commit()
+    db.session.add(User(data))
+    db.session.commit()
     flash("Insercion exitosa")
     return redirect(url_for("user_index"))
 
@@ -135,3 +135,16 @@ def show(user_id):
     return render_template("user/show.html",user = user)
     #validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
     #---completar para futura entrega--#
+
+def activated(user_id):
+    if not authenticated(session):
+        abort(401)
+
+    user = db.session.query(User).filter_by(id= user_id).first()
+    if user.activo == False:
+        user.activo = True
+    else:
+        user.activo = False
+    db.session.commit()
+
+    return redirect(url_for('user_index'))
