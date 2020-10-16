@@ -9,7 +9,7 @@ def login():
 
 
 def authenticate():
-    user = db.query(User).filter(User.email == request.form['email']).filter(User.password == request.form['password']).first()
+    user = db.session.query(User).filter(User.email == request.form['email']).filter(User.password == request.form['password']).first()
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))

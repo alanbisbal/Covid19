@@ -9,7 +9,7 @@ def index():
     if not authenticated(session):
         abort(401)
     #retorna todos los usuarios
-    users = db.query(User).all()
+    users = db.session.query(User).all()
     return render_template("user/index.html", users=users)
 
 
@@ -27,8 +27,8 @@ def create():
     #validaciones de acceso administrador
     data = request.form
     #validacion de campos unicos
-    user_with_email = db.query(User).filter_by(email = data['email']).first()
-    user_with_username = db.query(User).filter_by(username = data['username']).first()
+    user_with_email = db.session.query(User).filter_by(email = data['email']).first()
+    user_with_username = db.session.query(User).filter_by(username = data['username']).first()
     if user_with_email:
         flash("El email ya existe en el sistema.")
         return redirect(request.referrer)
@@ -49,7 +49,7 @@ def update(user_id):
     #validacion de acceso administrador
 
     #retorna una vista con el id del usuario enviado por parametro
-    user = db.query(User).filter_by(id= user_id).first()
+    user = db.session.query(User).filter_by(id= user_id).first()
     return render_template("user/update.html",user = user)
 
 
@@ -61,9 +61,19 @@ def update_new():
 
     data = request.form
     #Se controla los campos unicos.
-    user = db.query(User).get(data['user_id'])
-    user_with_email = db.query(User).filter_by(email = data['email']).first()
-    user_with_username = db.query(User).filter_by(username = data['username']).first()
+    user = db.session.query(User).get(data['user_id'])
+
+
+    """
+    test sobre que permisos tiene el usuario
+    for rol in user.rols:
+        for permiso in rol.permisos:
+            print(permiso.name)
+    """
+
+
+    user_with_email = db.session.query(User).filter_by(email = data['email']).first()
+    user_with_username = db.session.query(User).filter_by(username = data['username']).first()
     if user_with_email and user_with_email.id != user.id:
         flash("El email ya existe en el sistema.")
         return redirect(request.referrer)
@@ -79,7 +89,7 @@ def update_new():
         user.last_name = data['last_name']
     if user.email != data['email']:
         user.email = data['email']
-    db.commit()
+    db.session.commit()
     flash("Actualizacion exitosa.")
     return redirect(url_for('user_index'))
 
@@ -91,9 +101,9 @@ def delete():
     #validacion de acceso administrador
 
     #se busca el usuario en la base de datos y se lo elimina
-    user = db.query(User).get(request.form['user_id'])
-    db.delete(user)
-    db.commit()
+    user = db.session.query(User).get(request.form['user_id'])
+    db.session.delete(user)
+    db.session.commit()
     return redirect(url_for('user_index'))
 
 def search():
@@ -105,14 +115,14 @@ def search():
     filtro = request.args.get("filtro")
     # se aplica filtro independientemente del estado
     if estado == '---':
-        users = db.query(User).filter(User.username.contains(filtro))
+        users = db.session.query(User).filter(User.username.contains(filtro))
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado activo
     if estado == 'activo':
-        users = db.query(User).filter(User.activo == True,User.username.contains(filtro))
+        users = db.session.query(User).filter(User.activo == True,User.username.contains(filtro))
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado inactivo
-    users = db.query(User).filter(User.activo == False).filter(User.username.contains(filtro))
+    users = db.session.query(User).filter(User.activo == False).filter(User.username.contains(filtro))
     return render_template("user/index.html", users=users)
 
 
@@ -120,7 +130,7 @@ def show(user_id):
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador y si lo es retorna el usuario enviado por id
-    user = db.query(User).filter_by(id= user_id).first()
+    user = db.session.query(User).filter_by(id= user_id).first()
     return render_template("user/show.html",user = user)
     #validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
     #---completar para futura entrega--#

@@ -6,5 +6,5 @@ from flask import request
 
 
 def index():
-    issues = db.query(Issue).all()
+    issues = db.session.query(Issue).all()
     return jsonify(issues=issues)
