@@ -20,3 +20,6 @@ class Rol(db.Model):
     @classmethod
     def __str__(self):
         return '<Rol {}>'.format(self.name)
+
+    def all():
+        return db.session.query(Rol).all()

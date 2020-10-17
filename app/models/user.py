@@ -28,3 +28,55 @@ class User(db.Model):
     @classmethod
     def __str__(self):
         return '<User {}>'.format(self.username)
+
+
+    def add(data):
+        db.session.add(User(data))
+        db.session.commit()
+
+    def all():
+        return db.session.query(User).all()
+
+    def with_email(data):
+        return db.session.query(User).filter_by(email = data).first()
+
+    def with_username(data):
+        return db.session.query(User).filter_by(username = data).first()
+
+    def with_id(data):
+        return db.session.query(User).get(data)
+
+    def update(self,data):
+        if self.first_name != data['first_name']:
+            self.first_name = data['first_name']
+        if self.username != data['username']:
+            self.username = data['username']
+        if self.last_name != data['last_name']:
+            self.last_name = data['last_name']
+        if self.email != data['email']:
+            self.email = data['email']
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def with_filter(filter):
+        return db.session.query(User).filter(User.username.contains(filter))
+
+    def active_with_filter(filter):
+        return db.session.query(User).filter(User.activo == True,User.username.contains(filter))
+
+    def deactive_with_filter(filter):
+        return db.session.query(User).filter(User.activo == False,User.username.contains(filter))
+
+    def active(self):
+        return self.activo
+
+    def activate(self):
+        self.activo = True
+        db.session.commit()
+
+    def deactivate(self):
+        self.activo = False
+        db.session.commit()

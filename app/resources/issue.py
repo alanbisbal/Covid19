@@ -4,7 +4,7 @@ from app.models.issue import Issue
 from app import db
 # Public resources
 def index():
-    issues = db.session.query(Issue).all()
+    issues = Issue.all()
     return render_template("issue/index.html", issues=issues)
 
 def new():
@@ -12,7 +12,5 @@ def new():
 
 
 def create():
-    db.session.add(Issue(request.form))
-    db.session.commit()
-
+    Issue.add(request.form)
     return redirect(url_for("issue_index"))
