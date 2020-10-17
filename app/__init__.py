@@ -6,6 +6,7 @@ from app.db import db
 from app.resources import issue
 from app.resources import user
 from app.resources import auth
+from app.resources import config as configuracion
 from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -56,6 +57,9 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/search", "user_search", user.search)
     app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
     app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
+
+
+    app.add_url_rule("/configuracion", "config_activated", configuracion.activated, methods=["POST"])
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

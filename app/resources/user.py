@@ -158,4 +158,4 @@ def configuracion():
 
     #retorna una vista con el id del usuario enviado por parametro
     configuracion = db.session.query(Config).first()
-    return render_template("config/configuracion.html", config=configuracion )
+    return render_template("config/configuracion.html", config=configuracion)
