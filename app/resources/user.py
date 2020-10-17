@@ -142,7 +142,7 @@ def activated(user_id):
 
 
     user = User.with_id(user_id)
-    if user.active():
+    if user.is_active():
         user.deactivate()
     else:
         user.activate()
