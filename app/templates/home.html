@@ -8,18 +8,17 @@
 {% block iniciarSesion %}{% endblock %}
 
 
-    <br>
+
+<br>
     <div class="jumbotron">
       <div class="container">
-        <h1 class="display-4">Donaciones Covid19</h1>
-        <h5>En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados <br>
-           Solicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano. <br>
-           También podes recibir donaciones en caso de necesitarlo
+        <h1 class="display-4">{{ config.titulo }}</h1>
+        <h5>
+            {{ config.description }}
         </h5>
+
         <br>
-        <h4>Ayudanos a ayudar respetando el distanciamiento social.</h4>
-        <br>
-        <h6>Contacto: Covid19@donaciones.com</h6>
+        <h6>{{ config.email }} </h6>
       </div>
     </div>
 
