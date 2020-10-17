@@ -8,7 +8,11 @@ from app import db
 def index():
     if not authenticated(session):
         abort(401)
+
     #retorna todos los usuarios
+    if session["permisos"] != "Admin":
+        flash("Acceso denegado")
+        return redirect(url_for('home'))
     users = db.session.query(User).all()
     return render_template("user/index.html", users=users)
     return render_template("home.html")
@@ -17,6 +21,9 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
+    if session["permisos"] != "Admin":
+        flash("Acceso denegado")
+        return redirect(url_for('home'))
     #retorna vista de creacion de usuario
     return render_template("user/new.html")
 
@@ -26,6 +33,9 @@ def create():
         abort(401)
 
     #validaciones de acceso administrador
+    if session['permisos'] != 'Admin':
+        flash('No tenes permiso')
+        return redirect(url_for("user_index"))
     data = request.form
     #validacion de campos unicos
     user_with_email = db.session.query(User).filter_by(email = data['email']).first()
@@ -48,7 +58,9 @@ def update(user_id):
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-
+    if session['permisos'] != 'Admin':
+        flash('No tenes permiso')
+        return redirect(url_for("user_index"))
     #retorna una vista con el id del usuario enviado por parametro
     user = db.session.query(User).filter_by(id= user_id).first()
     return render_template("user/update.html",user = user)
@@ -59,6 +71,9 @@ def update_new():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
+    if session['permisos'] != 'Admin':
+        flash('No tenes permiso')
+        return redirect(url_for("user_index"))
 
     data = request.form
     #Se controla los campos unicos.
@@ -90,7 +105,9 @@ def delete():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-
+    if session['permisos'] != 'Admin':
+        flash('No tenes permiso')
+        return redirect(url_for("user_index"))
     #se busca el usuario en la base de datos y se lo elimina
     user = db.session.query(User).get(request.form['user_id'])
     db.session.delete(user)
@@ -120,7 +137,10 @@ def search():
 def show(user_id):
     if not authenticated(session):
         abort(401)
+
     #validacion de acceso administrador y si lo es retorna el usuario enviado por id
+    #Consulta: no es simplemente ver sus propios datos? creo que mas alla de que sea
+    #admin, operador u otra cosa, tiene que poder ver sus datos sin problemas
     user = db.session.query(User).filter_by(id= user_id).first()
     return render_template("user/show.html",user = user)
     #validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil

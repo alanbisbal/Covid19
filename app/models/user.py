@@ -19,6 +19,7 @@ class User(db.Model):
         self.email = data['email']
         self.password = data['password']
         self.activo = 1
+        self.perfil= "Admin"
         db.session.commit()
 
 
