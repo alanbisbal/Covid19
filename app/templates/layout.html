@@ -33,8 +33,10 @@
               <a class="p-2 text-dark" href="#">Solicitudes de sitio</a>
               {% if session.permisos != "Admin" %}
               <a class="p-2 text-dark" href="#">Roles y permisos</a>
-                <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
-              {% endif %}
+              <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
+              <a class="p-2 text-dark" href="{{ url_for('user_configuracion') }}">Configuracion</a>
+          {% else %}
+            <a href="{{ url_for('auth_login') }}" class="btn btn-link">Iniciar sesión</a>
 
 
         </nav>

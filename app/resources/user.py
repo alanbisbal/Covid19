@@ -1,8 +1,11 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.db import connection
 from app.models.user import User
+from app.models.rol import Rol
+from app.models.users_rols import Users_rols
 from app.helpers.auth import authenticated
 from app import db
+from app.models.config import Config
 
 # Protected resources
 def index():
@@ -10,10 +13,14 @@ def index():
         abort(401)
 
     #retorna todos los usuarios
+<<<<<<< HEAD
     if session["permisos"] != "Admin":
         flash("Acceso denegado")
         return redirect(url_for('home'))
     users = db.session.query(User).all()
+=======
+    users = User.all()
+>>>>>>> 10d263faa922ae19097059f586b638d34324b279
     return render_template("user/index.html", users=users)
     return render_template("home.html")
 
@@ -21,11 +28,15 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
+<<<<<<< HEAD
     if session["permisos"] != "Admin":
         flash("Acceso denegado")
         return redirect(url_for('home'))
+=======
+    rols = Rol.all()
+>>>>>>> 10d263faa922ae19097059f586b638d34324b279
     #retorna vista de creacion de usuario
-    return render_template("user/new.html")
+    return render_template("user/new.html",rols=rols)
 
 
 def create():
@@ -38,17 +49,19 @@ def create():
         return redirect(url_for("user_index"))
     data = request.form
     #validacion de campos unicos
-    user_with_email = db.session.query(User).filter_by(email = data['email']).first()
-    user_with_username = db.session.query(User).filter_by(username = data['username']).first()
+    user_with_email = User.with_email(data['email'])
     if user_with_email:
         flash("El email ya existe en el sistema.")
         return redirect(request.referrer)
+
+    user_with_username = User.with_username(data['username'])
     if user_with_username:
         flash("El nombre de usuario ya existe en el sistema.")
         return redirect(request.referrer)
-    #insercion a la base de datos.
-    db.session.add(User(data))
-    db.session.commit()
+    #insercion a la base de datos
+    User.add(data)
+    user = User.with_email(data['email'])
+    Users_rols.add(user.id,data['rol'])
     flash("Insercion exitosa")
     return redirect(url_for("user_index"))
 
@@ -62,7 +75,7 @@ def update(user_id):
         flash('No tenes permiso')
         return redirect(url_for("user_index"))
     #retorna una vista con el id del usuario enviado por parametro
-    user = db.session.query(User).filter_by(id= user_id).first()
+    user = User.with_id(user_id)
     return render_template("user/update.html",user = user)
 
 
@@ -77,9 +90,21 @@ def update_new():
 
     data = request.form
     #Se controla los campos unicos.
-    user = db.session.query(User).get(data['user_id'])
-    user_with_email = db.session.query(User).filter_by(email = data['email']).first()
-    user_with_username = db.session.query(User).filter_by(username = data['username']).first()
+
+    user = User.with_id(data['user_id'])
+
+
+    """
+    test sobre que permisos tiene el usuario
+    for rol in user.rols:
+        for permiso in rol.permisos:
+            print(permiso.name)
+    """
+
+
+    user_with_email = User.with_email(data['email'])
+    user_with_username = User.with_username(data['username'])
+
     if user_with_email and user_with_email.id != user.id:
         flash("El email ya existe en el sistema.")
         return redirect(request.referrer)
@@ -87,15 +112,7 @@ def update_new():
         flash("El nombre de usuario ya existe en el sistema.")
         return redirect(request.referrer)
     #actualiza el usuario
-    if user.first_name != data['first_name']:
-        user.first_name = data['first_name']
-    if user.username != data['username']:
-        user.username = data['username']
-    if user.last_name != data['last_name']:
-        user.last_name = data['last_name']
-    if user.email != data['email']:
-        user.email = data['email']
-    db.session.commit()
+    user.update(data)
     flash("Actualizacion exitosa.")
     return redirect(url_for('user_index'))
 
@@ -109,9 +126,8 @@ def delete():
         flash('No tenes permiso')
         return redirect(url_for("user_index"))
     #se busca el usuario en la base de datos y se lo elimina
-    user = db.session.query(User).get(request.form['user_id'])
-    db.session.delete(user)
-    db.session.commit()
+    user = User.with_id(request.form['user_id'])
+    user.delete()
     return redirect(url_for('user_index'))
 
 def search():
@@ -120,17 +136,18 @@ def search():
     #validacion de acceso administrador
 
     estado = request.args.get("estado")
-    filtro = request.args.get("filtro")
+    filter = request.args.get("filtro")
     # se aplica filtro independientemente del estado
     if estado == '---':
-        users = db.session.query(User).filter(User.username.contains(filtro))
+        users = User.with_filter(filter)
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado activo
     if estado == 'activo':
-        users = db.session.query(User).filter(User.activo == True,User.username.contains(filtro))
+
+        users = User.active_with_filter(filter)
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado inactivo
-    users = db.session.query(User).filter(User.activo == False).filter(User.username.contains(filtro))
+    users = User.deactive_with_filter(filter)
     return render_template("user/index.html", users=users)
 
 
@@ -139,9 +156,29 @@ def show(user_id):
         abort(401)
 
     #validacion de acceso administrador y si lo es retorna el usuario enviado por id
-    #Consulta: no es simplemente ver sus propios datos? creo que mas alla de que sea
-    #admin, operador u otra cosa, tiene que poder ver sus datos sin problemas
-    user = db.session.query(User).filter_by(id= user_id).first()
+    user = User.with_id(user_id)
     return render_template("user/show.html",user = user)
     #validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
     #---completar para futura entrega--#
+
+def activated(user_id):
+    if not authenticated(session):
+        abort(401)
+
+
+    user = User.with_id(user_id)
+    if user.active():
+        user.deactivate()
+    else:
+        user.activate()
+    return redirect(url_for('user_index'))
+
+
+def configuracion():
+    if not authenticated(session):
+        abort(401)
+    #validacion de acceso administrador
+
+    #retorna una vista con el id del usuario enviado por parametro
+    configuracion = db.session.query(Config).first()
+    return render_template("config/configuracion.html", config=configuracion )
