@@ -24,3 +24,29 @@ class Config(db.Model):
     @classmethod
     def __str__(self):
         return '<Config {}>'.format(self.email)
+
+    def getConfig():
+        return db.session.query(Config).first()
+
+    def is_active(self):
+        return self.estado
+
+    def activate(self):
+        self.estado = True
+        db.session.commit()
+
+    def deactivate(self):
+        self.estado = False
+        db.session.commit()
+
+    def update(self, data):
+        self.titulo = data['titulo']
+        self.description = data['description']
+        self.email = data['email']
+        print(data)
+        self.elementos = data['elementos']
+        if data['estado']== "habilitado":
+            self.estado = True
+        else:
+            self.estado = False
+        db.session.commit()

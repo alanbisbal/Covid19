@@ -72,14 +72,6 @@ def update_new():
     user = User.with_id(data['user_id'])
 
 
-    """
-    test sobre que permisos tiene el usuario
-    for rol in user.rols:
-        for permiso in rol.permisos:
-            print(permiso.name)
-    """
-
-
     user_with_email = User.with_email(data['email'])
     user_with_username = User.with_username(data['username'])
 
@@ -142,7 +134,7 @@ def activated(user_id):
 
 
     user = User.with_id(user_id)
-    if user.is_active():
+    if user.active():
         user.deactivate()
     else:
         user.activate()
@@ -156,4 +148,4 @@ def configuracion():
 
     #retorna una vista con el id del usuario enviado por parametro
     configuracion = db.session.query(Config).first()
-    return render_template("config/configuracion.html", config=configuracion )
+    return render_template("config/configuracion.html", config=configuracion)
