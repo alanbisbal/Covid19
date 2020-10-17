@@ -3,13 +3,11 @@ from app import db
 from app.models.config import Config
 from app.helpers.auth import authenticated
 
-def activated():
+
+def update():
     if not authenticated(session):
         abort(401)
     config = Config.getConfig()
-    if config.is_active():
-        config.deactivate()
-    else:
-        config.activate()
-
-    return redirect(url_for('user_configuracion'))
+    config.update(request.form)
+    flash("actualizacion exitosa")
+    return redirect(url_for('user_configuracion', config = config))

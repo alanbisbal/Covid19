@@ -38,3 +38,15 @@ class Config(db.Model):
     def deactivate(self):
         self.estado = False
         db.session.commit()
+
+    def update(self, data):
+        self.titulo = data['titulo']
+        self.description = data['description']
+        self.email = data['email']
+        print(data)
+        self.elementos = data['elementos']
+        if data['estado']== "habilitado":
+            self.estado = True
+        else:
+            self.estado = False
+        db.session.commit()

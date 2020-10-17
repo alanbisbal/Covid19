@@ -56,13 +56,13 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
     app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
 
-
-    app.add_url_rule("/configuracion", "config_activated", configuracion.activated, methods=["POST"])
+    #Rutas de configuracion
+    app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
-        configuracion = db.session.query(Config).first()
+        configuracion = Config.getConfig()
         return render_template("home.html", config=configuracion )
 
 
