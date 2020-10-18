@@ -72,7 +72,7 @@ class User(db.Model):
     def deactive_with_filter(filter):
         return db.session.query(User).filter(User.activo == False,User.username.contains(filter))
 
-    def active(self):
+    def is_active(self):
         return self.activo
 
     def activate(self):
@@ -82,14 +82,3 @@ class User(db.Model):
     def deactivate(self):
         self.activo = False
         db.session.commit()
-
-    def permit_recovery(self):
-        permissions = []
-        for rol in self.rols:
-            permissions += rol.permission_names()
-        return permissions
-
-    def has_permisions(self, string):
-        # el in chequea si una cosa está en otra
-        # otra forma: self.permit_recovery().contains(string)
-        return string in self.permit_recovery()

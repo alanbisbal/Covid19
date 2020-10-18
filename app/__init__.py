@@ -12,6 +12,8 @@ from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
+from app.models.user import User
+from app.helpers.permits import has_permit
 
 db = SQLAlchemy()
 
@@ -32,7 +34,7 @@ def create_app(environment="development"):
     db.init_app(app)
 
    # Funciones que se exportan al contexto de Jinja2
-    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
+    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated,has_permit=has_permit)
 
     # Autenticación    A DONDE ME LLEVA  NOM DE LA VISTA  LA FUNCION DEL RECURSO A EJECUTAR
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -56,14 +58,30 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
     app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
 
+
+
+
+
     #Rutas de configuracion
     app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
+
+
+
+
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         configuracion = Config.getConfig()
         return render_template("home.html", config=configuracion )
+
+
+
+
+
+
+
+
 
 
     # Rutas de API-rest

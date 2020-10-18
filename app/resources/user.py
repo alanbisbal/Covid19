@@ -15,9 +15,7 @@ def index():
     if not authenticated(session):
         abort(401)
     # retorna todos los usuarios
-    users = User.all()
-    users_permits = User.permit_recovery(users)
-    return render_template("user/index.html", users=users, users_permits = users_permits)
+    return render_template("user/index.html", users=users)
     return render_template("home.html")
 
 def new():
