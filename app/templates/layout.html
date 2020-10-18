@@ -18,10 +18,12 @@
       {% block navbar %}
       <!---estas secciones son vistas por cualquier usuario-->
       <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <h5 class="my-0 mr-md-auto font-weight-normal">
+        <div class="my-0 mr-md-auto font-weight-normal">
           <a href="{{ url_for('home') }}">
-          <img src="{{ url_for('static', filename = 'img/logo.png') }}" width="40" height="40"></h5>
+            <img src="{{ url_for('static', filename = 'img/logo.png') }}" alt="logo" width="40" height="40" id="logo">
           </a>
+        </div>
+          
         <nav class="my-2 my-md-0 mr-md-3">
           <!--si el usuario es admin debera tener ademas de la seccion inicio un href diferente-->
           <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
