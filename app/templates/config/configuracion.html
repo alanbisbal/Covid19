@@ -13,15 +13,15 @@
 
     <div class="form-group">
       <label for="titulo">Título de Inicio:</label>
-      <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese el título de inicio" value="{{config.titulo}}">
+      <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese el título de inicio" value="{{config.titulo}}" required>
     </div>
     <div class="form-group">
       <label for="description">Descripción de inicio:</label>
-      <textarea class="form-control" name="description" id="description" placeholder="Ingrese la descripción de inicio" rows="3" >{{config.description}}</textarea>
+      <textarea class="form-control" name="description" id="description" placeholder="Ingrese la descripción de inicio" rows="3" required>{{config.description}}</textarea>
     </div>
     <div class="form-group">
       <label for="email">Correo de contacto:</label>
-      <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo de contacto" value="{{config.email}}">
+      <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo de contacto" value="{{config.email}}" required>
     </div>
 
   <div class="form-group">
