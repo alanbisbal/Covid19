@@ -102,7 +102,7 @@ def delete():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-    if not has_permit('user_delete'):
+    if not has_permit('user_destroy'):
         flash("No posee permisos")
         return redirect(url_for("home"))
     #se busca el usuario en la base de datos y se lo elimina
