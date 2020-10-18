@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+<a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
+<a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
 <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('user_search') }}">
   <h1 class="my-0 mr-md-auto font-weight-normal">Usuarios</h1>
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Buscar.." aria-label="Search">
@@ -20,8 +22,7 @@
 
   </form>
   <!--aca iba el volver etc-->
-  <a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
-  <a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
+
   <table class="table">
   <thead>
     <tr>
@@ -71,12 +72,24 @@
   </tbody>
 
 </table>
-{% for page in users.iter_pages() %}
- {% if page %}
-   <a href="{{ url_for('users_index', page_num=page)}}">{{ page }} </a>
- {% else %}
- {% endif %}
-{% endfor %}
+
+<!--botones  de paginacion-->
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+      {% if users.has_prev %}
+        <li class="page-item"> <a class="page-link" href="{{ url_for('user_index', page=users.prev_num) }}">Anterior</a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link btn disabled" href="#">Anterior</a></li>
+      {% endif %}
 
 
+      {% if users.has_next %}
+        <li class="page-item"> <a class="page-link" href="{{ url_for('user_index', page=users.next_num) }}">Siguiente</a></li>
+      {% else %}
+        <li class="page-item"><a class="page-link btn disabled" href="#">Siguiente</a></li>
+      {% endif %}
+
+  </ul>
+</nav>
 {% endblock %}

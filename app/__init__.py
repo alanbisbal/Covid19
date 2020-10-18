@@ -57,8 +57,16 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
     app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
 
+
+
+
+
     #Rutas de configuracion
     app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
+
+
+
+
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
@@ -66,12 +74,15 @@ def create_app(environment="development"):
         configuracion = Config.getConfig()
         return render_template("home.html", config=configuracion )
 
+
+
+    #app.add_url_rule("/usuarios", "user_view", user.view)
     #ruta de paginacion
-    @app.route('/usuarios/<int:page>',methods=['GET'])
-    def view(page=1):
-       per_page = 1
-       users = User.all().paginate(page,per_page,error_out=False)
-       return render_template('/user/index.html',users=users)
+    
+
+
+
+
 
     # Rutas de API-rest
     app.add_url_rule("/api/consultas", "api_issue_index", api_issue.index)

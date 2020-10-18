@@ -7,14 +7,17 @@ from app.helpers.auth import authenticated
 from app import db
 from app.models.config import Config
 
+
 # Protected resources
 def index():
     if not authenticated(session):
         abort(401)
     #retorna todos los usuarios
-    users = User.all()
+    per_page = Config.getConfig().elementos 
+    page = request.args.get("page", 1, type=int)
+    users = User.query.paginate(page,per_page,error_out=False)
     return render_template("user/index.html", users=users)
-    return render_template("home.html")
+    
 
 
 def new():
@@ -147,6 +150,8 @@ def activated(user_id):
     else:
         user.activate()
     return redirect(url_for('user_index'))
+
+
 
 
 def configuracion():
