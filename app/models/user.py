@@ -82,7 +82,3 @@ class User(db.Model):
     def deactivate(self):
         self.activo = False
         db.session.commit()
-
-    def permit_recovery(self):
-        for i in self.rols:
-            return (i.permisos.name)

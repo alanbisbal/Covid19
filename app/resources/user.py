@@ -10,14 +10,17 @@ from app.helpers.auth import authenticated
 from app import db
 from app.models.config import Config
 
-# protected resources
+
+# Protected resources
 def index():
     if not authenticated(session):
         abort(401)
-    # retorna todos los usuarios
-    users = User.all()
+    #retorna todos los usuarios
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
+    users = User.query.paginate(page,per_page,error_out=False)
     return render_template("user/index.html", users=users)
-    return render_template("home.html")
+
 
 def new():
     if not authenticated(session):
@@ -30,9 +33,6 @@ def create():
     if not authenticated(session):
         abort(401)
     # validaciones de acceso administrador
-    if session['permisos'] != 'Admin':
-        flash('No tenes permiso')
-        return redirect(url_for("user_index"))
     data = request.form
     # validacion de campos unicos
     user_with_email = User.with_email(data['email'])
@@ -56,7 +56,6 @@ def update(user_id):
     # validacion de acceso administrador
     # retorna una vista con el id del usuario enviado por parametro
     user = User.with_id(user_id)
-    print (user.permit_recovery())
     return render_template("user/update.html", user=user)
 
 def update_new():
@@ -125,6 +124,8 @@ def activated(user_id):
     else:
         user.activate()
     return redirect(url_for('user_index'))
+
+
 
 
 def configuracion():
