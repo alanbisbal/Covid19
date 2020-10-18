@@ -1,15 +1,12 @@
 from flask import request
 from sqlalchemy.orm import relationship
-
 from app.models import issue
 from app.db import db
-
 from sqlalchemy import Table, Column, Integer, ForeignKey
-
 
 class Config(db.Model):
     __tablename__ = 'configs'
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer,primary_key = True)
     titulo = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255))
     email = db.Column(db.String(255),nullable=False)
@@ -47,7 +44,7 @@ class Config(db.Model):
         self.description = data['description']
         self.email = data['email']
         self.elementos = data['elementos']
-        if data['estado'] == "habilitado":
+        if data['estado']== "habilitado":
             self.estado = True
         else:
             self.estado = False
