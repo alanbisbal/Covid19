@@ -24,6 +24,7 @@ def validate_form_user(data):
     else:
         return False
 
+
 def exist_email(data):
     user = User.with_email(data)
     if user:

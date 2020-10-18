@@ -12,6 +12,7 @@ from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
+from app.models.user import User
 
 db = SQLAlchemy()
 
@@ -56,14 +57,31 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
     app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
 
+
+
+
+
     #Rutas de configuracion
     app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
+
+
+
+
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         configuracion = Config.getConfig()
         return render_template("home.html", config=configuracion )
+
+
+
+    #app.add_url_rule("/usuarios", "user_view", user.view)
+    #ruta de paginacion
+    
+
+
+
 
 
     # Rutas de API-rest
