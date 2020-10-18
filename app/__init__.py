@@ -76,8 +76,7 @@ def create_app(environment="development"):
 
 
 
-    #app.add_url_rule("/usuarios", "user_view", user.view)
-    #ruta de paginacion
+    
     
 
 
