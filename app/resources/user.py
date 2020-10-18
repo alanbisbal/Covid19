@@ -121,15 +121,17 @@ def search():
     estado = request.args.get("estado")
     filter = request.args.get("filtro")
     # se aplica filtro independientemente del estado
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
     if estado == '---':
-        users = User.with_filter(filter)
+        users = User.with_filter(filter).paginate(page,per_page,error_out=False)
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado activo
     if estado == 'activo':
-        users = User.active_with_filter(filter)
+        users = User.active_with_filter(filter).paginate(page,per_page,error_out=False)
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado inactivo
-    users = User.deactive_with_filter(filter)
+    users = User.deactive_with_filter(filter).paginate(page,per_page,error_out=False)
     return render_template("user/index.html", users=users)
 
 
