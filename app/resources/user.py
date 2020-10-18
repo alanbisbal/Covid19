@@ -6,6 +6,8 @@ from app.models.users_rols import Users_rols
 from app.helpers.auth import authenticated
 from app import db
 from app.models.config import Config
+from app.helpers.validates import validate_form_user,exist_email
+
 
 # Protected resources
 def index():
@@ -31,11 +33,15 @@ def create():
 
     #validaciones de acceso administrador
     data = request.form
+    if not validate_form_user(data):
+        return redirect(request.referrer)
     #validacion de campos unicos
-    user_with_email = User.with_email(data['email'])
-    if user_with_email:
+
+    if exist_email(data['email']):
         flash("El email ya existe en el sistema.")
         return redirect(request.referrer)
+
+
 
     user_with_username = User.with_username(data['username'])
     if user_with_username:
