@@ -59,9 +59,9 @@ def exist_username_update(data,username):
     if data != username:
         user = User.with_username(data)
         if user:
+            flash("El nombre de usuario ya existe en el sistema.")
             return True
         else:
-            flash("El nombre de usuario ya existe en el sistema.")
             return False
     return False
 
