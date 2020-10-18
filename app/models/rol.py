@@ -23,3 +23,6 @@ class Rol(db.Model):
 
     def all():
         return db.session.query(Rol).all()
+
+    def permission_names(self):
+        return [permiso.name for permiso in self.permisos]

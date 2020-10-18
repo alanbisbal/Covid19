@@ -16,7 +16,8 @@ def index():
         abort(401)
     # retorna todos los usuarios
     users = User.all()
-    return render_template("user/index.html", users=users)
+    users_permits = User.permit_recovery(users)
+    return render_template("user/index.html", users=users, users_permits = users_permits)
     return render_template("home.html")
 
 def new():
@@ -30,9 +31,6 @@ def create():
     if not authenticated(session):
         abort(401)
     # validaciones de acceso administrador
-    if session['permisos'] != 'Admin':
-        flash('No tenes permiso')
-        return redirect(url_for("user_index"))
     data = request.form
     # validacion de campos unicos
     user_with_email = User.with_email(data['email'])
@@ -55,7 +53,6 @@ def update(user_id):
         abort(401)
     # validacion de acceso administrador
     # retorna una vista con el id del usuario enviado por parametro
-    user = User.with_id(user_id)
     print (user.permit_recovery())
     return render_template("user/update.html", user=user)
 
@@ -106,7 +103,6 @@ def search():
     users = User.deactive_with_filter(filter)
     return render_template("user/index.html", users=users)
 
-
 def show(user_id):
     if not authenticated(session):
         abort(401)
@@ -125,7 +121,6 @@ def activated(user_id):
     else:
         user.activate()
     return redirect(url_for('user_index'))
-
 
 def configuracion():
     if not authenticated(session):

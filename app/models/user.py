@@ -84,5 +84,12 @@ class User(db.Model):
         db.session.commit()
 
     def permit_recovery(self):
-        for i in self.rols:
-            return (i.permisos.name)
+        permissions = []
+        for rol in self.rols:
+            permissions += rol.permission_names()
+        return permissions
+
+    def has_permisions(self, string):
+        # el in chequea si una cosa está en otra
+        # otra forma: self.permit_recovery().contains(string)
+        return string in self.permit_recovery()

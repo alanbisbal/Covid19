@@ -53,14 +53,14 @@
          <button type="submit" class="btn btn-primary ">Ver</button>
        </form>
 
-        <form action="{{ url_for('user_update', user_id = user.id ) }}"  >
-          <button type="submit" class="btn btn-warning ">Editar</button>
-        </form>
+       <form action="{{ url_for('user_update', user_id = user.id ) }}"  >
+         <button type="submit" class="btn btn-warning ">Editar</button>
+       </form>
 
-        <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
-          <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
-          <button type="submite" class="btn btn-danger" >eliminar</button>
-        </form>
+       <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
+         <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
+         <button type="submite" class="btn btn-danger">eliminar</button>
+       </form>
 
       </div>
       </td>
@@ -71,5 +71,7 @@
 
 </table>
 <a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
-<a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
+{% if "user_new" in users_permits %}
+    <a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
+{% endif %}
 {% endblock %}
