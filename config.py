@@ -49,7 +49,8 @@ class ProductionConfig(BaseConfig):
     DB_USER = environ.get("DB_USER", "grupo37")
     DB_PASS = environ.get("DB_PASS", "YTdhZmE5MDFkMmRj")
     DB_NAME = environ.get("DB_NAME", "grupo37")
-
+    SQLALCHEMY_DATABASE_URI =  'mysql+pymysql://grupo37:YTdhZmE5MDFkMmRj@localhost/grupo37'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 config = dict(
     development=DevelopmentConfig, testing=TestingConfig, production=ProductionConfig
