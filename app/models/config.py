@@ -30,7 +30,7 @@ class Config(db.Model):
 
     def getConfig():
         return db.session.query(Config).first()
-        
+
     def is_active(self):
         return self.estado
 

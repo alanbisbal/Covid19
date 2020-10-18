@@ -73,8 +73,10 @@ def create_app(environment="development"):
     @app.route("/")
     def home():
         configuracion = Config.getConfig()
-        return render_template("home.html", config=configuracion )
-
+        sitio_activo = configuracion.is_active()
+        if sitio_activo:
+            return render_template("home.html", config=configuracion)
+        return render_template("mantenimiento.html")
 
 
 

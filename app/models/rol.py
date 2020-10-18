@@ -26,3 +26,7 @@ class Rol(db.Model):
 
     def permission_names(self):
         return [permiso.name for permiso in self.permisos]
+
+    def has_permit(self, permit_name):
+        permits = map(lambda p: p.name == permit_name, self.permisos)
+        return any(permits)

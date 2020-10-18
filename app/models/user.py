@@ -82,3 +82,7 @@ class User(db.Model):
     def deactivate(self):
         self.activo = False
         db.session.commit()
+
+    def has_permit(self, permit_name):
+        permits = map(lambda rol: rol.has_permit(permit_name), self.rols)
+        return any(permits)
