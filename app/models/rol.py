@@ -3,10 +3,9 @@ from flask import request
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import permiso, user, users_rols, rols_permisos
 
-
 class Rol(db.Model):
     __tablename__ = 'rols'
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255))
     users = db.relationship("User" , secondary="users_rols")
@@ -16,6 +15,7 @@ class Rol(db.Model):
         self.name = data['name']
         self.description = data['description']
         db.session.commit()
+
 
     @classmethod
     def __str__(self):
