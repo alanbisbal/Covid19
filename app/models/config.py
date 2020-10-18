@@ -30,7 +30,7 @@ class Config(db.Model):
 
     def getConfig():
         return db.session.query(Config).first()
-        
+
     def is_active(self):
         return self.estado
 
@@ -46,7 +46,6 @@ class Config(db.Model):
         self.titulo = data['titulo']
         self.description = data['description']
         self.email = data['email']
-        print(data)
         self.elementos = data['elementos']
         if data['estado'] == "habilitado":
             self.estado = True
