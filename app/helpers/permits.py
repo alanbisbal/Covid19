@@ -23,9 +23,10 @@ def permits_enabled(permit):
                 perm_array[]= usr.permit_recovery()
                 for n in perm_array:
                     if name = "user_new":
-                        if usr.rol = "Operador":
+                        return redirect(url_for('user/index.html'))
+                        #if usr.rol = "Operador":
                             #Mejorar
-
+                        
 
 
 
