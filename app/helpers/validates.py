@@ -38,9 +38,9 @@ def exist_email(data):
 def exist_username(data):
     user = User.with_username(data)
     if user:
+        flash("El nombre de usuario ya existe en el sistema.")
         return True
     else:
-        flash("El nombre de usuario ya existe en el sistema.")
         return False
 
 def exist_email_update(data,email):

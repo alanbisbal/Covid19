@@ -7,12 +7,15 @@ from app.helpers.auth import authenticated
 from app import db
 from app.models.config import Config
 from app.helpers.validates import form_user_new,exist_email,exist_username,form_user_update,exist_email_update,exist_username_update
-
+from app.helpers.permits import has_permit
 
 # Protected resources
 def index():
     if not authenticated(session):
         abort(401)
+    if not has_permit('user_index'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     #retorna todos los usuarios
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
@@ -23,6 +26,9 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
+    if not has_permit('user_new'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     rols = Rol.all()
     #retorna vista de creacion de usuario
     return render_template("user/new.html",rols=rols)
@@ -31,7 +37,9 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-
+    if not has_permit('user_new'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     #validaciones de acceso administrador
     data = request.form
     if not form_user_new(data):
@@ -52,6 +60,9 @@ def create():
 def update(user_id):
     if not authenticated(session):
         abort(401)
+    if not has_permit('user_update'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     #validacion de acceso administrador
 
     #retorna una vista con el id del usuario enviado por parametro
@@ -63,6 +74,9 @@ def update(user_id):
 def update_new():
     if not authenticated(session):
         abort(401)
+    if not has_permit('user_update'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     #validacion de acceso administrador
 
     data = request.form
@@ -87,7 +101,9 @@ def delete():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-
+    if not has_permit('user_delete'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     #se busca el usuario en la base de datos y se lo elimina
     user = User.with_id(request.form['user_id'])
     user.delete()
@@ -97,6 +113,9 @@ def search():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
+    if not has_permit('user_index'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
 
     estado = request.args.get("estado")
     filter = request.args.get("filtro")
@@ -116,6 +135,9 @@ def search():
 def show(user_id):
     if not authenticated(session):
         abort(401)
+    if not has_permit('user_show'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     #validacion de acceso administrador y si lo es retorna el usuario enviado por id
     user = User.with_id(user_id)
     return render_template("user/show.html",user = user)
@@ -125,8 +147,9 @@ def show(user_id):
 def activated(user_id):
     if not authenticated(session):
         abort(401)
-
-
+    if not has_permit('user_update'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     user = User.with_id(user_id)
     if user.is_active():
         user.deactivate()
@@ -138,6 +161,9 @@ def activated(user_id):
 def configuracion():
     if not authenticated(session):
         abort(401)
+    if not has_permit('user_update'):
+        flash("No posee permisos")
+        return redirect(url_for("home"))
     #validacion de acceso administrador
 
     #retorna una vista con el id del usuario enviado por parametro
