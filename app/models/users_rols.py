@@ -6,7 +6,7 @@ from app.models import user ,rol
 
 class Users_rols(db.Model):
     ____tablename__ = 'users_rols'
-    id = db.Column(db.Integer,primary_key = True)
+    id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     rol_id = db.Column(db.Integer, db.ForeignKey('rols.id'))
     user = db.relationship('User', backref=db.backref("users_rols",cascade="all, delete-orphan"))

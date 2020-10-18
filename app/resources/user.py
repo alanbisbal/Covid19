@@ -6,6 +6,7 @@ from app.models.users_rols import Users_rols
 from app.helpers.auth import authenticated
 from app import db
 from app.models.config import Config
+from app.helpers.validates import form_user_new,exist_email,exist_username,form_user_update,exist_email_update,exist_username_update
 
 
 # Protected resources
@@ -13,11 +14,10 @@ def index():
     if not authenticated(session):
         abort(401)
     #retorna todos los usuarios
-    per_page = Config.getConfig().elementos 
+    per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
     users = User.query.paginate(page,per_page,error_out=False)
     return render_template("user/index.html", users=users)
-    
 
 
 def new():
@@ -34,15 +34,11 @@ def create():
 
     #validaciones de acceso administrador
     data = request.form
-    #validacion de campos unicos
-    user_with_email = User.with_email(data['email'])
-    if user_with_email:
-        flash("El email ya existe en el sistema.")
+    if not form_user_new(data):
         return redirect(request.referrer)
-
-    user_with_username = User.with_username(data['username'])
-    if user_with_username:
-        flash("El nombre de usuario ya existe en el sistema.")
+    if exist_email(data['email']):
+        return redirect(request.referrer)
+    if exist_username(data['username']):
         return redirect(request.referrer)
     #insercion a la base de datos
     User.add(data)
@@ -70,29 +66,17 @@ def update_new():
     #validacion de acceso administrador
 
     data = request.form
+    if not form_user_update(data):
+        return redirect(request.referrer)
     #Se controla los campos unicos.
-
+    data = request.form
+    if not form_user_update(data):
+        return redirect(request.referrer)
     user = User.with_id(data['user_id'])
-
-
-    """
-    test sobre que permisos tiene el usuario
-    for rol in user.rols:
-        for permiso in rol.permisos:
-            print(permiso.name)
-    """
-
-
-    user_with_email = User.with_email(data['email'])
-    user_with_username = User.with_username(data['username'])
-
-    if user_with_email and user_with_email.id != user.id:
-        flash("El email ya existe en el sistema.")
+    if exist_email_update(data['email'],user.email):
         return redirect(request.referrer)
-    if user_with_username and user_with_username.id != user.id:
-        flash("El nombre de usuario ya existe en el sistema.")
+    if exist_username_update(data['username'],user.username):
         return redirect(request.referrer)
-    #actualiza el usuario
     user.update(data)
     flash("Actualizacion exitosa.")
     return redirect(url_for('user_index'))
@@ -122,7 +106,6 @@ def search():
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado activo
     if estado == 'activo':
-
         users = User.active_with_filter(filter)
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado inactivo
@@ -145,13 +128,11 @@ def activated(user_id):
 
 
     user = User.with_id(user_id)
-    if user.active():
+    if user.is_active():
         user.deactivate()
     else:
         user.activate()
     return redirect(url_for('user_index'))
-
-
 
 
 def configuracion():
