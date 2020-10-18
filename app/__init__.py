@@ -12,6 +12,7 @@ from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
+from app.models.user import User
 
 db = SQLAlchemy()
 
@@ -65,6 +66,12 @@ def create_app(environment="development"):
         configuracion = Config.getConfig()
         return render_template("home.html", config=configuracion )
 
+    #ruta de paginacion
+    @app.route('/usuarios/<int:page>',methods=['GET'])
+    def view(page=1):
+       per_page = 1
+       users = User.all().paginate(page,per_page,error_out=False)
+       return render_template('/user/index.html',users=users)
 
     # Rutas de API-rest
     app.add_url_rule("/api/consultas", "api_issue_index", api_issue.index)

@@ -20,7 +20,8 @@
 
   </form>
   <!--aca iba el volver etc-->
-
+  <a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
+  <a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
   <table class="table">
   <thead>
     <tr>
@@ -32,7 +33,7 @@
   </thead>
 
   <tbody>
-     {% for user in users %}
+     {% for user in users.items %}
     <tr>
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
@@ -70,6 +71,12 @@
   </tbody>
 
 </table>
-<a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
-<a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
+{% for page in users.iter_pages() %}
+ {% if page %}
+   <a href="{{ url_for('users_index', page_num=page)}}">{{ page }} </a>
+ {% else %}
+ {% endif %}
+{% endfor %}
+
+
 {% endblock %}
