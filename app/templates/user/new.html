@@ -26,17 +26,13 @@
       <input type="password" name="password" placeholder="Clave" class="form-control" required/>
     </div>
     <!--check box-->
-    <div class="form-group">
-      <div class="form-check form-check-inline"> 
-        <input class="form-check-input" id="" name="" type="checkbox" value="1" >
-        <label class="form-check-label" for="1">Administrador</label>
-      </div>
-      <div class="form-check form-check-inline"> 
-        <input class="form-check-input" id="" name="" type="checkbox" value="2">
-        <label class="form-check-label" for="2">Operador</label>
-      </div>
-    </div>
-    
+    <select class='form-control mr-sm-2' name='rol'>
+       {% for rol in rols %}
+       <option value={{rol.id}} >{{rol.name}}</option>
+       {% endfor %}
+    </select>
+
+
   <!--fin del check box-->
   <div class="form-inline">
         <a href="{{ url_for('user_index') }}" class="btn btn-primary my-1" >Volver</a>

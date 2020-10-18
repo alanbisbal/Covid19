@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2020 a las 05:55:51
+-- Tiempo de generación: 18-10-2020 a las 21:54:51
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -60,7 +60,7 @@ CREATE TABLE `configs` (
 --
 
 INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
-(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 10, 1);
+(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,10 @@ CREATE TABLE `issues` (
 INSERT INTO `issues` (`id`, `email`, `description`, `categorie_id`, `status_id`) VALUES
 (1, 'fede@mail.com', 'No puedo iniciar sesión correctamente', 1, 1),
 (2, 'jose@mail.com', 'El sistema de dice que hay un error', 1, 2),
-(3, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1);
+(3, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1),
+(4, 'asdasd@asdasd', 'asdasd', 1, 1),
+(5, 'Alan@Alan', 'consulta general', 2, 2),
+(6, 'Alan@Alan', '123123', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -106,7 +109,13 @@ INSERT INTO `permisos` (`id`, `name`, `description`) VALUES
 (2, 'user_new', ' permite cargar un usuario'),
 (3, 'user_destroy', 'permite borrar un usuario'),
 (4, 'user_update', 'permite actualizar un usuario.\r\n'),
-(5, 'user_show', 'permite visualizar un usuario');
+(5, 'user_show', 'permite visualizar un usuario'),
+(7, 'centro_index', 'permite acceder al index (listado) del módulo'),
+(9, 'centro_new', ' permite cargar un centro de ayuda social.'),
+(11, 'centro_destroy', ' permite borrar un centro de ayuda social.\r\n'),
+(13, 'centro_update', 'permite actualizar un centro de ayuda social'),
+(15, 'centro_show', 'permite visualizar un centro de ayuda social'),
+(16, 'permisos_index', ' permite acceder al index (listado) del módulo.');
 
 -- --------------------------------------------------------
 
@@ -150,7 +159,13 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (3, 1, 3),
 (4, 1, 4),
 (5, 1, 5),
-(6, 2, 5);
+(6, 2, 5),
+(9, 1, 7),
+(10, 1, 9),
+(11, 1, 11),
+(12, 1, 13),
+(13, 1, 15),
+(14, 1, 16);
 
 -- --------------------------------------------------------
 
@@ -193,8 +208,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `password`, `activo`) VALUES
-(1, 'Admin', 'admin', 'Cosme', 'Fulanito', '123123', 1),
-(2, 'Operador', 'operador@gmail.com', 'Lalo', 'Landa', '123123', 1);
+(1, 'Admin', 'admin@admin', 'Cosme', 'Fulanito', '123123', 1),
+(2, 'Operador', 'operador@gmail.com', 'Lalo', 'Landa', '123123', 1),
+(17, 'd', 'asdsad@dasd', 'a', 'd', 'asdasd', 1),
+(18, 'eqweqwq', 'qweqwe@qweqwe', 'qweqwe', 'qweqweqw', 'qweqwe', 1),
+(19, 'czxczxcz', 'zxc@zxc', 'zczxcz', 'cxzcxz', 'zxczcxz', 0),
+(21, 'dddddddd', 'asdsad@d', 'asdasdasddddddddd', 'dasdadad', 'aaaa', 0),
+(22, 'asd', 'asd@asd', 'asd', 'asd', 'asd', 1);
 
 -- --------------------------------------------------------
 
@@ -214,7 +234,14 @@ CREATE TABLE `users_rols` (
 
 INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 (1, 1, 1),
-(2, 2, 2);
+(2, 2, 2),
+(9, 1, 2),
+(10, 1, 2),
+(11, 17, 2),
+(12, 18, 2),
+(13, 19, 2),
+(14, 21, 1),
+(15, 22, 2);
 
 --
 -- Índices para tablas volcadas
@@ -302,13 +329,13 @@ ALTER TABLE `configs`
 -- AUTO_INCREMENT de la tabla `issues`
 --
 ALTER TABLE `issues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `rols`
@@ -320,7 +347,7 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `status`
@@ -338,7 +365,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `users_rols`
 --
 ALTER TABLE `users_rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Restricciones para tablas volcadas
