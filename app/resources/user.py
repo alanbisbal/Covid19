@@ -1,15 +1,11 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.db import connection
-
 from app.models.user import User
 from app.models.rol import Rol
-
 from app.models.users_rols import Users_rols
 from app.helpers.auth import authenticated
-
 from app import db
 from app.models.config import Config
-
 from app.helpers.validates import form_user_new,exist_email,exist_username,form_user_update,exist_email_update,exist_username_update
 from app.helpers.permits import has_permit
 
@@ -105,7 +101,7 @@ def delete():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-    if not has_permit('user_delete'):
+    if not has_permit('user_destroy'):
         flash("No posee permisos")
         return redirect(url_for("home"))
     #se busca el usuario en la base de datos y se lo elimina
