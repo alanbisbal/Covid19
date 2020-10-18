@@ -72,7 +72,7 @@ class User(db.Model):
     def deactive_with_filter(filter):
         return db.session.query(User).filter(User.activo == False,User.username.contains(filter))
 
-    def active(self):
+    def is_active(self):
         return self.activo
 
     def activate(self):
