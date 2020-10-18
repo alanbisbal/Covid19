@@ -13,6 +13,7 @@ from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
 from app.models.user import User
+from app.helpers.permits import has_permit
 
 db = SQLAlchemy()
 
@@ -33,7 +34,7 @@ def create_app(environment="development"):
     db.init_app(app)
 
    # Funciones que se exportan al contexto de Jinja2
-    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
+    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated,has_permit=has_permit)
 
     # Autenticación    A DONDE ME LLEVA  NOM DE LA VISTA  LA FUNCION DEL RECURSO A EJECUTAR
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -76,8 +77,8 @@ def create_app(environment="development"):
 
 
 
-    
-    
+
+
 
 
 

@@ -31,13 +31,17 @@
 
           <!--si el usuario es admin ademas vera estas secciones :-->
           {% if is_authenticated(session) %}
-              <a class="p-2 text-dark" href="#">Solicitudes de sitio</a>
-              <a class="p-2 text-dark" href="#">Roles y permisos</a>
-              <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
-              <a class="p-2 text-dark" href="{{ url_for('user_configuracion') }}">Configuracion</a>
+              {% if has_permit('permisos_index') %}
+                <a class="p-2 text-dark" href="#">Roles y permisos</a>
+              {% endif %}
+              {% if has_permit('user_index') %}
+                <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
+              {% endif %}
+              {% if has_permit('user_update') %}
+                <a class="p-2 text-dark" href="{{ url_for('user_configuracion') }}">Configuracion</a>
+              {% endif %}
           {% else %}
             <a href="{{ url_for('auth_login') }}" class="btn btn-link">Iniciar sesión</a>
-
           {% endif %}
 
         </nav>
@@ -64,7 +68,7 @@
           </ul>
         {% endif %}
       {% endwith %}
-      
+
       {% block content %}
       {% block iniciarSesion %}{% endblock %}
       {% endblock %}
