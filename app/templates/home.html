@@ -1,17 +1,26 @@
 {% extends "layout.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Inicio{% endblock %}
 {% block head %}
-  {{ super() }}
+ {{ super() }}
 {% endblock %}
+
 {% block content %}
-  <h1>Inicio</h1>
-  <p>Página de inicio de la aplicación</p>
-  <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
-  {% if is_authenticated(session) %}
-    <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
-    <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>
-  {% else %}
-    <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
-  {% endif %}
+{% block iniciarSesion %}{% endblock %}
+
+
+
+<br>
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-4">{{ config.titulo }}</h1>
+        <h5>
+            {{ config.description }}
+        </h5>
+
+        <br>
+        <h6>{{ config.email }} </h6>
+      </div>
+    </div>
+
 
 {% endblock %}
