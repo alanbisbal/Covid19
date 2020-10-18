@@ -2,7 +2,7 @@ from app import db
 from flask import request
 from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
-from app.models import rol, users_rols
+from app.models import rol, users_rols, rols_permisos
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -81,3 +81,7 @@ class User(db.Model):
     def deactivate(self):
         self.activo = False
         db.session.commit()
+
+    def permit_recovery(self):
+        for i in self.rols:
+            return (i.permisos.name)

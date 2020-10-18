@@ -13,14 +13,7 @@ def index():
         abort(401)
 
     #retorna todos los usuarios
-<<<<<<< HEAD
-    if session["permisos"] != "Admin":
-        flash("Acceso denegado")
-        return redirect(url_for('home'))
-    users = db.session.query(User).all()
-=======
     users = User.all()
->>>>>>> 10d263faa922ae19097059f586b638d34324b279
     return render_template("user/index.html", users=users)
     return render_template("home.html")
 
@@ -28,13 +21,8 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-<<<<<<< HEAD
-    if session["permisos"] != "Admin":
-        flash("Acceso denegado")
-        return redirect(url_for('home'))
-=======
+
     rols = Rol.all()
->>>>>>> 10d263faa922ae19097059f586b638d34324b279
     #retorna vista de creacion de usuario
     return render_template("user/new.html",rols=rols)
 
@@ -71,12 +59,13 @@ def update(user_id):
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-    if session['permisos'] != 'Admin':
-        flash('No tenes permiso')
-        return redirect(url_for("user_index"))
+
     #retorna una vista con el id del usuario enviado por parametro
     user = User.with_id(user_id)
+    print (user.permit_recovery())
     return render_template("user/update.html",user = user)
+
+
 
 
 
@@ -84,9 +73,6 @@ def update_new():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-    if session['permisos'] != 'Admin':
-        flash('No tenes permiso')
-        return redirect(url_for("user_index"))
 
     data = request.form
     #Se controla los campos unicos.
@@ -122,9 +108,7 @@ def delete():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-    if session['permisos'] != 'Admin':
-        flash('No tenes permiso')
-        return redirect(url_for("user_index"))
+
     #se busca el usuario en la base de datos y se lo elimina
     user = User.with_id(request.form['user_id'])
     user.delete()

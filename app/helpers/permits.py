@@ -11,6 +11,7 @@ Contacte con un administrador.'
 #@profile_permissions('user_index', current_user)
 #def profile(user_id):
 
+
 def permits_enabled(permit):
     """recibe un nombre de permiso y un usuario, si el usuario no tiene el permiso lo redirige al welcome"""
 
@@ -20,6 +21,18 @@ def permits_enabled(permit):
         def wrapper(*args, **kwargs):
             usr = session.get('user')
             if usr:
+                perm_array[]= usr.permit_recovery()
+                for n in perm_array:
+                    if name = "user_new":
+                        if usr.rol = "Operador":
+
+
+
+
+
+
+
+
                 user = User.query.get(usr.id)
                 if not user or not user.active or not user.has_permit(permit):
                     flash(PERMIT_ERROR, 'danger')
