@@ -23,16 +23,16 @@
             <img src="{{ url_for('static', filename = 'img/logo.png') }}" alt="logo" width="40" height="40" id="logo">
           </a>
         </div>
-          
+
         <nav class="my-2 my-md-0 mr-md-3">
           <!--si el usuario es admin debera tener ademas de la seccion inicio un href diferente-->
           <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
+          {% if is_authenticated(session) %}
           <a class="p-2 text-dark" href="#">Centros de Ayuda</a>
           <a class="p-2 text-dark" href="#">Turnos</a>
           <a class="p-2 text-dark" href="{{ url_for('issue_index') }}">Consultas</a>
 
           <!--si el usuario es admin ademas vera estas secciones :-->
-          {% if is_authenticated(session) %}
               {% if has_permit('permisos_index') %}
                 <a class="p-2 text-dark" href="#">Roles y permisos</a>
               {% endif %}
