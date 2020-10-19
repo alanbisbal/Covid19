@@ -20,6 +20,9 @@ def authenticate():
     if not user:
         flash("Usuario o clave incorrecto.")
         return redirect(url_for("auth_login"))
+    if not user.is_active():
+        flash("Su usuario se encuentra desactivado.")
+        return redirect(url_for("auth_login"))
     if not Config.getConfig().is_active():
         if not user.has_permit("login_when_desactivated"):
             flash("El sitio se encuentra en mantenimiento")
