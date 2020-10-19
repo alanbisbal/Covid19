@@ -6,14 +6,11 @@
 
 {% block content %}
 
-
+<a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
+<a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
 
 <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('user_search') }}">
   <h1 class="my-0 mr-md-auto font-weight-normal">Usuarios</h1>
-
-  <a href="{{ url_for('home') }}" class="btn btn-outline-primary">Volver</a>
-  <div class="col-md-2"><a href="{{ url_for('user_new') }}" class="btn btn-outline-success">Crear Usuario</a></div>
-  
 
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Buscar.." aria-label="Search">
     <select class='form-control mr-sm-2' name='estado'>
@@ -28,11 +25,7 @@
 
   </form>
   <!--aca iba el volver etc-->
-  <script type="text/javascript">
-      function ConfirmDelete() {
-          return confirm('estas seguro?')
-        }
-  </script>
+
   <table class="table">
   <thead>
     <tr>
@@ -48,15 +41,15 @@
     <tr>
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
-      </td>
+
       <td>
         {% if user.activo %}
             <form action="{{ url_for('user_activated', user_id = user.id ) }}"  method ="POST"  enctype="multipart/form-data" >
-              <button type="submit" class="btn btn-success" onclick="return ConfirmDelete()" >habilitado</button>
+              <button type="submit" class="btn btn-success">habilitado</button>
             </form>
           {% else %}
             <form action="{{ url_for('user_activated', user_id = user.id ) }}"  method ="POST"  enctype="multipart/form-data" >
-              <button type="submit" class="btn btn-danger" onclick="return ConfirmDelete()" >deshabilitado</button>
+              <button type="submit" class="btn btn-danger">deshabilitado</button>
             </form>
           {% endif %}
       <td>
@@ -72,7 +65,7 @@
 
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
-          <button type="submite" class="btn btn-danger" onclick="return ConfirmDelete()" >eliminar</button>
+          <button type="submite" class="btn btn-danger" >eliminar</button>
         </form>
 
       </div>

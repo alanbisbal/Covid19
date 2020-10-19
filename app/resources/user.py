@@ -9,6 +9,7 @@ from app.models.config import Config
 from app.helpers.validates import form_user_new,exist_email,exist_username,form_user_update,exist_email_update,exist_username_update
 from app.helpers.permits import has_permit
 
+
 # Protected resources
 def index():
     if not authenticated(session):
@@ -101,8 +102,8 @@ def delete():
     if not authenticated(session):
         abort(401)
     #validacion de acceso administrador
-    if not has_permit('user_delete'):
-        flash("No posee permisos")
+    if not has_permit('user_destroy'):
+        flash("No posee permisos.")
         return redirect(url_for("home"))
     #se busca el usuario en la base de datos y se lo elimina
     user = User.with_id(request.form['user_id'])
@@ -120,15 +121,17 @@ def search():
     estado = request.args.get("estado")
     filter = request.args.get("filtro")
     # se aplica filtro independientemente del estado
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
     if estado == '---':
-        users = User.with_filter(filter)
+        users = User.with_filter(filter).paginate(page,per_page,error_out=False)
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado activo
     if estado == 'activo':
-        users = User.active_with_filter(filter)
+        users = User.active_with_filter(filter).paginate(page,per_page,error_out=False)
         return render_template("user/index.html", users=users)
     # se aplica filtro con estado inactivo
-    users = User.deactive_with_filter(filter)
+    users = User.deactive_with_filter(filter).paginate(page,per_page,error_out=False)
     return render_template("user/index.html", users=users)
 
 
