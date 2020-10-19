@@ -95,3 +95,10 @@ def form_config_update(data):
         return True
     else:
         return False
+
+def is_admin(user_id):
+    user = User.with_id(user_id)
+    for rol in user.rols:
+        if (rol.name=='Administrador'):
+            return True
+    return False

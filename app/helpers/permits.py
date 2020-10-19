@@ -11,3 +11,7 @@ def has_permit(permit):
             if(permit == permiso.name):
                 return True
     return False
+
+
+def is_admin(user):
+    return False

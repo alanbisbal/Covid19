@@ -2,7 +2,7 @@ from flask import redirect, render_template, request, url_for, abort, session, f
 from app.db import connection
 from app.models.user import User
 from app.models.config import Config
-
+from app.helpers.permits import is_admin
 from app import db
 
 
@@ -24,7 +24,7 @@ def authenticate():
         flash("Su usuario se encuentra desactivado.")
         return redirect(url_for("auth_login"))
     if not Config.getConfig().is_active():
-        if not user.has_permit("login_when_desactivated"):
+        if is_admin(user):
             flash("El sitio se encuentra en mantenimiento")
             return redirect(url_for("home"))
 
