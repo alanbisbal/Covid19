@@ -11,6 +11,11 @@ def login():
 
 
 def authenticate():
+    """ Este metodo realiza la autenticacion de un usuario,
+    teniendo en cuenta si los datos ingresados en el formulario
+    son correctos, si el usuario se encuntra o no activo,
+    y si la pagina está o no habilitada
+    """
     user = db.session.query(User).filter(User.email == request.form['email']).filter(User.password == request.form['password']).first()
     if not user:
         flash("Usuario o clave incorrecto.")

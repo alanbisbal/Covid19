@@ -28,5 +28,7 @@ class Rol(db.Model):
         return [permiso.name for permiso in self.permisos]
 
     def has_permit(self, permit_name):
+        """ Obtiene los permisos y devuelve un boolean
+        respecto al nombre del permisos que se paso por parametro """
         permits = map(lambda p: p.name == permit_name, self.permisos)
         return any(permits)
