@@ -1,34 +1,88 @@
-class User(object):
+from app import db
+from flask import request
+
+from sqlalchemy.orm import relationship
+from sqlalchemy import Table, Column, Integer, ForeignKey
+
+from app.models import rol, users_rols
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer,primary_key=True)
+    username = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    activo = db.Column(db.Boolean, nullable=False)
+    rols = db.relationship("Rol" , secondary="users_rols")
+
+    def __init__(self, data):
+        self.username = data['username']
+        self.first_name = data['first_name']
+        self.last_name = data['last_name']
+        self.email = data['email']
+        self.password = data['password']
+        self.activo = 1
+        db.session.commit()
+
     @classmethod
-    def all(cls, conn):
-        sql = "SELECT * FROM users"
-        cursor = conn.cursor()
-        cursor.execute(sql)
+    def __str__(self):
+        return '<User {}>'.format(self.username)
 
-        return cursor.fetchall()
 
-    @classmethod
-    def create(cls, conn, data):
-        sql = """
-            INSERT INTO users (email, password, first_name, last_name)
-            VALUES (%s, %s, %s, %s)
-        """
+    def add(data):
+        db.session.add(User(data))
+        db.session.commit()
 
-        cursor = conn.cursor()
-        cursor.execute(sql, list(data.values()))
-        conn.commit()
+    def all():
+        return db.session.query(User).all()
 
-        return True
+    def with_email(data):
+        return db.session.query(User).filter_by(email = data).first()
 
-    @classmethod
-    def find_by_email_and_pass(cls, conn, email, password):
-        sql = """
-            SELECT * FROM users AS u
-            WHERE u.email = %s AND u.password = %s
-        """
+    def with_username(data):
+        return db.session.query(User).filter_by(username = data).first()
 
-        cursor = conn.cursor()
-        cursor.execute(sql, (email, password))
+    def with_id(data):
+        return db.session.query(User).get(data)
 
-        return cursor.fetchone()
+    def update(self,data):
+        if self.first_name != data['first_name']:
+            self.first_name = data['first_name']
+        if self.username != data['username']:
+            self.username = data['username']
+        if self.last_name != data['last_name']:
+            self.last_name = data['last_name']
+        if self.email != data['email']:
+            self.email = data['email']
+        db.session.commit()
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def with_filter(filter):
+        return db.session.query(User).filter(User.username.contains(filter))
+
+    def active_with_filter(filter):
+        return db.session.query(User).filter(User.activo == True,User.username.contains(filter))
+
+    def deactive_with_filter(filter):
+        return db.session.query(User).filter(User.activo == False,User.username.contains(filter))
+
+    def is_active(self):
+        return self.activo
+
+    def activate(self):
+        self.activo = True
+        db.session.commit()
+
+    def deactivate(self):
+        self.activo = False
+        db.session.commit()
+
+    def has_permit(self, permit_name):
+        permits = map(lambda rol: rol.has_permit(permit_name), self.rols)
+        return any(permits)

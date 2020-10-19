@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="width: 500px;">
+  <h3>Editar Datos del Usuario</h3>
+<form action="{{ url_for('user_update_new') }}" method ="POST" enctype="multipart/form-data">
+
+  <div class="form-group">
+
+    <input type="hidden" class="form-control"  id="user_id" name="user_id" value="{{user.id}}">
+  </div>
+
+  <div class="form-group">
+    <label for="username">Nombre de usuario:</label>
+    <input type="text" class="form-control" id="username" name="username" value="{{user.username}}" required>
+  </div>
+
+  <div class="form-group">
+    <label for="first_name">Nombre:</label>
+    <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}" required>
+  </div>
+  <div class="form-group">
+    <label for="last_name">Apellido:</label>
+    <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}" required>
+  </div>
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input type="text" class="form-control" id="email" name="email" value="{{user.email}}" required>
+  </div>
+
+    <button type="submit" class="btn btn-primary my-1">Guardar</button>
+
+
+</form>
+</div>
+{% endblock %}

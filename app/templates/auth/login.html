@@ -1,13 +1,44 @@
 {% extends "layout.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Donaciones Covid19{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block content %}
-  <h1>Iniciar sesión</h1>
-  <form action="{{ url_for('auth_authenticate') }}" method="POST">
-    <input name="email" placeholder="Correo" required/>
-    <input type="password" name="password" placeholder="Clave" required/>
-    <input type="submit" value="Login">
-  </form>
+
+{% block navbar %}
+  {{ super() }}
+{% endblock %}
+
+{% block iniciarSesion %}
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <h5 class="card-title text-center">Iniciar Sesión</h5>
+          <form class="form-signin text-center" action="{{ url_for('auth_authenticate') }}" method="POST">
+            <div class="form-group">
+              <div class="input-group">
+                <input name="email" type="email" class="form-control" placeholder="Correo electrónico" required autofocus>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+
+                <input name="password" type="password" class="form-control" placeholder="Contraseña" required>
+              </div>
+            </div>
+
+
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="Login">Loguearse</button>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 {% endblock %}
