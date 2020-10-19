@@ -1,22 +1,19 @@
 from app import db
 from flask import request
-
 from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
-
-from app.models import rol, users_rols, rols_permisos
-
+from app.models import rol, users_rols
 
 class User(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer,primary_key=True)
-    username = db.Column(db.String(255), nullable=False, unique=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
+    id = db.Column(db.Integer,primary_key = True)
+    username = db.Column(db.String(255), nullable=False, unique = True )
+    email = db.Column(db.String(255), nullable=False, unique = True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     activo = db.Column(db.Boolean, nullable=False)
-    rols = db.relationship("Rol", secondary="users_rols")
+    rols = db.relationship("Rol" , secondary="users_rols")
 
     def __init__(self, data):
         self.username = data['username']
@@ -25,12 +22,13 @@ class User(db.Model):
         self.email = data['email']
         self.password = data['password']
         self.activo = 1
-        self.perfil= "Admin"
         db.session.commit()
+
 
     @classmethod
     def __str__(self):
         return '<User {}>'.format(self.username)
+
 
     def add(data):
         db.session.add(User(data))
