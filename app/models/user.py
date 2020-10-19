@@ -1,14 +1,17 @@
 from app import db
 from flask import request
+
 from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
+
 from app.models import rol, users_rols
+
 
 class User(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255), nullable=False, unique = True )
-    email = db.Column(db.String(255), nullable=False, unique = True)
+    id = db.Column(db.Integer,primary_key=True)
+    username = db.Column(db.String(255), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
@@ -23,7 +26,6 @@ class User(db.Model):
         self.password = data['password']
         self.activo = 1
         db.session.commit()
-
 
     @classmethod
     def __str__(self):
@@ -80,3 +82,7 @@ class User(db.Model):
     def deactivate(self):
         self.activo = False
         db.session.commit()
+
+    def has_permit(self, permit_name):
+        permits = map(lambda rol: rol.has_permit(permit_name), self.rols)
+        return any(permits)

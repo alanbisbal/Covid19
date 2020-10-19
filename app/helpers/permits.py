@@ -1,5 +1,6 @@
 from flask import redirect, url_for, flash, session
 from app.models.user import User
+
 from app.models.rol import Rol
 from app.models.permiso import Permiso
 
@@ -9,4 +10,8 @@ def has_permit(permit):
         for permiso in rol.permisos:
             if(permit == permiso.name):
                 return True
+    return False
+
+
+def is_admin(user):
     return False
