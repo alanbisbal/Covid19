@@ -35,7 +35,11 @@
       <th scope="col">opciones</th>
     </tr>
   </thead>
-
+  <script type="text/javascript">
+  function ConfirmDelete() {
+      return confirm('estas seguro?')
+    }
+  </script>
   <tbody>
      {% for user in users.items %}
     <tr>
@@ -43,29 +47,33 @@
       <td>{{ user.email }}</td>
 
       <td>
+      {% if not is_admin(user.id) %}
         {% if user.activo %}
             <form action="{{ url_for('user_activated', user_id = user.id ) }}"  method ="POST"  enctype="multipart/form-data" >
-              <button type="submit" class="btn btn-success">habilitado</button>
+              <button type="submit" class="btn btn-success"  onclick="return ConfirmDelete()">habilitado</button>
             </form>
           {% else %}
             <form action="{{ url_for('user_activated', user_id = user.id ) }}"  method ="POST"  enctype="multipart/form-data" >
-              <button type="submit" class="btn btn-danger">deshabilitado</button>
+              <button type="submit" class="btn btn-danger"  onclick="return ConfirmDelete()">deshabilitado</button>
             </form>
           {% endif %}
+        {% endif %}
       <td>
      <div class="form-inline ">
+
+
 
        <form action="{{ url_for('user_show', user_id = user.id ) }}"  >
          <button type="submit" class="btn btn-primary ">Ver</button>
        </form>
 
-        <form action="{{ url_for('user_update', user_id = user.id ) }}"  >
-          <button type="submit" class="btn btn-warning ">Editar</button>
-        </form>
+       <form action="{{ url_for('user_update', user_id = user.id ) }}"  >
+         <button type="submit" class="btn btn-warning ">Editar</button>
+       </form>
 
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
-          <button type="submite" class="btn btn-danger" >eliminar</button>
+          <button type="submite" class="btn btn-danger"  onclick="return ConfirmDelete()" >eliminar</button>
         </form>
 
       </div>

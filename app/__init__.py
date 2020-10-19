@@ -14,6 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
 from app.models.user import User
 from app.helpers.permits import has_permit
+from app.helpers.validates import is_admin
 
 db = SQLAlchemy()
 
@@ -34,7 +35,7 @@ def create_app(environment="development"):
     db.init_app(app)
 
    # Funciones que se exportan al contexto de Jinja2
-    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated,has_permit=has_permit)
+    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated,has_permit=has_permit,is_admin=is_admin)
 
     # Autenticación    A DONDE ME LLEVA  NOM DE LA VISTA  LA FUNCION DEL RECURSO A EJECUTAR
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
@@ -73,8 +74,10 @@ def create_app(environment="development"):
     @app.route("/")
     def home():
         configuracion = Config.getConfig()
-        return render_template("home.html", config=configuracion )
-
+        sitio_activo = configuracion.is_active()
+        if sitio_activo:
+            return render_template("home.html", config=configuracion)
+        return render_template("mantenimiento.html")
 
 
 
