@@ -55,9 +55,8 @@ def create():
     user = User.with_email(data['email'])
     roles =  request.form.getlist('roles[]')
     for rol in roles:
-        print (rol)
         Users_rols.add(user.id,rol)
-    flash("Insercion exitosa", "success")
+    flash("Insercion exitosa","success")
     return redirect(url_for("user_index"))
 
 def update(user_id):

@@ -14,6 +14,6 @@ def has_permit(permit):
 
 def is_admin(user):
     for rol in user.roles():
-        if(rol.id== 1):
+        if(rol.id==1):
             return True
     return False
