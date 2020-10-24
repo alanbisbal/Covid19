@@ -37,7 +37,7 @@
   </thead>
   <script type="text/javascript">
   function ConfirmDelete() {
-      return confirm('estas seguro?')
+      return confirm('Esta seguro')
     }
   </script>
   <tbody>
@@ -47,7 +47,7 @@
       <td>{{ user.email }}</td>
 
       <td>
-      {% if not is_admin(user.id) %}
+      {% if not is_admin(user) %} 
         {% if user.activo %}
             <form action="{{ url_for('user_activated', user_id = user.id ) }}"  method ="POST"  enctype="multipart/form-data" >
               <button type="submit" class="btn btn-success"  onclick="return ConfirmDelete()">habilitado</button>
@@ -57,7 +57,11 @@
               <button type="submit" class="btn btn-danger"  onclick="return ConfirmDelete()">deshabilitado</button>
             </form>
           {% endif %}
-        {% endif %}
+      {% else %}  
+      
+        <button type="submit" class="btn btn-success btn disabled" href="#">habilitado</button>
+    
+      {% endif %}
       <td>
      <div class="form-inline ">
 
