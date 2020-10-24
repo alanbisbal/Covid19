@@ -5,6 +5,7 @@
 <div class="mx-auto" style="width: 500px;">
   <h3>Crear Usuario</h3>
   <form action="{{ url_for('user_create') }}" method="POST">
+    <fieldset>
     <div class="form-group">
       <label for="formGroupExampleInput">Nombre</label>
       <input type="text" class="form-control" name="first_name" placeholder="Nombre"  required/>
@@ -25,16 +26,16 @@
       <label >Clave</label>
       <input type="password" name="password" placeholder="Clave" class="form-control"  required/>
     </div>
+    </fieldset>
     <!--check box-->
-
+    <fieldset>
+    <label for="formGroupExampleInput" >Roles</label>
     <br>
-
       {% for rol in rols %}
-       <input type="checkbox" name=roles[] value="{{rol.id}}">{{rol.name}}
-       <br>
+          <input type="checkbox" value="{{rol.id}}" name=roles[]> {{rol.name}}
+        <br>
       {% endfor %}
-  
-
+    </fieldset>
 
 
   <!--fin del check box-->
