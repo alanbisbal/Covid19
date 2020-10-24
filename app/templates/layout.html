@@ -30,7 +30,6 @@
           {% if is_authenticated(session) %}
           <a class="p-2 text-dark" href="#">Centros de Ayuda</a>
           <a class="p-2 text-dark" href="#">Turnos</a>
-          <a class="p-2 text-dark" href="{{ url_for('issue_index') }}">Consultas</a>
 
           <!--si el usuario es admin ademas vera estas secciones :-->
               {% if has_permit('permisos_index') %}

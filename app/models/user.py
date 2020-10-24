@@ -86,3 +86,16 @@ class User(db.Model):
     def has_permit(self, permit_name):
         permits = map(lambda rol: rol.has_permit(permit_name), self.rols)
         return any(permits)
+
+    def permits(self):
+        permisos = []
+        for rol in self.rols:
+            for permiso in rol.permisos:
+                permisos.append(permiso)
+        return permisos
+
+    def roles(self):
+        rols = []
+        for rol in self.rols:
+            rols.append(rol)
+        return rols
