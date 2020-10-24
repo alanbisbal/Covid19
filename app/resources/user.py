@@ -119,14 +119,14 @@ def search():
     page = request.args.get("page", 1, type=int)
     if estado == '---':
         users = User.with_filter(filter).paginate(page,per_page,error_out=False)
-        return render_template("user/index.html", users=users)
+        return render_template("user/index.html", users=users, estado=estado)
     # se aplica filtro con estado activo
     if estado == 'activo':
         users = User.active_with_filter(filter).paginate(page,per_page,error_out=False)
-        return render_template("user/index.html", users=users)
+        return render_template("user/index.html", users=users, estado=estado)
     # se aplica filtro con estado inactivo
     users = User.deactive_with_filter(filter).paginate(page,per_page,error_out=False)
-    return render_template("user/index.html", users=users)
+    return render_template("user/index.html", users=users, estado=estado)
 
 def show(user_id):
     if not authenticated(session):
