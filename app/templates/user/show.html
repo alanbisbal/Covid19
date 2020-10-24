@@ -14,8 +14,22 @@
     <p class="lead">Email:   {{user.email }}</p>
     <p class="lead">Nombre: {{user.first_name }}</p>
     <p class="lead">Apellido: {{user.last_name }}</p>
+
+
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Rol</th>
+        <th scope="col">Descripcion</th>
+      </tr>
+    </thead>
+    {% for rol in user.roles() %}
+    <tbody>
+        <td>{{rol.name}}</td>
+        <td>{{rol.description}}</td>
+    </tbody>
+    {% endfor %}
   </div>
 </div>
 
 {% endblock %}
-
