@@ -53,7 +53,9 @@ def create():
     # insercion a la base de datos
     User.add(data)
     user = User.with_email(data['email'])
-    for rol in data['roles']:
+    roles =  request.form.getlist('roles[]')
+    for rol in roles:
+        print (rol)
         Users_rols.add(user.id,rol)
     flash("Insercion exitosa")
     return redirect(url_for("user_index"))
