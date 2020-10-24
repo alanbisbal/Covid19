@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
 from app.models.user import User
 from app.helpers.permits import has_permit
-from app.helpers.validates import is_admin
+from app.helpers.permits import is_admin
 
 db = SQLAlchemy()
 

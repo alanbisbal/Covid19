@@ -24,7 +24,7 @@ def authenticate():
         flash("Su usuario se encuentra desactivado.")
         return redirect(url_for("auth_login"))
     if not Config.getConfig().is_active():
-        if not is_admin(user):
+        if not is_admin(user): 
             flash("El sitio se encuentra en mantenimiento")
             return redirect(url_for("home"))
     session["user"] = user.email

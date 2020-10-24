@@ -47,7 +47,7 @@
       <td>{{ user.email }}</td>
 
       <td>
-      {% if not is_admin(user.id) %}
+      {% if not is_admin(user) %} 
         {% if user.activo %}
             <form action="{{ url_for('user_activated', user_id = user.id ) }}"  method ="POST"  enctype="multipart/form-data" >
               <button type="submit" class="btn btn-success"  onclick="return ConfirmDelete()">habilitado</button>
