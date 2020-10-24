@@ -18,7 +18,7 @@ def index():
     if not authenticated(session):
         abort(401)
     if not has_permit('user_index'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # retorna todos los usuarios
     per_page = Config.getConfig().elementos
@@ -30,7 +30,7 @@ def new():
     if not authenticated(session):
         abort(401)
     if not has_permit('user_new'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     rols = Rol.all()
     # retorna vista de creacion de usuario
@@ -40,7 +40,7 @@ def create():
     if not authenticated(session):
         abort(401)
     if not has_permit('user_new'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # validaciones de acceso administrador
     data = request.form
@@ -54,14 +54,14 @@ def create():
     User.add(data)
     user = User.with_email(data['email'])
     Users_rols.add(user.id,data['rol'])
-    flash("Insercion exitosa")
+    flash("Inserción exitosa","success")
     return redirect(url_for("user_index"))
 
 def update(user_id):
     if not authenticated(session):
         abort(401)
     if not has_permit('user_update'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # validacion de acceso administrador
     # retorna una vista con el id del usuario enviado por parametro
@@ -72,7 +72,7 @@ def update_new():
     if not authenticated(session):
         abort(401)
     if not has_permit('user_update'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # validacion de acceso administrador
 
@@ -89,7 +89,7 @@ def update_new():
     if exist_username_update(data['username'],user.username):
         return redirect(request.referrer)
     user.update(data)
-    flash("Actualizacion exitosa.")
+    flash("Actualización exitosa.","success")
     return redirect(url_for('user_index'))
 
 def delete():
@@ -97,11 +97,12 @@ def delete():
         abort(401)
     # validacion de acceso administrador
     if not has_permit('user_destroy'):
-        flash("No posee permisos.")
+        flash("No posee permisos.","danger")
         return redirect(url_for("home"))
     # se busca el usuario en la base de datos y se lo elimina
     user = User.with_id(request.form['user_id'])
     user.delete()
+    flash("Eliminación exitosa.","success")
     return redirect(url_for('user_index'))
 
 def search():
@@ -109,7 +110,7 @@ def search():
         abort(401)
     # validacion de acceso administrador
     if not has_permit('user_index'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
 
     estado = request.args.get("estado")
@@ -132,7 +133,7 @@ def show(user_id):
     if not authenticated(session):
         abort(401)
     if not has_permit('user_show'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # validacion de acceso administrador y si lo es retorna el usuario enviado por id
     user = User.with_id(user_id)
@@ -144,7 +145,7 @@ def activated(user_id):
     if not authenticated(session):
         abort(401)
     if not has_permit('user_update'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     user = User.with_id(user_id)
     if user.is_active():
@@ -157,7 +158,7 @@ def configuracion():
     if not authenticated(session):
         abort(401)
     if not has_permit('user_update'):
-        flash("No posee permisos")
+        flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # validacion de acceso administrador
 
