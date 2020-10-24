@@ -26,14 +26,15 @@
       <input type="password" name="password" placeholder="Clave" class="form-control"  required/>
     </div>
     <!--check box-->
-    <label for="formGroupExampleInput" >Roles</label>
+
     <br>
-    <select multiple hidden name='roles'>
+
       {% for rol in rols %}
-          <input type="checkbox" value={{rol.id}}> {{rol.name}}
-        <br>
+       <input type="checkbox" name=roles[] value="{{rol.id}}">{{rol.name}}
+       <br>
       {% endfor %}
-    </select>
+  
+
 
 
   <!--fin del check box-->
