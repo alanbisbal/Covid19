@@ -17,7 +17,7 @@ class Rol(db.Model):
         self.name = data['name']
         self.description = data['description']
         db.session.commit()
-        
+
     @classmethod
     def __str__(self):
         return '<Rol {}>'.format(self.name)

@@ -11,7 +11,7 @@ from app import db
 from app.models.config import Config
 
 from app.helpers.validates import form_user_new,exist_email,exist_username,form_user_update,exist_email_update,exist_username_update
-from app.helpers.permits import has_permit
+from app.helpers.permits import has_permit, is_admin
 
 
 def index():
@@ -53,8 +53,10 @@ def create():
     # insercion a la base de datos
     User.add(data)
     user = User.with_email(data['email'])
-    Users_rols.add(user.id,data['rol'])
-    flash("Inserción exitosa","success")
+    roles =  request.form.getlist('roles[]')
+    for rol in roles:
+        Users_rols.add(user.id,rol)
+    flash("Insercion exitosa","success")
     return redirect(url_for("user_index"))
 
 def update(user_id):
@@ -148,6 +150,9 @@ def activated(user_id):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     user = User.with_id(user_id)
+    if is_admin(user):
+        flash("El admin no puede ser deshabilitado", "danger")
+        return redirect(url_for('user_index'))
     if user.is_active():
         user.deactivate()
     else:
