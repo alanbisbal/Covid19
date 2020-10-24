@@ -37,7 +37,7 @@
   </thead>
   <script type="text/javascript">
   function ConfirmDelete() {
-      return confirm('Esta seguro que desea eliminar el usuario?')
+      return confirm('Esta seguro')
     }
   </script>
   <tbody>
@@ -57,7 +57,11 @@
               <button type="submit" class="btn btn-danger"  onclick="return ConfirmDelete()">deshabilitado</button>
             </form>
           {% endif %}
-        {% endif %}
+      {% else %}  
+      
+        <button type="submit" class="btn btn-success btn disabled" href="#">habilitado</button>
+    
+      {% endif %}
       <td>
      <div class="form-inline ">
 
