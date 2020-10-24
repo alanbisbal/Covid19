@@ -33,6 +33,9 @@ class Config(db.Model):
     def is_active(self):
         return self.estado
 
+    def cant_elements(self):
+        return self.elementos   
+
     def activate(self):
         self.estado = True
         db.session.commit()

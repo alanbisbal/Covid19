@@ -13,6 +13,6 @@ def update():
     if form_config_update(request.form):
         config = Config.getConfig()
         config.update(request.form)
-        flash("actualizacion exitosa")
+        flash("actualizacion exitosa","success")
         return redirect(url_for('user_configuracion', config=config))
     return redirect(request.referrer)

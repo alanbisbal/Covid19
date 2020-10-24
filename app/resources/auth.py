@@ -18,22 +18,22 @@ def authenticate():
     """
     user = db.session.query(User).filter(User.email == request.form['email']).filter(User.password == request.form['password']).first()
     if not user:
-        flash("Usuario o clave incorrecto.")
+        flash("Usuario o clave incorrecto.","danger")
         return redirect(url_for("auth_login"))
     if not user.is_active():
-        flash("Su usuario se encuentra desactivado.")
+        flash("Su usuario se encuentra desactivado.","danger")
         return redirect(url_for("auth_login"))
     if not Config.getConfig().is_active():
-        if not is_admin(user):
-            flash("El sitio se encuentra en mantenimiento")
+        if not is_admin(user): 
+            flash("El sitio se encuentra en mantenimiento","danger")
             return redirect(url_for("home"))
     session["user"] = user.email
     session["username"] = user.username
-    flash("La sesión se inició correctamente.")
+    flash("La sesión se inició correctamente.","success")
     return redirect(url_for("home"))
 
 def logout():
     del session["user"]
     session.clear()
-    flash("La sesión se cerró correctamente.")
+    flash("La sesión se cerró correctamente.","success")
     return redirect(url_for("auth_login"))
