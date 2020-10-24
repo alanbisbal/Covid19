@@ -3,18 +3,16 @@ from flask import Flask, render_template, g
 from flask_session import Session
 from config import config
 from app.db import db
-from app.resources import issue
 from app.resources import user
 from app.resources import auth
 from app.resources import config as configuracion
-from app.resources.api import issue as api_issue
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
 from app.models.user import User
 from app.helpers.permits import has_permit
-from app.helpers.permits import is_admin
+from app.helpers.validates import is_admin
 
 db = SQLAlchemy()
 
@@ -29,7 +27,6 @@ def create_app(environment="development"):
     # Server Side session
     app.config["SESSION_TYPE"] = "filesystem"
     Session(app)
-
     # Configure db
 
     db.init_app(app)
@@ -42,10 +39,6 @@ def create_app(environment="development"):
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
     app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
 
-    # Rutas de Consultas
-    app.add_url_rule("/consultas", "issue_index", issue.index)
-    app.add_url_rule("/consultas", "issue_create", issue.create, methods=["POST"])
-    app.add_url_rule("/consultas/nueva", "issue_new", issue.new)
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
@@ -87,8 +80,6 @@ def create_app(environment="development"):
 
 
 
-    # Rutas de API-rest
-    app.add_url_rule("/api/consultas", "api_issue_index", api_issue.index)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
