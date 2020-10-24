@@ -16,6 +16,7 @@ from app.models.user import User
 from app.helpers.permits import has_permit
 from app.helpers.validates import is_admin
 
+
 db = SQLAlchemy()
 
 def create_app(environment="development"):
