@@ -143,10 +143,10 @@ def show(user_id):
     # validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
     # ---completar para futura entrega---
 
-def show():
+def perfil():
     if not authenticated(session):
         abort(401)
-    if not has_permit('user_show'):
+    if not has_permit('user_perfil'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # validacion de acceso administrador y si lo es retorna el usuario enviado por id

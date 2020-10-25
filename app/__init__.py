@@ -50,7 +50,7 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/search", "user_search", user.search)
     app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
     app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
-    app.add_url_rule("/show", "user_show", user.show)
+    app.add_url_rule("/perfil", "user_perfil", user.perfil)
 
 
 
