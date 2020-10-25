@@ -50,7 +50,7 @@
 
          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido {{session.username}}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="">Perfil</a>
+              <a class="dropdown-item" href="{{ url_for('user_perfil') }}">Perfil</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ url_for('auth_logout') }}">Cerrar Sesión</a>
              </div>

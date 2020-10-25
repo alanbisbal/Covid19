@@ -143,6 +143,18 @@ def show(user_id):
     # validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
     # ---completar para futura entrega---
 
+def perfil():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('user_perfil'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
+    # validacion de acceso administrador y si lo es retorna el usuario enviado por id
+    user = User.with_username(session["username"])
+    return render_template("user/show.html",user = user)
+    # validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
+    # -
+    #     
 def activated(user_id):
     if not authenticated(session):
         abort(401)

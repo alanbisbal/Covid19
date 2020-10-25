@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block content %}
+<!--esta re demas igual no lo borro
+<a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>-->
 
-<a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>
 <a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
 
 <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('user_search') }}">
@@ -24,7 +25,7 @@
     </svg></button>
 
   </form>
-  <!--aca iba el volver etc-->
+  
 
   <table class="table">
   <thead>
@@ -32,6 +33,7 @@
       <th scope="col">Nombre de usuario</th>
       <th scope="col">Correo</th>
       <th scope="col">Estado</th>
+      <th scope="col">Roles</th>
       <th scope="col">opciones</th>
     </tr>
   </thead>
@@ -40,13 +42,17 @@
       return confirm('Esta seguro')
     }
   </script>
+
   <tbody>
      {% for user in users.items %}
     <tr>
+      <!--nombre de usuario-->
       <td>{{ user.username }}</td>
+      <!--correo-->
       <td>{{ user.email }}</td>
 
       <td>
+        <!--estado (activo/inactivo)-->
       {% if not is_admin(user) %}
         {% if user.activo %}
             <form action="{{ url_for('user_activated', user_id = user.id ) }}"  method ="POST"  enctype="multipart/form-data" >
@@ -64,22 +70,29 @@
               <button type="submit" class="btn btn-danger btn disabled" href="#">deshabilitado</button>
         {% endif %}
       {% endif %}
+      
       <td>
+        <!--roles-->
+        {% for rol in user.roles() %}
+          <span class="badge badge-info">{{rol.name}}</span>
+        {% endfor %}
+
+      </td>
+      
+      <td>
+        <!--opciones-->   
      <div class="form-inline ">
-
-
-
        <form action="{{ url_for('user_show', user_id = user.id ) }}"  >
-         <button type="submit" class="btn btn-primary ">Ver</button>
+         <button type="submit" class="btn btn-primary mt-2">Ver</button>
        </form>
 
        <form action="{{ url_for('user_update', user_id = user.id ) }}"  >
-         <button type="submit" class="btn btn-warning ">Editar</button>
+         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
        </form>
 
         <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
           <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
-          <button type="submite" class="btn btn-danger"  onclick="return ConfirmDelete()" >eliminar</button>
+          <button type="submite" class="btn btn-danger mt-2 ml-2"  onclick="return ConfirmDelete()" >eliminar</button>
         </form>
 
       </div>
