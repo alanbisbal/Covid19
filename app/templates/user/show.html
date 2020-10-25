@@ -13,7 +13,7 @@
     <p ><strong >Email:</strong> {{user.email }}</p>
     <p><strong>Nombre:</strong> {{user.first_name }}</p>
     <p><strong>Apellido: </strong>{{user.last_name }}</p>
-    <p><strong>Activo: </strong>
+    <p><strong>Estado: </strong>
       {% if user.activo %}
           <button type="submit" class="btn btn-success btn disabled" href="#">habilitado</button>
         {% else %}
