@@ -51,6 +51,9 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
     app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
     app.add_url_rule("/perfil", "user_perfil", user.perfil)
+    app.add_url_rule("/usuarios/update/user_delete_rol", "user_rol_delete", user.rol_delete, methods=["POST"])
+    app.add_url_rule("/usuarios/update/user_add_rols", "user_add_rols", user.add_rols, methods=["POST"])
+
 
 
 

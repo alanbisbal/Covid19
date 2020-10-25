@@ -68,7 +68,8 @@ def update(user_id):
     # validacion de acceso administrador
     # retorna una vista con el id del usuario enviado por parametro
     user = User.with_id(user_id)
-    return render_template("user/update.html",user = user)
+    rols = Rol.except_rols(user.roles())
+    return render_template("user/update.html",user = user,rols=rols)
 
 def update_new():
     if not authenticated(session):
@@ -154,7 +155,7 @@ def perfil():
     return render_template("user/show.html",user = user)
     # validacion de acceso de usuario a su propio perfil y si lo es, retorna su perfil
     # -
-    #     
+    #
 def activated(user_id):
     if not authenticated(session):
         abort(401)
@@ -182,3 +183,32 @@ def configuracion():
     # retorna una vista con el id del usuario enviado por parametro
     configuracion = db.session.query(Config).first()
     return render_template("config/configuracion.html", config=configuracion)
+
+
+def rol_delete():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('user_update'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
+    data = request.args
+    user_rol = Users_rols.with_userid_rolid(data)
+    user_rol.delete()
+    flash("Rol eliminado correctamente","success")
+    return redirect(request.referrer)
+
+
+
+def add_rols():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('user_update'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
+
+    user_id = request.args['user_id']
+    roles =  request.form.getlist('roles[]')
+    for rol in roles:
+        Users_rols.add(user_id,rol)
+    flash("Insercion exitosa","success")
+    return redirect(request.referrer)

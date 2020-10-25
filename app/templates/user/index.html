@@ -25,7 +25,7 @@
     </svg></button>
 
   </form>
-  
+
 
   <table class="table">
   <thead>
@@ -70,7 +70,7 @@
               <button type="submit" class="btn btn-danger btn disabled" href="#">deshabilitado</button>
         {% endif %}
       {% endif %}
-      
+
       <td>
         <!--roles-->
         {% for rol in user.roles() %}
@@ -78,9 +78,9 @@
         {% endfor %}
 
       </td>
-      
+
       <td>
-        <!--opciones-->   
+        <!--opciones-->
      <div class="form-inline ">
        <form action="{{ url_for('user_show', user_id = user.id ) }}"  >
          <button type="submit" class="btn btn-primary mt-2">Ver</button>

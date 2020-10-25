@@ -21,11 +21,8 @@
       {% endif %}
       </p>
     <p ><strong>Roles:</strong>
-      {% for rol in user.roles() %}
-
+    {% for rol in user.roles() %}
       <span class="badge badge-info">{{rol.name}}</span>
-
-
     {% endfor %}
     </p>
     <script type="text/javascript">
