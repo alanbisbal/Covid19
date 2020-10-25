@@ -51,7 +51,11 @@ def create():
     if exist_username(data['username']):
         return redirect(request.referrer)
     # insercion a la base de datos
-    User.add(data)
+    if data['activo'] == 'True':
+        estado = 1
+    if data['activo'] == 'False':
+        estado = 0
+    User.add(data,estado)
     user = User.with_email(data['email'])
     roles =  request.form.getlist('roles[]')
     for rol in roles:
