@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-10-2020 a las 02:21:25
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.33
+-- Tiempo de generación: 25-10-2020 a las 02:40:33
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,25 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `grupo37`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `categories`
---
-
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Bug'),
-(2, 'Question');
 
 -- --------------------------------------------------------
 
@@ -61,32 +42,6 @@ CREATE TABLE `configs` (
 
 INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
 (1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 25, 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `issues`
---
-
-CREATE TABLE `issues` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `categorie_id` int(11) DEFAULT NULL,
-  `status_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `issues`
---
-
-INSERT INTO `issues` (`id`, `email`, `description`, `categorie_id`, `status_id`) VALUES
-(1, 'fede@mail.com', 'No puedo iniciar sesión correctamente', 1, 1),
-(2, 'jose@mail.com', 'El sistema de dice que hay un error', 1, 2),
-(3, 'maria@mail.com', 'No tengo acceso al sistema', 1, 1),
-(4, 'asdasd@asdasd', 'asdasd', 1, 1),
-(5, 'Alan@Alan', 'consulta general', 2, 2),
-(6, 'Alan@Alan', '123123', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -116,7 +71,8 @@ INSERT INTO `permisos` (`id`, `name`, `description`) VALUES
 (13, 'centro_update', 'permite actualizar un centro de ayuda social'),
 (15, 'centro_show', 'permite visualizar un centro de ayuda social'),
 (16, 'permisos_index', ' permite acceder al index (listado) del módulo.'),
-(17, 'user_perfil', 'permite al usuario visualizar su perfil');
+(17, 'user_perfil', 'permite al usuario visualizar su perfil'),
+(18, 'permiso_admin', 'permite al usuario asignarle el permiso administrador');
 
 -- --------------------------------------------------------
 
@@ -168,27 +124,8 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (13, 1, 15),
 (14, 1, 16),
 (15, 1, 17),
-(16, 2, 17);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `status`
---
-
-CREATE TABLE `status` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `status`
---
-
-INSERT INTO `status` (`id`, `name`) VALUES
-(1, 'New'),
-(2, 'Todo'),
-(3, 'In progress');
+(16, 2, 17),
+(17, 1, 18);
 
 -- --------------------------------------------------------
 
@@ -274,24 +211,10 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 --
 
 --
--- Indices de la tabla `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `configs`
 --
 ALTER TABLE `configs`
   ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `issues`
---
-ALTER TABLE `issues`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `categorie_id` (`categorie_id`),
-  ADD KEY `status_id` (`status_id`);
 
 --
 -- Indices de la tabla `permisos`
@@ -314,12 +237,6 @@ ALTER TABLE `rols_permisos`
   ADD KEY `permiso_id` (`permiso_id`);
 
 --
--- Indices de la tabla `status`
---
-ALTER TABLE `status`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -340,28 +257,16 @@ ALTER TABLE `users_rols`
 --
 
 --
--- AUTO_INCREMENT de la tabla `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT de la tabla `configs`
 --
 ALTER TABLE `configs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `issues`
---
-ALTER TABLE `issues`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `rols`
@@ -373,13 +278,7 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT de la tabla `status`
---
-ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -396,13 +295,6 @@ ALTER TABLE `users_rols`
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `issues`
---
-ALTER TABLE `issues`
-  ADD CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`);
 
 --
 -- Filtros para la tabla `rols_permisos`
