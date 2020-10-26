@@ -19,6 +19,8 @@ def form_user_new(data):
     if not data['password']:
         flash('La contraseña no puede estar vacia',"danger")
         ok = False
+    if not data['activo']:
+        flash('La contraseña no puede estar vacia',"danger")
     if ok:
         return True
     else:
@@ -95,4 +97,3 @@ def form_config_update(data):
         return True
     else:
         return False
-

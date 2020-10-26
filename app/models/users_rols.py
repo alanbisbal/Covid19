@@ -22,3 +22,10 @@ class Users_rols(db.Model):
     def add(user_id,rol_id):
         db.session.add(Users_rols(user_id,rol_id))
         db.session.commit()
+
+    def with_userid_rolid(data):
+        return db.session.query(Users_rols).filter(Users_rols.user_id == data['user_id'],Users_rols.rol_id == data['rol_id']).first()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
