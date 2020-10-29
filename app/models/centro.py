@@ -12,8 +12,8 @@ class Centro(db.Model):
     name = db.Column(db.String(255), nullable=False)
     address =  db.Column(db.String(255), nullable=False)
     phone = db.Column(db.String(255), nullable=False)
-    open = db.Column(db.DateTime(timezone=True),nullable=False)
-    close = db.Column(db.DateTime(timezone=True),nullable=False)
+    open = db.Column(db.Time(timezone=True),nullable=False)
+    close = db.Column(db.Time(timezone=True),nullable=False)
     municipio = db.Column(db.String(255), nullable=False)
     web = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
@@ -21,7 +21,7 @@ class Centro(db.Model):
     protocol = db.Column(db.String(255), nullable=False)
     coordinates = db.Column(db.String(255), nullable=False)
     type = db.Column(Integer, ForeignKey('tipo_centros.id'))
-    turnos = db.relationship("Turno")
+    turnos = db.relationship("Turno",backref= "centros")#checkear el backref
 
     def __init__(self, data):
         self.name = data['name']
