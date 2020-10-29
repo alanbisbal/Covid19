@@ -17,6 +17,8 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     activo = db.Column(db.Boolean, nullable=False)
     rols = db.relationship("Rol" , secondary="users_rols")
+    #turnos= db.relationship('Turno', backref='user')
+    #Para crear una relación bidireccional, usamos backref , esto le permitirá al hijo hacer referencia al padre
 
     def __init__(self, data, estado):
         self.username = data['username']
