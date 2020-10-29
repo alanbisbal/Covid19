@@ -13,8 +13,8 @@ class Turno(db.Model):
     telefono = db.Column(db.String(25),nullable=False)
     hora_inicio= db.Column(db.DateTime(timezone=True),nullable=False)
     hora_fin= db.Column(db.DateTime(timezone=True),nullable=False)
-    fecha = Column(Date, index=True,nullable=False)
-    centro_id = db.Column(db.Integer, db.ForeignKey('centro.id')
+    fecha = db.Column(db.DateTime(timezone=True),nullable=False) #esta mal es solo una prueba
+    centro_id = db.Column(db.Integer, db.ForeignKey('centro.id'))
 
     def __init__(self, data):
         self.email = data['email']
@@ -27,3 +27,22 @@ class Turno(db.Model):
     @classmethod
     def __str__(self):
         return '<Turno {}>'.format(self.email)
+
+
+    def with_filter(filter):
+        return db.session.query(Turno).filter(Turno.centro_id.contains(filter))
+
+    def with_id(data):
+        return db.session.query(Turno).get(data)   
+
+    #'bloque' no sabemos bien como definirlo
+    def update(self,data):
+        if self.email != data['email']:
+            self.email = data['email']
+        if self.hora_inicio != data['hora_inicio']:
+            self.hora_inicio = data['hora_inicio'] 
+        if self.hora_fin != data['hora_fin']:
+            self.hora_fin = data['hora_fin']
+        if self.fecha != data['fecha']:
+            self.fecha = data['fecha']
+        db.session.commit()     
