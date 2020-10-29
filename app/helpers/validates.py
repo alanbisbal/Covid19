@@ -20,7 +20,7 @@ def form_user_new(data):
         flash('La contraseña no puede estar vacia',"danger")
         ok = False
     if not data['activo']:
-        flash('La contraseña no puede estar vacia',"danger")
+        flash('El estado no puede estar vacio',"danger")
     if ok:
         return True
     else:
