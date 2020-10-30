@@ -30,12 +30,12 @@
       <label for="exampleInputEmail1"><strong>Email</strong></label>
       <input type="email" class="form-control" name="email" placeholder="Correo" required>
     </div>
-    
+
     <div class="form-group">
       <label ><strong>Clave</strong></label>
       <input type="password" name="password" placeholder="Clave" class="form-control"  required/>
     </div>
-    
+
     <div class="form-group">
       <label ><strong>Estado</strong></label>
       <input type="radio" name="activo" value=True required>
@@ -43,15 +43,15 @@
       <input type="radio" name="activo" value=False >
       <button type="submit" class="btn btn-danger btn disabled" href="#">deshabilitado</button>
     </div>
-    
-    <!--check box--> 
+
+    <!--check box-->
     <div class="form-group">
     <label for="formGroupExampleInput" ><strong>Roles </strong></label>
       {% for rol in rols %}
-          <input type="checkbox" value="{{rol.id}}" name=roles[]> {{rol.name}} 
+          <input type="checkbox" value="{{rol.id}}" name=roles[]> {{rol.name}}
       {% endfor %}
     </div>
-   
+
 
 
   <!--fin del check box-->
