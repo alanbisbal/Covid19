@@ -47,3 +47,17 @@ class Turno(db.Model):
         if self.fecha != data['fecha']:
             self.fecha = data['fecha']
         db.session.commit()
+
+
+    def add(data):
+        db.session.add(Turno(data))
+        db.session.commit()
+
+
+    def all():
+        return db.session.query(Turno).all()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+

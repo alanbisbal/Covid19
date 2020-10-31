@@ -43,9 +43,7 @@ def create():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     data = request.form
-    if not form_turno(data):
-        return redirect(request.referrer)
-
+    Turno.add(data)
     flash("Insercion exitosa","success")
     return redirect(url_for("turno_index"))
 
