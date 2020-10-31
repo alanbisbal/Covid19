@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2020 a las 21:42:41
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.5
+-- Tiempo de generación: 31-10-2020 a las 22:18:52
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,7 +49,9 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `name`, `address`, `phone`, `open`, `close`, `municipio_id`, `web`, `email`, `state`, `protocol`, `coordinates`, `type`, `turnos`) VALUES
-(1, 'centro test', 'calle 123', '4444444888', '09:00:00', '16:00:00', 1, 'asd', 'asd', 1, 'asd', 'asd', 'asd', 'asd');
+(1, 'centro test', 'calle 123', '4444444888', '09:00:00', '16:00:00', 1, 'asd', 'asd', 1, 'asd', 'asd', 'asd', 'asd'),
+(5, 'centro 1', 'direccion 1', '1234567', '11:10:55', '18:10:55', 2, 'web usuario 1', 'mail@centro1', 1, 'protocolo 1', '1234', '12345', '1234'),
+(6, 'centro 2', 'direccion 2', '543221', '09:00:00', '16:00:00', 3, 'web3', 'mail3@centrode', 1, 'protocolo 2', '987655', '124', 'wqafafaf');
 
 -- --------------------------------------------------------
 
@@ -103,7 +105,11 @@ INSERT INTO `permisos` (`id`, `name`, `description`) VALUES
 (16, 'permisos_index', ' permite acceder al index (listado) del módulo.'),
 (17, 'user_perfil', 'permite al usuario visualizar su perfil'),
 (18, 'permiso_admin', 'permite al usuario asignarle el permiso administrador'),
-(19, 'turno_index', ' permite acceder al index (listado) del módulo de turnos');
+(19, 'turno_index', ' permite acceder al index (listado) del módulo de turnos'),
+(20, 'turno_new', 'permite cargar un turno'),
+(21, 'turno_destroy', 'permite borrar un turno'),
+(22, 'turno_update', 'permite actualizar un turno'),
+(23, 'turno_show', 'permite visualizar un turno');
 
 -- --------------------------------------------------------
 
@@ -161,7 +167,18 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (20, 2, 15),
 (21, 2, 7),
 (22, 1, 19),
-(23, 2, 19);
+(23, 2, 19),
+(24, 1, 20),
+(25, 1, 21),
+(26, 1, 22),
+(27, 1, 23),
+(28, 2, 20),
+(29, 2, 21),
+(30, 2, 22),
+(31, 2, 23),
+(32, 2, 21),
+(33, 2, 22),
+(34, 2, 23);
 
 -- --------------------------------------------------------
 
@@ -189,6 +206,15 @@ CREATE TABLE `turnos` (
   `fecha` datetime DEFAULT NULL,
   `centro_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
+(1, 'turno@uno', '12345', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2020-11-01 18:15:50', 1),
+(2, 'turno2@turno', '12341241', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2020-11-02 18:15:50', 1),
+(3, 'turno3@turno', '7070707031313131', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2020-11-02 18:15:50', 1);
 
 -- --------------------------------------------------------
 
@@ -341,7 +367,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
@@ -353,7 +379,7 @@ ALTER TABLE `configs`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `rols`
@@ -365,7 +391,7 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_centros`
@@ -377,7 +403,7 @@ ALTER TABLE `tipo_centros`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
