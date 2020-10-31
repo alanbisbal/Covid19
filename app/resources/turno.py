@@ -25,33 +25,58 @@ def index(centro_id):
     return render_template("turno/index.html", turnos=turnos)
 
 def new():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('turno_new'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
     turnos = Turno.all()
-    # retorna vista de creacion de usuario
+    # retorna vista de creacion de turnos
     return render_template("turno/new.html",turnos=turnos)
 
 def create():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('turno_new'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
     data = request.form
     if not form_turno(data):
         return redirect(request.referrer)
-    
+
     flash("Insercion exitosa","success")
-    return redirect(url_for("turno_index"))    
+    return redirect(url_for("turno_index"))
 
 def update(turno_id):
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('turno_update'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
     turno = Turno.with_id(turno_id)
     return render_template("turno/update.html",turno = turno)
 
 def update_new():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('turno_update'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
     data = request.form
     if not form_turno(data):
         return redirect(request.referrer)
     turno.update(data)
     flash("Actualización exitosa.","success")
-    return redirect(url_for('turno_index'))  
+    return redirect(url_for('turno_index'))
 
 def delete():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('turno_destroy'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
     # se busca el usuario en la base de datos y se lo elimina
     turno = Turno.with_id(request.form['turno_id'])
     turno.delete()
     flash("Eliminación exitosa.","success")
-    return redirect(url_for('turno_index'))  
+    return redirect(url_for('turno_index'))
