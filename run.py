@@ -4,6 +4,6 @@ if __name__ == "__main__":
     app = create_app()
     with app.app_context():
         from app import models
-        from app.models import config 
+        from app.models import config
         db.create_all()
     app.run()

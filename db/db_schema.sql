@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-10-2020 a las 07:52:25
+-- Tiempo de generación: 31-10-2020 a las 00:53:03
 -- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.33
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,36 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `grupo37`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `centros`
+--
+
+CREATE TABLE `centros` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `open` time NOT NULL,
+  `close` time NOT NULL,
+  `municipio_id` int(11) NOT NULL,
+  `web` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `state` tinyint(1) NOT NULL,
+  `protocol` varchar(255) NOT NULL,
+  `coordinates` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `turnos` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `centros`
+--
+
+INSERT INTO `centros` (`id`, `name`, `address`, `phone`, `open`, `close`, `municipio_id`, `web`, `email`, `state`, `protocol`, `coordinates`, `type`, `turnos`) VALUES
+(1, 'centro test', 'calle 123', '4444444888', '09:00:00', '16:00:00', 1, 'asd', 'asd', 1, 'asd', 'asd', 'asd', 'asd');
 
 -- --------------------------------------------------------
 
@@ -41,7 +71,7 @@ CREATE TABLE `configs` (
 --
 
 INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
-(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 25, 1);
+(1, 'Donaciones Covid190', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -116,7 +146,6 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (3, 1, 3),
 (4, 1, 4),
 (5, 1, 5),
-(6, 2, 5),
 (9, 1, 7),
 (10, 1, 9),
 (11, 1, 11),
@@ -125,7 +154,22 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (14, 1, 16),
 (15, 1, 17),
 (16, 2, 17),
-(17, 1, 18);
+(17, 1, 18),
+(18, 2, 9),
+(19, 2, 13),
+(20, 2, 15),
+(21, 2, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_centros`
+--
+
+CREATE TABLE `tipo_centros` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -149,19 +193,16 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `password`, `activo`) VALUES
 (1, 'Admin', 'admin@admin', 'Cosme', 'Fulanito', '123123', 1),
-(2, 'Operador', 'operador@gmail.com', 'Lalo', 'Landa', '123123', 0),
+(2, 'Operador', 'operador@gmail.com', 'Lalo', 'Landa', '123123', 1),
 (17, 'd', 'asdsad@dasd', 'a', 'd', 'asdasd', 1),
-(18, 'eqweqwq', 'qweqwe@qweqwe', 'qweqwe', 'qweqweqw', 'qweqwe', 1),
-(19, 'czxczxcz', 'zxc@zxc', 'zczxcz', 'cxzcxz', 'zxczcxz', 0),
+(18, 'eqweqwq', 'qweqwe@qweqwe', 'qweqwe', 'qweqweqw', 'qweqwe', 0),
 (22, 'asd', 'asd@asd', 'asd', 'asd', 'asd', 1),
 (23, 'ELVERDA', 'VER@dad', '12312312', 'afqfq', '123123', 1),
-(24, 'beni', 'toca@mela', 'Benito', 'camela', '123123', 1),
 (25, 'qwerty', 'q@werty', 'qwerty', 'qwerty', '123123', 1),
 (26, 'qwertya', 'q@wertya', 'qwertya', 'qwertya', '123123', 1),
 (27, 'qwertyaasd', 'q@wertyaasd', 'qwertyaad', 'qwertyaasd', '123123', 1),
 (28, 'qwertyaasdqwfqfw', 'q@wertyaasdfqwqwf', 'qwertyaadqewrwqar', 'qwertyaasdqwfqwf', '123123', 1),
 (29, 'benitez', 'q@wertyaasdfqwqwfqwqw', 'qwertyaadqewrwqarewdq', 'qwertyaasdqwfqwfqwdwqd', '123123', 1),
-(30, 'qqqqqlo', 'qqq@qqq', 'qqqqqqqqq', 'qqqqqqqqqqq', '123123', 1),
 (31, 'oooooooo', 'oooo@oo', 'ooooooo', 'ooooooooo', '123123', 1),
 (32, 'oooooooooo', 'oooo@oooo', 'ooooooooo', 'ooooooooooo', '123123', 1),
 (33, 'zzzzzzzzzzzzzzzzzz', 'zzz@zzz', 'zzzzzzzzz', 'zzzzzzzzzzzz', '123123', 1),
@@ -172,7 +213,8 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `pass
 (38, 'yy', 'yy@yy', 'yy', 'yy', 'yyy', 1),
 (39, 'yyy', 'yy@yyy', 'yyy', 'yyy', '123123', 1),
 (40, 'con2', 'con2@rolespapu', 'alan', 'bisbal', '132123', 1),
-(41, 'qwr3f', '12awfda@afhbua', 'adqdq', 'qwrwf', '123123', 1);
+(41, 'qwr3f', '12awfda@afhbua', 'adqdq', 'qwrwf', '123123', 1),
+(42, 'testrol', 'testrol@testrol', 'testrol', 'testrol', 'testrol', 1);
 
 -- --------------------------------------------------------
 
@@ -197,18 +239,25 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 (10, 1, 2),
 (11, 17, 2),
 (12, 18, 2),
-(13, 19, 2),
 (15, 22, 2),
 (16, 23, 1),
 (17, 39, 1),
 (18, 39, 2),
 (19, 40, 1),
 (20, 40, 2),
-(21, 41, 2);
+(21, 41, 2),
+(24, 26, 1),
+(26, 26, 2);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `centros`
+--
+ALTER TABLE `centros`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `configs`
@@ -237,6 +286,12 @@ ALTER TABLE `rols_permisos`
   ADD KEY `permiso_id` (`permiso_id`);
 
 --
+-- Indices de la tabla `tipo_centros`
+--
+ALTER TABLE `tipo_centros`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -255,6 +310,12 @@ ALTER TABLE `users_rols`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `centros`
+--
+ALTER TABLE `centros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
@@ -278,19 +339,25 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_centros`
+--
+ALTER TABLE `tipo_centros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `users_rols`
 --
 ALTER TABLE `users_rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Restricciones para tablas volcadas

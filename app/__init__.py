@@ -6,6 +6,7 @@ from app.db import db
 from app.resources import user
 from app.resources import auth
 from app.resources import turno
+from app.resources import centro
 from app.resources import config as configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -13,13 +14,15 @@ from flask_sqlalchemy import SQLAlchemy
 from app.models.config import Config
 from app.models.user import User
 from app.helpers.permits import has_permit, is_admin
+from flask_bootstrap import Bootstrap
 
 db = SQLAlchemy()
 
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
-
+    Bootstrap(app)
+    app.config['SECRET_KEY'] = 'ThisIsAVerySecretKey'
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
     app.config.from_object(config[env])
@@ -56,14 +59,21 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/update/user_add_rols", "user_add_rols", user.add_rols, methods=["POST"])
 
     # Ruta de Turnos
-    app.add_url_rule("/turnos/index/<centro_id>", "turno_index", turno.index)
+    app.add_url_rule("/turnos/index", "turno_index", turno.index)
     app.add_url_rule("/turnos", "turno_create", turno.create, methods=["POST"])
     app.add_url_rule("/turnos/nuevo", "turno_new", turno.new)
     app.add_url_rule("/turnos/update/<turno_id>", "turno_update", turno.update)
     app.add_url_rule("/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
     app.add_url_rule("/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
 
-
+    # Rutas de Centros
+    app.add_url_rule("/centros", "centro_index", centro.index)
+    app.add_url_rule("/centros", "centro_create", centro.create, methods=["POST"])
+    app.add_url_rule("/centro/nuevo", "centro_new", centro.new)
+    app.add_url_rule("/centros/show/<centro_id>", "centro_show", centro.show)
+    app.add_url_rule("/centros/delete", "centro_delete", centro.delete, methods=["POST"])
+    app.add_url_rule("/centros/update/<centro_id>", "centro_update", centro.update)
+    app.add_url_rule("/centros/update", "centro_update_new", centro.update_new, methods=["POST"])
     #Rutas de configuracion
     app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
 
