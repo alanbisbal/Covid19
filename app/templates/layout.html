@@ -30,7 +30,6 @@
           <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
           {% if is_authenticated(session) %}
             <a class="p-2 text-dark" href="{{ url_for('centro_index') }}">Centros de Ayuda</a>
-            <a class="p-2 text-dark" href="{{ url_for('turno_index')}}">Turnos</a>
           <!--si el usuario es admin ademas vera estas secciones :-->
               {% if has_permit('permisos_index') %}
                 <a class="p-2 text-dark" href="#">Roles y permisos</a>

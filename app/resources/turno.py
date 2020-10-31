@@ -11,7 +11,7 @@ from app.helpers.auth import authenticated
 from app.helpers.permits import has_permit, is_admin
 
 
-def index(centro):
+def index(centro_id):
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_index'):
@@ -20,7 +20,8 @@ def index(centro):
     # retorna todos los turnos
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
-    turnos = Turno.with_filter(centro).paginate(page,per_page,error_out=False)
+    print (centro_id)
+    turnos = Turno.with_filter(centro_id).paginate(page,per_page,error_out=False)
     return render_template("turno/index.html", turnos=turnos)
 
 def new():
