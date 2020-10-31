@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2020 a las 08:46:48
+-- Tiempo de generación: 31-10-2020 a las 00:53:03
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -49,9 +49,7 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `name`, `address`, `phone`, `open`, `close`, `municipio_id`, `web`, `email`, `state`, `protocol`, `coordinates`, `type`, `turnos`) VALUES
-(1, 'centro test', 'calle 123', '4444444888', '09:00:00', '16:00:00', 1, 'asd', 'asd', 1, 'asd', 'asd', 'asd', 'asd'),
-(2, 'TEST', 'TEST', '03:31', '00:00:00', '00:00:00', 1, 'TEST', 'admin', 0, 'TEST', 'TEST', 'TEST', 'TEST'),
-(3, 'TEST2', 'TEST2', '03:32', '00:00:00', '00:00:00', 1, 'TEST2', 'TEST2', 0, 'TEST2', 'TEST2', 'TEST2', 'TEST2');
+(1, 'centro test', 'calle 123', '4444444888', '09:00:00', '16:00:00', 1, 'asd', 'asd', 1, 'asd', 'asd', 'asd', 'asd');
 
 -- --------------------------------------------------------
 
@@ -156,7 +154,11 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (14, 1, 16),
 (15, 1, 17),
 (16, 2, 17),
-(17, 1, 18);
+(17, 1, 18),
+(18, 2, 9),
+(19, 2, 13),
+(20, 2, 15),
+(21, 2, 7);
 
 -- --------------------------------------------------------
 
@@ -194,7 +196,6 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `pass
 (2, 'Operador', 'operador@gmail.com', 'Lalo', 'Landa', '123123', 1),
 (17, 'd', 'asdsad@dasd', 'a', 'd', 'asdasd', 1),
 (18, 'eqweqwq', 'qweqwe@qweqwe', 'qweqwe', 'qweqweqw', 'qweqwe', 0),
-(19, 'czxczxcz', 'zxc@zxc', 'zczxcz', 'cxzcxz', 'zxczcxz', 0),
 (22, 'asd', 'asd@asd', 'asd', 'asd', 'asd', 1),
 (23, 'ELVERDA', 'VER@dad', '12312312', 'afqfq', '123123', 1),
 (25, 'qwerty', 'q@werty', 'qwerty', 'qwerty', '123123', 1),
@@ -246,9 +247,7 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 (20, 40, 2),
 (21, 41, 2),
 (24, 26, 1),
-(26, 26, 2),
-(29, 19, 1),
-(30, 19, 2);
+(26, 26, 2);
 
 --
 -- Índices para tablas volcadas
@@ -340,7 +339,7 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_centros`
