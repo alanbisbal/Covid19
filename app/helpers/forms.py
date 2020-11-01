@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField
+from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField
 from wtforms.validators import InputRequired as InputRequired
 
 class CenterForm(FlaskForm):
@@ -8,7 +8,7 @@ class CenterForm(FlaskForm):
     phone =StringField('phone',validators =[InputRequired()])
     open = TimeField('open',validators =[InputRequired()])
     close = TimeField('close',validators =[InputRequired()])
-    municipio_id = IntegerField('municipio_id',validators =[InputRequired()])
+    municipio_id = SelectField('municipio_id',validators =[InputRequired()],choices= [])
     web = StringField('web',validators =[InputRequired()])
     email = StringField('email',validators =[InputRequired()])
     state = StringField('state',validators =[InputRequired()])

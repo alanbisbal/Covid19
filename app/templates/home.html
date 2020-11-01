@@ -6,6 +6,21 @@
 
 {% block content %}
 
+<div id="app">
+  <h1>
+  [[message]]
+  </h1>
+</div>
+
+<script>
+var app = new Vue({
+  el: '#app',
+  delimiters: ["[[", "]]"],
+    data: {
+      message: "Example script from Vue!!!(see the code)"
+    }
+})
+</script>
 <br>
     <div class="jumbotron">
       <div class="container">

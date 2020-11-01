@@ -1,6 +1,5 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash
+from flask import redirect, render_template, request, url_for, session, abort, flash,jsonify
 from app import db
-
 from app.models.config import Config
 from app.helpers.auth import authenticated
 from app.models.centro import Centro
@@ -8,6 +7,8 @@ from app.helpers.forms import CenterForm
 
 from app.helpers.validates import form_config_update
 from app.helpers.permits import has_permit, is_admin
+import requests
+
 
 def index():
     if not authenticated(session):
@@ -27,7 +28,10 @@ def new():
     if not has_permit('centro_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-    form = CenterForm()
+
+    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()
+    print (municipios['data']['Town']['1']) #corregir. asi se obtienen algunos datos. preguntar forma de mejorar
+    form = CenterForm(municipios)
     return render_template("centro/new.html",form =form)
 
 def create():

@@ -15,6 +15,7 @@ from app.models.user import User
 from app.helpers.permits import has_permit, is_admin
 from flask_bootstrap import Bootstrap
 
+
 db = SQLAlchemy()
 
 def create_app(environment="development"):
