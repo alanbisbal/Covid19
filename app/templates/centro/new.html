@@ -17,21 +17,13 @@
     {% if form.csrf_token.errors %}
       <div class="warning">You have submitted an invalid CSRF token</div>
     {% endif %}
-
+  
     {{wtf.form_field(form.name)}}
     {{wtf.form_field(form.address)}}
     {{wtf.form_field(form.phone)}}
     {{wtf.form_field(form.open,type="Time")}}
     {{wtf.form_field(form.close,type="Time")}}
     {{wtf.form_field(form.municipio_id)}}
-
-    <div id="app">
-    <ul>
-      <li v-for="municipio in municipios">
-        [[municipio.id]]  -  [[municipio.name]]  (Fase:  [[municipio.phase ]])
-        </li>
-      </ul>
-    </div>
     {{wtf.form_field(form.web)}}
     {{wtf.form_field(form.email)}}
     {{wtf.form_field(form.state)}}

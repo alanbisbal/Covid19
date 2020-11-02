@@ -31,7 +31,7 @@ def new():
 
     municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()
     form = CenterForm()
-    return render_template("centro/new.html",form =form)
+    return render_template("centro/new.html",form=form)
 
 def create():
     if not authenticated(session):
@@ -41,7 +41,11 @@ def create():
         return redirect(url_for("home"))
     # validaciones de acceso administrador
     data = request.form
-    Centro.add(data)
+    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
+    for mun in municipios:
+        if municipios[mun]['name'] == data['municipio_id']:
+            id=municipios[mun]['id']
+    Centro.add(data,id)
     flash("Insercion exitosa","success")
     return redirect(url_for("centro_index"))
 

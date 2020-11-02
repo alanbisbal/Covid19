@@ -25,13 +25,13 @@ class Centro(db.Model):
     turnos = db.Column(db.String(255), nullable=False)
     #db.relationship("Turno",backref= "centros")#checkear el backref
 
-    def __init__(self, data):
+    def __init__(self, data,id):
         self.name = data['name']
         self.address = data['address']
         self.phone = data['phone']
         self.open = data['open']
         self.close =  data['close']
-        self.municipio_id = "1"
+        self.municipio_id = id
         self.web = data['web']
         self.email = data['email']
         self.state = 0
@@ -46,8 +46,8 @@ class Centro(db.Model):
         return '<Centro {}>'.format(self.name)
 
 
-    def add(data):
-        db.session.add(Centro(data))
+    def add(data,id):
+        db.session.add(Centro(data,id))
         db.session.commit()
 
 
