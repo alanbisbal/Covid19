@@ -34,7 +34,10 @@ class Centro(db.Model):
         self.municipio_id = id
         self.web = data['web']
         self.email = data['email']
-        self.state = 0
+        if data['state'] == 'y':
+            self.state = 1
+        else:
+            self.state = 0
         self.protocol = data['protocol']
         self.coordinates = data['coordinates']
         self.type = data['type']
