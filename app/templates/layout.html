@@ -11,10 +11,23 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <title>{% block title %}{% endblock %}</title>
-
+    <script src="https://unpkg.com/vue"></script>
     {% endblock %}
   </head>
   <body>
+    <div id="app">
+        <h2>{{ message }}</h2>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'Hola Vue!!!'
+        }
+      })
+    </script>
+
     <div id="navbar">
       {% block navbar %}
       <!---estas secciones son vistas por cualquier usuario-->

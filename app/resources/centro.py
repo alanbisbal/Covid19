@@ -49,7 +49,6 @@ def update(centro_id):
     if not has_permit('centro_update'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
-
     centro = Centro.with_id(centro_id)
     return render_template("centro/update.html",centro = centro)
 
@@ -60,6 +59,12 @@ def update_new():
     if not has_permit('centro_update'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
+    data= request.form
+    # Hacer todas estas funciones para el centro
+    print (data)
+    centro = Centro.with_id(data['centro_id'])
+    centro.update(data)
+    flash("Actualización exitosa.","success")
     return redirect(url_for("centro_index"))
 
 def delete():

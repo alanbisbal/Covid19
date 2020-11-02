@@ -15,6 +15,10 @@ from app.models.user import User
 from app.helpers.permits import has_permit, is_admin
 from flask_bootstrap import Bootstrap
 
+from flask import jsonify
+from app.resources.api import centros
+
+
 db = SQLAlchemy()
 
 def create_app(environment="development"):
@@ -78,6 +82,11 @@ def create_app(environment="development"):
         if sitio_activo:
             return render_template("home.html", config=configuracion)
         return render_template("mantenimiento.html")
+
+    # Ruta para la api con el listado de centros
+    @app.route('/centros')
+    def getCentros():
+        return jsonify(centros)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

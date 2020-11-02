@@ -57,10 +57,37 @@ class Centro(db.Model):
     def with_id(data):
         return db.session.query(Centro).get(data)
 
-    #arreglar update
-    def update(self,data):
-        db.session.commit()
+    def with_email(data):
+        return db.session.query(Centro).filter_by(email = data).first()
 
+    def update(self,data):
+        if self.name != data['name']:
+            self.name = data['name']
+        if self.address != data['address']:
+            self.address = data['address']
+        if self.phone != data['phone']:
+            self.phone = data['phone']
+        if self.open != data['open']:
+            self.open = data['open']
+        if self.close != data['close']:
+            self.close = data['close']
+        if self.municipio_id != data['municipio_id']:
+            self.municipio_id = data['municipio_id']
+        if self.web != data['web']:
+            self.web = data['web']
+        if self.email != data['email']:
+            self.email = data['email']
+        if self.state != data['state']:
+            self.state = 0
+        if self.protocol != data['protocol']:
+            self.protocol = data['protocol']
+        if self.coordinates != data['coordinates']:
+            self.coordinates = data['coordinates']
+        if self.type != data['type']:
+            self.type = data['type']
+        if self.turnos != data['turnos']:
+            self.turnos = data['turnos']
+        db.session.commit()
 
     def delete(self):
         db.session.delete(self)
