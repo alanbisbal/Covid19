@@ -30,8 +30,7 @@ def new():
         return redirect(url_for("home"))
 
     municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()
-    print (municipios['data']['Town']['1']) #corregir. asi se obtienen algunos datos. preguntar forma de mejorar
-    form = CenterForm(municipios)
+    form = CenterForm()
     return render_template("centro/new.html",form =form)
 
 def create():
