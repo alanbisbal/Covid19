@@ -54,9 +54,9 @@ def update(turno_id):
     if not has_permit('turno_update'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-    form = Turno.with_id(turno_id)
+    turno = Turno.with_id(turno_id)
     form = TurnoForm()
-    return render_template("turno/update.html",form = form)
+    return render_template("turno/update.html",form = form,turno=turno)
 
 def update_new():
     if not authenticated(session):
