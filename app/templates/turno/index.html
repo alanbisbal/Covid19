@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<a href="{{ url_for('turno_new') }}" class="btn btn-success mr-sm-2">Crear Turno</a>
+<a href="{{ url_for('turno_new', centro_id=1) }}" class="btn btn-success mr-sm-2">Crear Turno</a>
 <form class="form-inline md-form mr-auto mb-4" action="">
   <h1 class="my-0 mr-md-auto font-weight-normal">Turnos</h1>
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Búscar.." aria-label="Search">

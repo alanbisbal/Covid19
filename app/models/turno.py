@@ -22,6 +22,7 @@ class Turno(db.Model):
         self.hora_inicio = data['hora_inicio']
         self.hora_fin = data['hora_fin']
         self.fecha = data['fecha']
+        self.centro_id = data['centro_id']
         db.session.commit()
 
     @classmethod

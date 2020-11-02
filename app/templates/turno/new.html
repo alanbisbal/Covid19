@@ -6,7 +6,7 @@
 <div class="container col-md-8 col-sm-12 " style="max-width: 40rem;">
   <div class="card">
 
-  <form action="{{ url_for('turno_create') }}" method="POST">
+  <form action="{{ url_for('turno_create', centro_id = 1) }}" method="POST">
     <div class="card-header bg-primary text-white" >
       <h5>Crear Turno:</h5>
     </div>
@@ -22,6 +22,7 @@
     {{wtf.form_field(form.hora_inicio,type="Time")}}
     {{wtf.form_field(form.hora_fin,type="Time")}}
     {{wtf.form_field(form.fecha,type="Date")}}
+    {{wtf.form_field(form.centro_id)}}
 
     </div>
 
