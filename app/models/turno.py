@@ -29,7 +29,7 @@ class Turno(db.Model):
         return '<Turno {}>'.format(self.email)
 
     def with_filter(filter):
-        return db.session.query(Turno).filter(Turno.centro_id.contains(filter))
+        return db.session.query(Turno).filter(Turno.centro_id == filter)
 
     def with_id(data):
         return db.session.query(Turno).get(data)
@@ -60,4 +60,3 @@ class Turno(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-

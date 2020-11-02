@@ -22,8 +22,8 @@ class Centro(db.Model):
     coordinates = db.Column(db.String(255), nullable=False)
     type = db.Column(db.String(255), nullable=False)
     #db.Column(Integer, ForeignKey('tipo_centros.id'))
-    turnos = db.relationship("Turno",backref= "centros")#checkear el backref
-    
+    turnito = db.relationship("Turno",backref= "centros")#checkear el backref
+    turnos = db.Column(db.String(255), nullable=False)
 
     def __init__(self, data):
         self.name = data['name']

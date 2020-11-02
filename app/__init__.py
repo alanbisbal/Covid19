@@ -65,6 +65,7 @@ def create_app(environment="development"):
     app.add_url_rule("/turnos/update/<turno_id>", "turno_update", turno.update)
     app.add_url_rule("/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
     app.add_url_rule("/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
+    app.add_url_rule("/turnos/show/<turno_id>", "turno_show", turno.show)
 
     # Rutas de Centros
     app.add_url_rule("/centros", "centro_index", centro.index)
@@ -75,7 +76,7 @@ def create_app(environment="development"):
     app.add_url_rule("/centros/update/<centro_id>", "centro_update", centro.update)
     app.add_url_rule("/centros/update", "centro_update_new", centro.update_new, methods=["POST"])
 
-    
+
     #Rutas de configuracion
     app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
 

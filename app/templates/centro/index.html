@@ -69,7 +69,20 @@
   </tbody>
 
 </table>
-</div>
+<script src="https://unpkg.com/vue"></script>
+
+    <div id="app">
+      <h2>{{ message }}</h2>
+    </div>
+
+      <script>
+      var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hola Vue!!!'
+      }
+    })
+  </script>
 <hr class="my-4">
 <!--botones  de paginacion-->
 
