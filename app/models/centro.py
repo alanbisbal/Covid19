@@ -97,3 +97,12 @@ class Centro(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    def with_filter(filter):
+        return db.session.query(Centro).filter(Centro.name.contains(filter))
+
+    def active_with_filter(filter):
+        return db.session.query(Centro).filter(Centro.state == True,Centro.name.contains(filter))
+
+    def deactive_with_filter(filter):
+        return db.session.query(Centro).filter(Centro.state == False,Centro.name.contains(filter))
