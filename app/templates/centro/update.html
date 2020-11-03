@@ -17,71 +17,28 @@
   <div class="card-body">
   </div>
 
+  <div class="form-group">
+  {{ form.csrf_token }}
+  {% if form.csrf_token.errors %}
+    <div class="warning">You have submitted an invalid CSRF token</div>
+  {% endif %}
+
   <input type="hidden" class="form-control"  id="centro_id" name="centro_id" value="{{centro.id}}">
 
-  <div class="form-group">
-    <label for="name"><strong>Nombre del centro</strong></label>
-    <input type="text" class="form-control" id="name" name="name" value="{{centro.name}}" required>
-  </div>
+  {{wtf.form_field(form.name, value=centro.name)}}
+  {{wtf.form_field(form.address, value=centro.address)}}
+  {{wtf.form_field(form.phone, value=centro.phone)}}
+  {{wtf.form_field(form.open,type="Time", value=centro.open)}}
+  {{wtf.form_field(form.close,type="Time", value=centro.close)}}
+  {{wtf.form_field(form.municipio_id)}}
+  {{wtf.form_field(form.web, value=centro.web)}}
+  {{wtf.form_field(form.email, value=centro.email)}}
+  {{wtf.form_field(form.protocol, value=centro.protocol)}}
+  {{wtf.form_field(form.coordinates, value=centro.coordinates)}}
+  {{wtf.form_field(form.type, value=centro.type)}}
+  {{wtf.form_field(form.turnos, value=centro.turnos)}}
+  {{wtf.form_field(form.state, value=centro.state)}}
 
-  <div class="form-group">
-    <label for="address"><strong>Direccion</strong></label>
-    <input type="text" class="form-control" id="address" name="address" value="{{centro.address}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Telefono</strong></label>
-    <input type="text" class="form-control" id="phone" name="phone" value="{{centro.phone}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Abierto</strong></label>
-    <input type="time" class="form-control" id="open" name="open" value="{{centro.open}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Cerrado</strong></label>
-    <input type="time" class="form-control" id="close" name="close" value="{{centro.close}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Municipio_id</strong></label>
-    <input type="text" class="form-control" id="municipio_id" name="municipio_id" value="{{centro.municipio_id}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Web</strong></label>
-    <input type="text" class="form-control" id="web" name="web" value="{{centro.web}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Email</strong></label>
-    <input type="text" class="form-control" id="email" name="email" value="{{centro.email}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Estado</strong></label>
-    <input type="text" class="form-control" id="state" name="state" value="{{centro.state}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Protocolo</strong></label>
-    <input type="text" class="form-control" id="protocol" name="protocol" value="{{centro.protocol}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Cordenadas</strong></label>
-    <input type="text" class="form-control" id="coordinates" name="coordinates" value="{{centro.coordinates}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Tipo</strong></label>
-    <input type="text" class="form-control" id="type" name="type" value="{{centro.type}}" required>
-  </div>
-
-  <div class="form-group">
-    <label for="name"><strong>Turnos</strong></label>
-    <input type="text" class="form-control" id="turnos" name="turnos" value="{{centro.turnos}}" required>
   </div>
 
 
@@ -90,10 +47,9 @@
    <a href="/usuarios" class="btn btn-secondary mt-2">Volver</a>
     <button type="submit" class="btn btn-primary mt-2 ml-2">Guardar</button>
   </div>
-  </div>
   </form>
   </div>
-  </div>
+</div>
 
 <script type="text/javascript">
 function ConfirmDelete() {

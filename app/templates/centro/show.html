@@ -10,7 +10,35 @@
   <div class="container">
     <h1 class="display-4"> Centro</h1>
     <hr class="my-4">
+
     <p ><strong >Nombre:</strong> {{centro.name }}</p>
+    <p ><strong >Direccion:</strong> {{centro.address }}</p>
+    <p ><strong >Telefono:</strong> {{centro.phone }}</p>
+    <p ><strong >Hora de apertura:</strong> {{centro.open }}</p>
+    <p ><strong >Hora de cierre:</strong> {{centro.close }}</p>
+    <p ><strong >Municipio:</strong> </p>
+    <div id="app">
+          <p v-for="municipio in municipios" v-if="{{centro.municipio_id}} == municipio.id">
+            [[municipio.id]]  -  [[municipio.name]]  (Fase:  [[municipio.phase ]])
+          </p>
+     </div>
+    <p ><strong >Sitio web:</strong> {{centro.web }}</p>
+    <p ><strong >Email:</strong> {{centro.email }}</p>
+    <p ><strong >Estado:</strong>
+      {% if centro.state %}
+      Publicado
+      {% else %}
+      Despublicado
+      {%endif%}
+
+    </p>
+    <p ><strong >Protocolo:</strong> {{centro.protocol }}</p>
+    <p ><strong >Coordenadas:</strong> {{centro.coordinates }}</p>
+    <p ><strong >Tipo de centro:</strong> {{centro.type }}</p>
+    <p ><strong >Turnos:</strong> {{centro.turnos }}</p>
+
+
+
     <script type="text/javascript">
   function ConfirmDelete() {
       return confirm('Esta seguro que desea eliminar este centro?')
@@ -28,6 +56,22 @@
         <button type="submite" class="btn btn-danger mt-2 ml-2"  onclick="return ConfirmDelete()" >eliminar</button>
       </form>
 
+      <script>
+        var app = new Vue({
+          el: '#app',
+          delimiters: ["[[", "]]"],
+          data: {
+            municipios: []
+          },
+          created() {
+            fetch('https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios')
+              .then(response => response.json())
+              .then(json =>{
+                this.municipios = json.data.Town
+              })
+          }
+        })
+      </script>
 
 
     </div>

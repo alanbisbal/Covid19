@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     {% block head %}
@@ -8,25 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <title>{% block title %}{% endblock %}</title>
     <script src="https://unpkg.com/vue"></script>
     {% endblock %}
   </head>
   <body>
-    <div id="app">
-        <h2>{{ message }}</h2>
-    </div>
 
-    <script>
-      var app = new Vue({
-        el: '#app',
-        data: {
-          message: 'Hola Vue!!!'
-        }
-      })
-    </script>
 
     <div id="navbar">
       {% block navbar %}

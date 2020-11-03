@@ -1,18 +1,24 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField
+from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField
 from wtforms.validators import InputRequired as InputRequired
+from wtforms.fields.html5 import EmailField
+import requests
 
 class CenterForm(FlaskForm):
-    name = StringField('name',validators =[InputRequired()])
-    address = StringField('address',validators =[InputRequired()])
-    phone =StringField('phone',validators =[InputRequired()])
-    open = TimeField('open',validators =[InputRequired()])
-    close = TimeField('close',validators =[InputRequired()])
-    municipio_id = IntegerField('municipio_id',validators =[InputRequired()])
-    web = StringField('web',validators =[InputRequired()])
-    email = StringField('email',validators =[InputRequired()])
-    state = StringField('state',validators =[InputRequired()])
-    protocol = StringField('protocol',validators =[InputRequired()])
-    coordinates = StringField('coordinates',validators =[InputRequired()])
-    type = StringField('type',validators =[InputRequired()])
-    turnos = StringField('turnos',validators =[InputRequired()])
+    data = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
+    dict={}
+    for mun in data:
+        dict[data[mun]['name']]=mun   
+    name = StringField('Nombre',validators =[InputRequired()])
+    address = StringField('Direccion',validators =[InputRequired()])
+    phone =StringField('Telefono',validators =[InputRequired()])
+    open = TimeField('Hora de apertura',validators =[InputRequired()])
+    close = TimeField('Hora de cierre',validators =[InputRequired()])
+    municipio_id = SelectField('Municipio',validate_choice=False ,choices= dict)
+    web = StringField('Sitio Web',validators =[InputRequired()])
+    email = EmailField('Email',validators =[InputRequired()])
+    state = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
+    protocol = StringField('Protocolo',validators =[InputRequired()])
+    coordinates = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
+    type = StringField('Tipo',validators =[InputRequired()])
+    turnos = StringField('Turnos',validators =[InputRequired()])

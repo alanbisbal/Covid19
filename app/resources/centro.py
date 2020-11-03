@@ -1,6 +1,5 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash
+from flask import redirect, render_template, request, url_for, session, abort, flash,jsonify
 from app import db
-
 from app.models.config import Config
 from app.helpers.auth import authenticated
 from app.models.centro import Centro
@@ -8,6 +7,8 @@ from app.helpers.forms import CenterForm
 
 from app.helpers.validates import form_config_update
 from app.helpers.permits import has_permit, is_admin
+import requests
+
 
 def index():
     if not authenticated(session):
@@ -27,8 +28,10 @@ def new():
     if not has_permit('centro_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
+
+    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()
     form = CenterForm()
-    return render_template("centro/new.html",form =form)
+    return render_template("centro/new.html",form=form)
 
 def create():
     if not authenticated(session):
@@ -38,7 +41,11 @@ def create():
         return redirect(url_for("home"))
     # validaciones de acceso administrador
     data = request.form
-    Centro.add(data)
+    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
+    for mun in municipios:
+        if municipios[mun]['name'] == data['municipio_id']:
+            id=municipios[mun]['id']
+    Centro.add(data,id)
     flash("Insercion exitosa","success")
     return redirect(url_for("centro_index"))
 
@@ -50,7 +57,8 @@ def update(centro_id):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
     centro = Centro.with_id(centro_id)
-    return render_template("centro/update.html",centro = centro)
+    form = CenterForm()
+    return render_template("centro/update.html",centro = centro, form=form)
 
 def update_new():
     if not authenticated(session):
@@ -62,7 +70,7 @@ def update_new():
     data= request.form
     # Hacer todas estas funciones para el centro
     print (data)
-    centro = Centro.with_id(data['centro_id'])
+    centro = Centro.with_id(data['centro_id']) #Seguir pensandolo
     centro.update(data)
     flash("Actualización exitosa.","success")
     return redirect(url_for("centro_index"))
