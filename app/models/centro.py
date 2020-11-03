@@ -63,7 +63,7 @@ class Centro(db.Model):
     def with_email(data):
         return db.session.query(Centro).filter_by(email = data).first()
 
-    def update(self,data):
+    def update(self,data, id):
         if self.name != data['name']:
             self.name = data['name']
         if self.address != data['address']:
@@ -75,12 +75,14 @@ class Centro(db.Model):
         if self.close != data['close']:
             self.close = data['close']
         if self.municipio_id != data['municipio_id']:
-            self.municipio_id = data['municipio_id']
+            self.municipio_id = id
         if self.web != data['web']:
             self.web = data['web']
         if self.email != data['email']:
             self.email = data['email']
-        if self.state != data['state']:
+        if data['state'] == 'y':
+            self.state = 1
+        else:
             self.state = 0
         if self.protocol != data['protocol']:
             self.protocol = data['protocol']

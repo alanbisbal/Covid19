@@ -69,9 +69,13 @@ def update_new():
         return redirect(url_for("home"))
     data= request.form
     # Hacer todas estas funciones para el centro
-    print (data)
     centro = Centro.with_id(data['centro_id']) #Seguir pensandolo
-    centro.update(data)
+    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
+    for mun in municipios:
+        if municipios[mun]['name'] == data['municipio_id']:
+            id=municipios[mun]['id']
+
+    centro.update(data, id)
     flash("Actualización exitosa.","success")
     return redirect(url_for("centro_index"))
 
