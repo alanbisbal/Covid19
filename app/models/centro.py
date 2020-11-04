@@ -74,7 +74,7 @@ class Centro(db.Model):
             self.open = data['open']
         if self.close != data['close']:
             self.close = data['close']
-        if self.municipio_id != data['municipio_id']:
+        if self.municipio_id != id:
             self.municipio_id = id
         if self.web != data['web']:
             self.web = data['web']
