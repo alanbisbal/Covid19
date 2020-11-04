@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}Usuarios{% endblock %}
+{% block title %}Centros{% endblock %}
 
 {% block content %}
 <div class="container col-md-8 col-sm-12 " style="max-width: 40rem;">
@@ -17,35 +17,50 @@
     {% if form.csrf_token.errors %}
       <div class="warning">You have submitted an invalid CSRF token</div>
     {% endif %}
-    {{wtf.form_field(form.name)}}
-    {{wtf.form_field(form.address)}}
-    {{wtf.form_field(form.phone)}}
-    {{wtf.form_field(form.open,type="Time")}}
-    {{wtf.form_field(form.close,type="Time")}}
+
+    {{wtf.form_field(form.nombre)}}
+    {{wtf.form_field(form.direccion)}}
+    {{wtf.form_field(form.telefono)}}
+    {{wtf.form_field(form.hora_inicio,type="Time")}}
+    {{wtf.form_field(form.hora_fin,type="Time")}}
     {{wtf.form_field(form.municipio_id)}}
     {{wtf.form_field(form.web)}}
     {{wtf.form_field(form.email)}}
-    {{wtf.form_field(form.state)}}
-    {{wtf.form_field(form.protocol)}}
-    {{wtf.form_field(form.coordinates)}}
-    {{wtf.form_field(form.type)}}
-    {{wtf.form_field(form.turnos)}}
-    </div>
+    {{wtf.form_field(form.protocolo)}}
+    {{wtf.form_field(form.coordenadas)}}
+    {{wtf.form_field(form.tipo_centro)}}
+    {{wtf.form_field(form.estado)}}
 
+    </div>
     <div class="form-inline">
           <a href="{{ url_for('centro_index') }}" class="btn btn-primary my-1" >Volver</a>
           <div class="card-body d-flex justify-content-between align-items-center"></div>
           <div  class="col-auto my-1">
-            <input type="submit" value="Crear" class="btn btn-success">
+             <input type="submit" value="Crear" class="btn btn-success">
           </div>
           <div>
             <button type="reset" class="btn btn-danger">Limpiar</button>
           </div>
-
      </div>
-
   </div>
   </form>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      delimiters: ["[[", "]]"],
+      data: {
+        municipios: []
+      },
+      created() {
+        fetch('https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios')
+          .then(response => response.json())
+          .then(json =>{
+            this.municipios = json.data.Town
+          })
+      }
+    })
+  </script>
 </div>
 </div>
 {% endblock %}

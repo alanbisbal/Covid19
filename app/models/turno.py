@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
-
+from app.models import centro
 
 class Turno(db.Model):
     __tablename__ = 'turnos'
@@ -15,6 +15,7 @@ class Turno(db.Model):
     hora_fin = db.Column(db.Time(timezone=True),nullable=False)
     fecha = db.Column(db.Date)
     centro_id = db.Column(db.Integer, db.ForeignKey('centros.id'))
+    centro = relationship("Centro")
 
     def __init__(self, data):
         self.email = data['email']

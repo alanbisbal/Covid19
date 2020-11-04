@@ -5,8 +5,8 @@ from config import config
 from app.db import db
 from app.resources import user
 from app.resources import auth
-from app.resources import turno
 from app.resources import centro
+from app.resources import turno
 from app.resources import config as configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -15,6 +15,9 @@ from app.models.config import Config
 from app.models.user import User
 from app.helpers.permits import has_permit, is_admin
 from flask_bootstrap import Bootstrap
+from flask import jsonify
+from app.resources.api import centros
+
 
 db = SQLAlchemy()
 
@@ -58,10 +61,11 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/update/user_delete_rol", "user_rol_delete", user.rol_delete, methods=["POST"])
     app.add_url_rule("/usuarios/update/user_add_rols", "user_add_rols", user.add_rols, methods=["POST"])
 
-    # Ruta de Turnos
+    # Rutas de turno
+    app.add_url_rule("/turnos", "turno_indexall", turno.indexall)
     app.add_url_rule("/turnos/index/<centro_id>", "turno_index", turno.index)
-    app.add_url_rule("/turnos", "turno_create", turno.create, methods=["POST"])
-    app.add_url_rule("/turnos/nuevo", "turno_new", turno.new, methods=["POST"])
+    app.add_url_rule("/turnos/nuevo/create", "turno_create", turno.create, methods=["POST"])
+    app.add_url_rule("/turnos/nuevo", "turno_new", turno.new)
     app.add_url_rule("/turnos/update/<turno_id>", "turno_update", turno.update)
     app.add_url_rule("/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
     app.add_url_rule("/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
@@ -75,7 +79,7 @@ def create_app(environment="development"):
     app.add_url_rule("/centros/delete", "centro_delete", centro.delete, methods=["POST"])
     app.add_url_rule("/centros/update/<centro_id>", "centro_update", centro.update)
     app.add_url_rule("/centros/update", "centro_update_new", centro.update_new, methods=["POST"])
-
+    app.add_url_rule("/centros/search", "centro_search", centro.search)
 
     #Rutas de configuracion
     app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
@@ -88,6 +92,11 @@ def create_app(environment="development"):
         if sitio_activo:
             return render_template("home.html", config=configuracion)
         return render_template("mantenimiento.html")
+
+    # Ruta para la api con el listado de centros
+    @app.route('/centros')
+    def getCentros():
+        return jsonify(centros)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     {% block head %}
@@ -8,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <title>{% block title %}{% endblock %}</title>
-
+    <script src="https://unpkg.com/vue"></script>
     {% endblock %}
   </head>
   <body>
+
+
     <div id="navbar">
       {% block navbar %}
       <!---estas secciones son vistas por cualquier usuario-->
@@ -32,7 +33,7 @@
             <a class="p-2 text-dark" href="{{ url_for('centro_index') }}">Centros de Ayuda</a>
           <!--si el usuario es admin ademas vera estas secciones :-->
               {% if has_permit('permisos_index') %}
-                <a class="p-2 text-dark" href="#">Roles y permisos</a>
+                <a class="p-2 text-dark" href="{{ url_for('turno_indexall') }}"">Turnos</a>
               {% endif %}
               {% if has_permit('user_index') %}
                 <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>

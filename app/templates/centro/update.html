@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
-{% block title %}Usuarios{% endblock %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Centro{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
@@ -14,24 +15,39 @@
     <h5>Editar datos del centro:</h5>
   </div>
   <div class="card-body">
-    {{centro.name}}
+  </div>
+
+  <div class="form-group">
+  {{ form.csrf_token }}
+  {% if form.csrf_token.errors %}
+    <div class="warning">You have submitted an invalid CSRF token</div>
+  {% endif %}
+
+  <input type="hidden" class="form-control"  id="centro_id" name="centro_id" value="{{centro.id}}">
+
+  {{wtf.form_field(form.nombre, value=centro.nombre)}}
+  {{wtf.form_field(form.direccion, value=centro.direccion)}}
+  {{wtf.form_field(form.telefono, value=centro.telefono)}}
+  {{wtf.form_field(form.hora_inicio,type="Time", value=centro.hora_inicio)}}
+  {{wtf.form_field(form.hora_fin,type="Time", value=centro.hora_fin)}}
+  {{wtf.form_field(form.municipio_id)}}
+  {{wtf.form_field(form.web, value=centro.web)}}
+  {{wtf.form_field(form.email, value=centro.email)}}
+  {{wtf.form_field(form.protocolo, value=centro.protocolo)}}
+  {{wtf.form_field(form.coordenadas, value=centro.coordenadas)}}
+  {{wtf.form_field(form.tipo_centro, value=centro.tipo_centro)}}
+  {{wtf.form_field(form.estado, value=centro.estado)}}
+
   </div>
 
 
-
-<script type="text/javascript">
-function ConfirmDelete() {
-    return confirm('Esta seguro')
-  }
-</script>
-
-
-<div class="form-inline">
-  <div class="card-body d-flex justify-content-between align-items-center"></div>
- <a href="/centros" class="btn btn-secondary mt-2">Volver</a>
-  <button type="submit" class="btn btn-primary mt-2 ml-2">Guardar</button>
+  <div class="form-inline">
+    <div class="card-body d-flex justify-content-between align-items-center"></div>
+   <a href="/usuarios" class="btn btn-secondary mt-2">Volver</a>
+    <button type="submit" class="btn btn-primary mt-2 ml-2">Editar</button>
+  </div>
+  </form>
+  </div>
 </div>
-</form>
-</div>
-</div>
+
 {% endblock %}

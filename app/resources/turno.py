@@ -22,10 +22,20 @@ def index(centro_id):
     # retorna todos los turnos
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
-    print (centro_id)
     turnos = Turno.with_filter(centro_id).paginate(page,per_page,error_out=False)
-    return render_template("turno/index.html", turnos=turnos, centro_id=centro_id)
+    return render_template("turno/index.html", turnos=turnos)
 
+def indexall():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('turno_index'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
+    # retorna todos los turnos paginados
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
+    turnos = Turno.query.paginate(page,per_page,error_out=False)
+    return render_template("turno/index.html", turnos=turnos)
 
 def new():
     if not authenticated(session):
@@ -45,9 +55,8 @@ def create():
         return redirect(url_for("home"))
     data = request.form
     Turno.add(data)
-    id = data["centro_id"]
     flash("Insercion exitosa","success")
-    return  redirect(url_for("turno_index", centro_id=id ))
+    return redirect(url_for("home"))
 
 def update(turno_id):
     if not authenticated(session):
@@ -80,10 +89,9 @@ def delete():
         return redirect(url_for("home"))
     # se busca el usuario en la base de datos y se lo elimina
     turno = Turno.with_id(request.form['turno_id'])
-    id = turno.centro_id
     turno.delete()
     flash("Eliminación exitosa.","success")
-    return redirect(url_for("turno_index", centro_id=id ))
+    return redirect(url_for('home'))
 
 def show(turno_id):
     if not authenticated(session):

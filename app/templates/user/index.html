@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block content %}
-<a href="{{ url_for('user_new') }}" class="btn btn-success mr-sm-2">Crear Usuario</a>
+<!--esta re demas igual no lo borro
+<a href="{{ url_for('home') }}" class="btn btn-primary my-1">Volver</a>-->
+
+<a href="{{ url_for('user_new') }}" class="btn btn-success">Crear Usuario</a>
+
 <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('user_search') }}">
   <h1 class="my-0 mr-md-auto font-weight-normal">Usuarios</h1>
 
@@ -22,7 +26,7 @@
 
   </form>
 
-  <div class="table-responsive-md">
+
   <table class="table">
   <thead>
     <tr>
@@ -99,7 +103,6 @@
   </tbody>
 
 </table>
-</div>
 <hr class="my-4">
 <!--botones  de paginacion-->
 

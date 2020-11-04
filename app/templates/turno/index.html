@@ -31,6 +31,7 @@
       <th scope="col">Telefono</th>
       <th scope="col">Hora</th>
       <th scope="col">Fecha</th>
+      <th scope="col">Centro</th>
     </tr>
   </thead>
   <script type="text/javascript">
@@ -51,6 +52,7 @@
       <!--fecha-->
       <td>{{ turno.fecha }}</td>
         <!--opciones-->
+      <td>{{ turno.centro.nombre }}</td>
       <td>
      <div class="form-inline ">
        <form action= "{{ url_for('turno_show', turno_id = turno.id ) }}"  >

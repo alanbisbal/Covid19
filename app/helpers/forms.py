@@ -1,21 +1,26 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,DateField
+from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField,DateField
 from wtforms.validators import InputRequired as InputRequired
+from wtforms.fields.html5 import EmailField
+import requests
 
 class CenterForm(FlaskForm):
-    name = StringField('name',validators =[InputRequired()])
-    address = StringField('address',validators =[InputRequired()])
-    phone =StringField('phone',validators =[InputRequired()])
-    open = TimeField('open',validators =[InputRequired()])
-    close = TimeField('close',validators =[InputRequired()])
-    municipio_id = IntegerField('municipio_id',validators =[InputRequired()])
-    web = StringField('web',validators =[InputRequired()])
-    email = StringField('email',validators =[InputRequired()])
-    state = StringField('state',validators =[InputRequired()])
-    protocol = StringField('protocol',validators =[InputRequired()])
-    coordinates = StringField('coordinates',validators =[InputRequired()])
-    type = StringField('type',validators =[InputRequired()])
-    turnos = StringField('turnos',validators =[InputRequired()])
+    data = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
+    dict={}
+    for mun in data:
+        dict[data[mun]['name']]=mun
+    nombre = StringField('Nombre',validators =[InputRequired()])
+    direccion = StringField('Direccion',validators =[InputRequired()])
+    telefono =StringField('Telefono',validators =[InputRequired()])
+    hora_inicio = TimeField('Hora de apertura',validators =[InputRequired()])
+    hora_fin = TimeField('Hora de cierre',validators =[InputRequired()])
+    municipio_id = SelectField('Municipio',validate_choice=False ,choices= dict)
+    web = StringField('Sitio Web',validators =[InputRequired()])
+    email = EmailField('Email',validators =[InputRequired()])
+    estado = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
+    protocolo = StringField('Protocolo',validators =[InputRequired()])
+    coordenadas = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
+    tipo_centro = StringField('Tipo',validators =[InputRequired()])#check
 
 class TurnoForm(FlaskForm):
     email = StringField('email',validators =[InputRequired()])
@@ -24,5 +29,3 @@ class TurnoForm(FlaskForm):
     hora_fin = TimeField('hora_fin',validators =[InputRequired()])
     fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
     centro_id = IntegerField('centro_id',validators =[InputRequired()])
-    
-    
