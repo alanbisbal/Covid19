@@ -24,7 +24,7 @@ def index(centro_id):
     page = request.args.get("page", 1, type=int)
     print (centro_id)
     turnos = Turno.with_filter(centro_id).paginate(page,per_page,error_out=False)
-    return render_template("turno/index.html", turnos=turnos)
+    return render_template("turno/index.html", turnos=turnos, centro_id=centro_id)
 
 
 def new():
@@ -45,8 +45,9 @@ def create():
         return redirect(url_for("home"))
     data = request.form
     Turno.add(data)
+    id = data["centro_id"]
     flash("Insercion exitosa","success")
-    return redirect(url_for("home"))
+    return  redirect(url_for("turno_index", centro_id=id ))
 
 def update(turno_id):
     if not authenticated(session):
@@ -79,9 +80,10 @@ def delete():
         return redirect(url_for("home"))
     # se busca el usuario en la base de datos y se lo elimina
     turno = Turno.with_id(request.form['turno_id'])
+    id = turno.centro_id
     turno.delete()
     flash("Eliminación exitosa.","success")
-    return redirect(url_for('home'))
+    return redirect(url_for("turno_index", centro_id=id ))
 
 def show(turno_id):
     if not authenticated(session):
