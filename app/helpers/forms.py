@@ -8,7 +8,7 @@ class CenterForm(FlaskForm):
     data = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
     dict={}
     for mun in data:
-        dict[data[mun]['name']]=mun   
+        dict[data[mun]['name']]=mun
     name = StringField('Nombre',validators =[InputRequired()])
     address = StringField('Direccion',validators =[InputRequired()])
     phone =StringField('Telefono',validators =[InputRequired()])
@@ -22,3 +22,11 @@ class CenterForm(FlaskForm):
     coordinates = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
     type = StringField('Tipo',validators =[InputRequired()])
     turnos = StringField('Turnos',validators =[InputRequired()])
+
+class TurnoForm(FlaskForm):
+    email = StringField('email',validators =[InputRequired()])
+    telefono = StringField('telefono')
+    hora_inicio = TimeField('hora_inicio',validators =[InputRequired()])
+    hora_fin = TimeField('hora_fin',validators =[InputRequired()])
+    fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
+    centro_id = IntegerField('centro_id',validators =[InputRequired()])

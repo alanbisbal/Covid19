@@ -20,7 +20,7 @@ def form_user_new(data):
         flash('La contraseña no puede estar vacia',"danger")
         ok = False
     if not data['activo']:
-        flash('La contraseña no puede estar vacia',"danger")
+        flash('El estado no puede estar vacio',"danger")
     if ok:
         return True
     else:
@@ -97,3 +97,22 @@ def form_config_update(data):
         return True
     else:
         return False
+
+
+def form_turno(data):
+    ok = True
+    if not data['email']:
+        flash('El email no puede estar vacio',"danger")
+        ok = False
+    if not data['bloque']:
+        flash('El horario no puede estar vacio',"danger")
+        ok = False
+    if not data['fecha']:
+        flash('La fecha no puede estar vacia',"danger")
+        ok = False
+    if ok:
+        return True
+    else:
+        return False
+
+    
