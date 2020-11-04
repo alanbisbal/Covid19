@@ -99,9 +99,27 @@ def search():
     if not has_permit('centro_index'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
+
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
     centros = Centro.query.paginate(page,per_page,error_out=False)
+    estado = request.args.get("estado")
+    filter = request.args.get("filtro")
+    # se aplica filtro independientemente del estado
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
+    if estado == '---':
+        centros = Centro.with_filter(filter).paginate(page,per_page,error_out=False)
+        return render_template("centro/index.html", centros=centros, estado=estado)
+    # se aplica filtro con estado activo
+    if estado == 'aceptado':
+        centros = Centro.active_with_filter(filter).paginate(page,per_page,error_out=False)
+        return render_template("centro/index.html", centros=centros, estado=estado)
+    # se aplica filtro con estado inactivo
+    centros = Centro.deactive_with_filter(filter).paginate(page,per_page,error_out=False)
+    return render_template("centro/index.html", centros=centros, estado=estado)
+
+
     return redirect(url_for("centro_index"))
 
 def show(centro_id):

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2020 a las 00:53:03
+-- Tiempo de generación: 04-11-2020 a las 18:33:16
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -29,27 +29,27 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `centros` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
-  `open` time NOT NULL,
-  `close` time NOT NULL,
-  `municipio_id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `direccion` varchar(255) NOT NULL,
+  `telefono` varchar(255) NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_fin` time NOT NULL,
+  `municipio_id` varchar(255) NOT NULL,
   `web` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `state` tinyint(1) NOT NULL,
-  `protocol` varchar(255) NOT NULL,
-  `coordinates` varchar(255) NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `turnos` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `estado` tinyint(1) NOT NULL,
+  `protocolo` varchar(255) NOT NULL,
+  `coordenadas` varchar(255) NOT NULL,
+  `tipo_centro` int(11) DEFAULT NULL
+) ;
 
 --
 -- Volcado de datos para la tabla `centros`
 --
 
-INSERT INTO `centros` (`id`, `name`, `address`, `phone`, `open`, `close`, `municipio_id`, `web`, `email`, `state`, `protocol`, `coordinates`, `type`, `turnos`) VALUES
-(1, 'centro test', 'calle 123', '4444444888', '09:00:00', '16:00:00', 1, 'asd', 'asd', 1, 'asd', 'asd', 'asd', 'asd');
+INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado`, `protocolo`, `coordenadas`, `tipo_centro`) VALUES
+(1, 'Facultad de informatica', '120 y 50', '12345678', '10:00:00', '11:30:00', '19', 'https://www.info.unlp.edu.ar/', 'difusion@info.unlp.edu.ar', 1, 'pdf', '1231231232', 1),
+(2, 'test2', '123 123 ', '123123123', '10:30:00', '11:30:00', '20', 'test.com', 'test2@123', 1, 'pdf', '123123', NULL);
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,7 @@ CREATE TABLE `configs` (
 --
 
 INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
-(1, 'Donaciones Covid190', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 5, 1);
+(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 50, 1);
 
 -- --------------------------------------------------------
 
@@ -102,7 +102,12 @@ INSERT INTO `permisos` (`id`, `name`, `description`) VALUES
 (15, 'centro_show', 'permite visualizar un centro de ayuda social'),
 (16, 'permisos_index', ' permite acceder al index (listado) del módulo.'),
 (17, 'user_perfil', 'permite al usuario visualizar su perfil'),
-(18, 'permiso_admin', 'permite al usuario asignarle el permiso administrador');
+(18, 'permiso_admin', 'permite al usuario asignarle el permiso administrador'),
+(19, 'turno_index', ' permite acceder al index (listado) del módulo de turnos'),
+(20, 'turno_new', 'permite cargar un turno'),
+(21, 'turno_destroy', 'permite borrar un turno'),
+(22, 'turno_update', 'permite actualizar un turno'),
+(23, 'turno_show', 'permite visualizar un turno');
 
 -- --------------------------------------------------------
 
@@ -158,7 +163,20 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (18, 2, 9),
 (19, 2, 13),
 (20, 2, 15),
-(21, 2, 7);
+(21, 2, 7),
+(22, 1, 19),
+(23, 2, 19),
+(24, 1, 20),
+(25, 1, 21),
+(26, 1, 22),
+(27, 1, 23),
+(28, 2, 20),
+(29, 2, 21),
+(30, 2, 22),
+(31, 2, 23),
+(32, 2, 21),
+(33, 2, 22),
+(34, 2, 23);
 
 -- --------------------------------------------------------
 
@@ -168,8 +186,41 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 
 CREATE TABLE `tipo_centros` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
+  `nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tipo_centros`
+--
+
+INSERT INTO `tipo_centros` (`id`, `nombre`) VALUES
+(1, 'Institución religiosa'),
+(2, 'Merendero'),
+(3, 'Colegio '),
+(4, 'Centro cultural');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `turnos`
+--
+
+CREATE TABLE `turnos` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `telefono` varchar(255) NOT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_fin` time NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `centro_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
+(1, 'admin@admin', '12312312', '11:11:00', '11:11:00', '2020-11-11', 1);
 
 -- --------------------------------------------------------
 
@@ -197,7 +248,6 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `pass
 (17, 'd', 'asdsad@dasd', 'a', 'd', 'asdasd', 1),
 (18, 'eqweqwq', 'qweqwe@qweqwe', 'qweqwe', 'qweqweqw', 'qweqwe', 0),
 (22, 'asd', 'asd@asd', 'asd', 'asd', 'asd', 1),
-(23, 'ELVERDA', 'VER@dad', '12312312', 'afqfq', '123123', 1),
 (25, 'qwerty', 'q@werty', 'qwerty', 'qwerty', '123123', 1),
 (26, 'qwertya', 'q@wertya', 'qwertya', 'qwertya', '123123', 1),
 (27, 'qwertyaasd', 'q@wertyaasd', 'qwertyaad', 'qwertyaasd', '123123', 1),
@@ -213,8 +263,7 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `pass
 (38, 'yy', 'yy@yy', 'yy', 'yy', 'yyy', 1),
 (39, 'yyy', 'yy@yyy', 'yyy', 'yyy', '123123', 1),
 (40, 'con2', 'con2@rolespapu', 'alan', 'bisbal', '132123', 1),
-(41, 'qwr3f', '12awfda@afhbua', 'adqdq', 'qwrwf', '123123', 1),
-(42, 'testrol', 'testrol@testrol', 'testrol', 'testrol', 'testrol', 1);
+(41, 'qwr3f', '12awfda@afhbua', 'adqdq', 'qwrwf', '123123', 1);
 
 -- --------------------------------------------------------
 
@@ -240,7 +289,6 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 (11, 17, 2),
 (12, 18, 2),
 (15, 22, 2),
-(16, 23, 1),
 (17, 39, 1),
 (18, 39, 2),
 (19, 40, 1),
@@ -257,7 +305,8 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 -- Indices de la tabla `centros`
 --
 ALTER TABLE `centros`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tipo_centro` (`tipo_centro`);
 
 --
 -- Indices de la tabla `configs`
@@ -292,6 +341,13 @@ ALTER TABLE `tipo_centros`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `turnos`
+--
+ALTER TABLE `turnos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `centro_id` (`centro_id`);
+
+--
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -315,7 +371,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
@@ -327,7 +383,7 @@ ALTER TABLE `configs`
 -- AUTO_INCREMENT de la tabla `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `rols`
@@ -339,13 +395,19 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_centros`
 --
 ALTER TABLE `tipo_centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `turnos`
+--
+ALTER TABLE `turnos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -364,11 +426,23 @@ ALTER TABLE `users_rols`
 --
 
 --
+-- Filtros para la tabla `centros`
+--
+ALTER TABLE `centros`
+  ADD CONSTRAINT `centros_ibfk_1` FOREIGN KEY (`tipo_centro`) REFERENCES `tipo_centros` (`id`);
+
+--
 -- Filtros para la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
   ADD CONSTRAINT `rols_permisos_ibfk_1` FOREIGN KEY (`rol_id`) REFERENCES `rols` (`id`),
   ADD CONSTRAINT `rols_permisos_ibfk_2` FOREIGN KEY (`permiso_id`) REFERENCES `permisos` (`id`);
+
+--
+-- Filtros para la tabla `turnos`
+--
+ALTER TABLE `turnos`
+  ADD CONSTRAINT `turnos_ibfk_1` FOREIGN KEY (`centro_id`) REFERENCES `centros` (`id`);
 
 --
 -- Filtros para la tabla `users_rols`

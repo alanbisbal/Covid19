@@ -18,19 +18,18 @@
       <div class="warning">You have submitted an invalid CSRF token</div>
     {% endif %}
 
-    {{wtf.form_field(form.name)}}
-    {{wtf.form_field(form.address)}}
-    {{wtf.form_field(form.phone)}}
-    {{wtf.form_field(form.open,type="Time")}}
-    {{wtf.form_field(form.close,type="Time")}}
+    {{wtf.form_field(form.nombre)}}
+    {{wtf.form_field(form.direccion)}}
+    {{wtf.form_field(form.telefono)}}
+    {{wtf.form_field(form.hora_inicio,type="Time")}}
+    {{wtf.form_field(form.hora_fin,type="Time")}}
     {{wtf.form_field(form.municipio_id)}}
     {{wtf.form_field(form.web)}}
     {{wtf.form_field(form.email)}}
-    {{wtf.form_field(form.protocol)}}
-    {{wtf.form_field(form.coordinates)}}
-    {{wtf.form_field(form.type)}}
-    {{wtf.form_field(form.turnos)}}
-    {{wtf.form_field(form.state)}}
+    {{wtf.form_field(form.protocolo)}}
+    {{wtf.form_field(form.coordenadas)}}
+    {{wtf.form_field(form.tipo_centro)}}
+    {{wtf.form_field(form.estado)}}
 
     </div>
     <div class="form-inline">
