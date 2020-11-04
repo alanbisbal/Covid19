@@ -33,7 +33,7 @@
             <a class="p-2 text-dark" href="{{ url_for('centro_index') }}">Centros de Ayuda</a>
           <!--si el usuario es admin ademas vera estas secciones :-->
               {% if has_permit('permisos_index') %}
-                <a class="p-2 text-dark" href="#">Roles y permisos</a>
+                <a class="p-2 text-dark" href="{{ url_for('turno_indexall') }}"">Turnos</a>
               {% endif %}
               {% if has_permit('user_index') %}
                 <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>

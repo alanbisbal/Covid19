@@ -61,9 +61,11 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/update/user_delete_rol", "user_rol_delete", user.rol_delete, methods=["POST"])
     app.add_url_rule("/usuarios/update/user_add_rols", "user_add_rols", user.add_rols, methods=["POST"])
 
+    # Rutas de turno
+    app.add_url_rule("/turnos", "turno_indexall", turno.indexall)
     app.add_url_rule("/turnos/index/<centro_id>", "turno_index", turno.index)
-    app.add_url_rule("/turnos", "turno_create", turno.create, methods=["POST"])
-    app.add_url_rule("/turnos/nuevo", "turno_new", turno.new)
+    app.add_url_rule("/turnos/nuevo/create", "turno_create", turno.create, methods=["POST"])
+    app.add_url_rule("/turnos/nuevo", "turno_new", turno.new, methods=["POST"])
     app.add_url_rule("/turnos/update/<turno_id>", "turno_update", turno.update)
     app.add_url_rule("/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
     app.add_url_rule("/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
