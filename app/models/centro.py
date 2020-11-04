@@ -39,6 +39,7 @@ class Centro(db.Model):
             self.estado = 0
         self.protocolo = data['protocolo']
         self.coordenadas = data['coordenadas']
+        tipo_centro = 1
         db.session.commit()
 
     @classmethod
@@ -49,7 +50,6 @@ class Centro(db.Model):
     def add(data,id):
         db.session.add(Centro(data,id))
         db.session.commit()
-
 
     def all():
         return db.session.query(Centro).all()

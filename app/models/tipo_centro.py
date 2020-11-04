@@ -1,7 +1,7 @@
 from flask import request
 from sqlalchemy.orm import relationship
 
-from app.db import db
+from app import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
@@ -19,3 +19,6 @@ class Tipo_centro(db.Model):
     @classmethod
     def __str__(self):
         return '<Tipo_centro {}>'.format(self.nombre)
+
+    def all():
+        return db.session.query(Tipo_centro).all()
