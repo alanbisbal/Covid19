@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField,DateField
+from wtforms import StringField,PasswordField,SubmitField, TextAreaField,TimeField,IntegerField,SelectField,BooleanField,DateField
 from wtforms.validators import InputRequired as InputRequired
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
@@ -31,3 +31,12 @@ class TurnoForm(FlaskForm):
     hora_fin = TimeField('hora_fin',validators =[InputRequired()])
     fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
     centro_id = IntegerField('centro_id',validators =[InputRequired()])
+
+class ConfigForm(FlaskForm):
+    titulo = StringField('titulo',validators =[InputRequired()])
+    description = TextAreaField('description',validators =[InputRequired()])
+    email = StringField('email',validators =[InputRequired()])
+    elementos = SelectField('elementos',validators =[InputRequired()],choices=[ 5,25,50])
+    estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])
+   
+      
