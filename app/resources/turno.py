@@ -56,7 +56,7 @@ def create():
     data = request.form
     Turno.add(data)
     flash("Insercion exitosa","success")
-    return redirect(url_for("home"))
+    return redirect(url_for('turno_index', centro_id=data['centro_id']))
 
 def update(turno_id):
     if not authenticated(session):
@@ -75,11 +75,10 @@ def update_new():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     data = request.form
-    if not form_turno(data):
-        return redirect(request.referrer)
+    turno = Turno.with_id(data['turno_id'])
     turno.update(data)
     flash("Actualización exitosa.","success")
-    return redirect(url_for('turno_index'))
+    return redirect(url_for('turno_index', centro_id=turno.centro_id))
 
 def delete():
     if not authenticated(session):
@@ -91,7 +90,7 @@ def delete():
     turno = Turno.with_id(request.form['turno_id'])
     turno.delete()
     flash("Eliminación exitosa.","success")
-    return redirect(url_for('home'))
+    return redirect(url_for('turno_index', centro_id=turno.centro_id))
 
 def show(turno_id):
     if not authenticated(session):

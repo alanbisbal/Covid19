@@ -40,8 +40,8 @@ class Turno(db.Model):
     def update(self,data):
         if self.email != data['email']:
             self.email = data['email']
-        if self.email != data['telefono']:
-            self.email = data['telefono']
+        if self.telefono != data['telefono']:
+            self.telefono = data['telefono']
         if self.hora_inicio != data['hora_inicio']:
             self.hora_inicio = data['hora_inicio']
         if self.hora_fin != data['hora_fin']:
