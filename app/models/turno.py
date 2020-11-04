@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
-
+from app.models import centro
 
 class Turno(db.Model):
     __tablename__ = 'turnos'

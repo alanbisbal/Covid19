@@ -25,19 +25,18 @@
 
   <input type="hidden" class="form-control"  id="centro_id" name="centro_id" value="{{centro.id}}">
 
-  {{wtf.form_field(form.name, value=centro.name)}}
-  {{wtf.form_field(form.address, value=centro.address)}}
-  {{wtf.form_field(form.phone, value=centro.phone)}}
-  {{wtf.form_field(form.open,type="Time", value=centro.open)}}
-  {{wtf.form_field(form.close,type="Time", value=centro.close)}}
+  {{wtf.form_field(form.nombre, value=centro.nombre)}}
+  {{wtf.form_field(form.direccion, value=centro.direccion)}}
+  {{wtf.form_field(form.telefono, value=centro.telefono)}}
+  {{wtf.form_field(form.hora_inicio,type="Time", value=centro.hora_inicio)}}
+  {{wtf.form_field(form.hora_fin,type="Time", value=centro.hora_fin)}}
   {{wtf.form_field(form.municipio_id)}}
   {{wtf.form_field(form.web, value=centro.web)}}
   {{wtf.form_field(form.email, value=centro.email)}}
-  {{wtf.form_field(form.protocol, value=centro.protocol)}}
-  {{wtf.form_field(form.coordinates, value=centro.coordinates)}}
-  {{wtf.form_field(form.type, value=centro.type)}}
-  {{wtf.form_field(form.turnos, value=centro.turnos)}}
-  {{wtf.form_field(form.state, value=centro.state)}}
+  {{wtf.form_field(form.protocolo, value=centro.protocolo)}}
+  {{wtf.form_field(form.coordenadas, value=centro.coordenadas)}}
+  {{wtf.form_field(form.tipo_centro, value=centro.tipo_centro)}}
+  {{wtf.form_field(form.estado, value=centro.estado)}}
 
   </div>
 
@@ -51,9 +50,4 @@
   </div>
 </div>
 
-<script type="text/javascript">
-function ConfirmDelete() {
-    return confirm('Esta seguro')
-  }
-</script>
 {% endblock %}

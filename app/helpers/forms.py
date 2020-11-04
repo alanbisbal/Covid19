@@ -9,19 +9,18 @@ class CenterForm(FlaskForm):
     dict={}
     for mun in data:
         dict[data[mun]['name']]=mun
-    name = StringField('Nombre',validators =[InputRequired()])
-    address = StringField('Direccion',validators =[InputRequired()])
-    phone =StringField('Telefono',validators =[InputRequired()])
-    open = TimeField('Hora de apertura',validators =[InputRequired()])
-    close = TimeField('Hora de cierre',validators =[InputRequired()])
+    nombre = StringField('Nombre',validators =[InputRequired()])
+    direccion = StringField('Direccion',validators =[InputRequired()])
+    telefono =StringField('Telefono',validators =[InputRequired()])
+    hora_inicio = TimeField('Hora de apertura',validators =[InputRequired()])
+    hora_fin = TimeField('Hora de cierre',validators =[InputRequired()])
     municipio_id = SelectField('Municipio',validate_choice=False ,choices= dict)
     web = StringField('Sitio Web',validators =[InputRequired()])
     email = EmailField('Email',validators =[InputRequired()])
-    state = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
-    protocol = StringField('Protocolo',validators =[InputRequired()])
-    coordinates = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
-    type = StringField('Tipo',validators =[InputRequired()])
-    turnos = StringField('Turnos',validators =[InputRequired()])
+    estado = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
+    protocolo = StringField('Protocolo',validators =[InputRequired()])
+    coordenadas = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
+    tipo_centro = StringField('Tipo',validators =[InputRequired()])#check
 
 class TurnoForm(FlaskForm):
     email = StringField('email',validators =[InputRequired()])
