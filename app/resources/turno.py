@@ -22,7 +22,6 @@ def index(centro_id):
     # retorna todos los turnos
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
-    print (centro_id)
     turnos = Turno.with_filter(centro_id).paginate(page,per_page,error_out=False)
     return render_template("turno/index.html", turnos=turnos)
 

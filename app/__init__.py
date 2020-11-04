@@ -6,6 +6,7 @@ from app.db import db
 from app.resources import user
 from app.resources import auth
 from app.resources import centro
+from app.resources import turno
 from app.resources import config as configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth

@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block content %}
-<a href="{{ url_for('turno_new', centro_id=1) }}" class="btn btn-success mr-sm-2">Crear Turno</a>
+<form action="{{ url_for('turno_new') }}" method="POST">
+  {{csrf_token}}
+  <input type="hidden" id="centro_id" name="centro_id" value="{{centro_id}}">
+    <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+</form>
+
 <form class="form-inline md-form mr-auto mb-4" action="">
   <h1 class="my-0 mr-md-auto font-weight-normal">Turnos</h1>
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Búscar.." aria-label="Search">
@@ -27,6 +32,7 @@
       <th scope="col">Telefono</th>
       <th scope="col">Hora</th>
       <th scope="col">Fecha</th>
+      <th scope="col">Centro</th>
     </tr>
   </thead>
   <script type="text/javascript">
@@ -47,6 +53,7 @@
       <!--fecha-->
       <td>{{ turno.fecha }}</td>
         <!--opciones-->
+      <td>{{ turno.centro.nombre }}</td>
       <td>
      <div class="form-inline ">
        <form action= "{{ url_for('turno_show', turno_id = turno.id ) }}"  >

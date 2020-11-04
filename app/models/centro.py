@@ -21,6 +21,7 @@ class Centro(db.Model):
     protocolo = db.Column(db.String(255), nullable=False)
     coordenadas = db.Column(db.String(255), nullable=False)
     tipo_centro = db.Column(db.Integer, db.ForeignKey('tipo_centros.id'))
+    tipo = relationship("Tipo_centro")
     turnos = db.relationship("Turno",backref= "centros")
 
     def __init__(self, data,id):
@@ -38,7 +39,6 @@ class Centro(db.Model):
             self.estado = 0
         self.protocolo = data['protocolo']
         self.coordenadas = data['coordenadas']
-        self.type = data['type']
         db.session.commit()
 
     @classmethod
@@ -85,8 +85,6 @@ class Centro(db.Model):
             self.protocolo = data['protocolo']
         if self.coordenadas != data['coordenadas']:
             self.coordenadas = data['coordenadas']
-        if self.type != data['type']:
-            self.type = data['type']
         db.session.commit()
 
     def delete(self):
