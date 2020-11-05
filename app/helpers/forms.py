@@ -11,7 +11,6 @@ class CenterForm(FlaskForm):
     municipios={}
     for mun in data:
         municipios[data[mun]['name']]=mun
-
     nombre = StringField('Nombre',validators =[InputRequired()])
     direccion = StringField('Direccion',validators =[InputRequired()])
     telefono =StringField('Telefono',validators =[InputRequired()])
@@ -23,7 +22,7 @@ class CenterForm(FlaskForm):
     estado = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
     protocolo = StringField('Protocolo',validators =[InputRequired()])
     coordenadas = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
-    tipo_centro = SelectField('Tipo',validators =[InputRequired()],choices= municipios)#check
+    tipo_centro = SelectField('Tipo',validators =[InputRequired()])
 
 class TurnoForm(FlaskForm):
     email = StringField('email',validators =[InputRequired()])
