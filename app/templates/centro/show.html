@@ -3,6 +3,8 @@
 {% block title %}Perfil{% endblock %}
 {% block head %}
   {{ super() }}
+  <link rel="stylesheet" href="https://developers.google.com//maps/documentation/javascript/demos/demos.css">
+  <style>#map { height: 100%; width: 100%; }</style>
 {% endblock %}
 
 {% block content %}
@@ -33,10 +35,9 @@
 
     </p>
     <p ><strong >Protocolo:</strong> {{centro.protocolo }}</p>
-    <p ><strong >Coordenadas:</strong> {{centro.coordenadas }}</p>
     <p ><strong >Tipo de centro:</strong> {{centro.tipo.nombre }}</p>
 
-
+   {{map.html}}{{map.js}}
 
     <script type="text/javascript">
   function ConfirmDelete() {

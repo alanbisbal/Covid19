@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 
 from app.db import db
 
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Table, Column, Integer, ForeignKey,Float
 from app.models import tipo_centro,turno
 
 class Centro(db.Model):
@@ -19,7 +19,8 @@ class Centro(db.Model):
     email = db.Column(db.String(255), nullable=False)
     estado =  db.Column(db.Boolean, nullable=False)
     protocolo = db.Column(db.String(255), nullable=False)
-    coordenadas = db.Column(db.String(255), nullable=False)
+    latitud = db.Column(db.Float(),nullable=False)
+    longitud = db.Column(db.Float(),nullable=False)
     tipo_centro = db.Column(db.Integer, db.ForeignKey('tipo_centros.id'))
     tipo = relationship("Tipo_centro")
     turnos = db.relationship("Turno",backref= "centros")
@@ -38,7 +39,8 @@ class Centro(db.Model):
         else:
             self.estado = 0
         self.protocolo = data['protocolo']
-        self.coordenadas = data['coordenadas']
+        self.latitud = data['latitud']
+        self.longitud = data['longitud']
         self.tipo_centro = data['tipo_centro']
         db.session.commit()
 
@@ -83,8 +85,10 @@ class Centro(db.Model):
             self.estado = 0
         if self.protocolo != data['protocolo']:
             self.protocolo = data['protocolo']
-        if self.coordenadas != data['coordenadas']:
-            self.coordenadas = data['coordenadas']
+        if self.latitud != data['latitud']:
+            self.latitud = data['latitud']
+        if self.longitud != data['longitud']:
+            self.longitud = data['longitud']
         if self.tipo_centro != data['tipo_centro']:
             self.tipo_centro = data['tipo_centro']
         db.session.commit()

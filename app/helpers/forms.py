@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField,DateField
-from wtforms.validators import InputRequired as InputRequired
+from wtforms import validators,StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField,DateField,FloatField
+from wtforms.validators import InputRequired ,NumberRange,Regexp,DataRequired
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 import requests
@@ -20,8 +20,10 @@ class CenterForm(FlaskForm):
     email = EmailField('Email',validators =[InputRequired()])
     estado = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
     protocolo = StringField('Protocolo',validators =[InputRequired()])
-    coordenadas = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
+    latitud = FloatField('latitud (coordenadas)',default="-34.9159",validators =[DataRequired()])
+    longitud = FloatField('Longitud (coordenadas)',default="-57.9924",validators =[DataRequired()])
     tipo_centro = SelectField('Tipo',validators =[InputRequired()])
+
 
 class TurnoForm(FlaskForm):
     email = StringField('email',validators =[InputRequired()])

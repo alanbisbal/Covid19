@@ -6,6 +6,8 @@ from app.models.centro import Centro
 from app.models.tipo_centro import Tipo_centro
 from app.helpers.forms import CenterForm
 
+from app.helpers import maps
+
 from app.helpers.validates import form_config_update
 from app.helpers.permits import has_permit, is_admin
 import requests
@@ -29,12 +31,11 @@ def new():
     if not has_permit('centro_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-
-
     form = CenterForm()
     tipos = Tipo_centro.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    return render_template("centro/new.html",form=form)
+    map = maps.index()  
+    return render_template("centro/new.html",form=form,map=map)
 
 def create():
     if not authenticated(session):
@@ -65,7 +66,8 @@ def update(centro_id):
     tipos = Tipo_centro.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
     form.tipo_centro.default = centro.tipo_centro # deberia ser algo de este estilo
-    return render_template("centro/update.html",centro = centro, form=form)
+    map = maps.showLoc(centro.latitud,centro.longitud)
+    return render_template("centro/update.html",centro = centro, form=form,map=map)
 
 def update_new():
     if not authenticated(session):
@@ -136,4 +138,5 @@ def show(centro_id):
         return redirect(url_for("home"))
     # validacion de acceso administrador y si lo es retorna el usuario enviado por id
     centro = Centro.with_id(centro_id)
-    return render_template("centro/show.html",centro = centro)
+    map = maps.showLoc(centro.latitud,centro.longitud)
+    return render_template("centro/show.html",centro = centro,map=map)

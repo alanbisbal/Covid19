@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2020 a las 18:33:16
+-- Tiempo de generación: 05-11-2020 a las 23:15:58
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -37,9 +37,10 @@ CREATE TABLE `centros` (
   `municipio_id` varchar(255) NOT NULL,
   `web` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `estado` tinyint(1) NOT NULL,
+  `estado` tinyint(1) DEFAULT NULL,
   `protocolo` varchar(255) NOT NULL,
-  `coordenadas` varchar(255) NOT NULL,
+  `latitud` float NOT NULL,
+  `longitud` float NOT NULL,
   `tipo_centro` int(11) DEFAULT NULL
 ) ;
 
@@ -47,9 +48,18 @@ CREATE TABLE `centros` (
 -- Volcado de datos para la tabla `centros`
 --
 
-INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado`, `protocolo`, `coordenadas`, `tipo_centro`) VALUES
-(1, 'Facultad de informatica', '120 y 50', '12345678', '10:00:00', '11:30:00', '19', 'https://www.info.unlp.edu.ar/', 'difusion@info.unlp.edu.ar', 1, 'pdf', '1231231232', 1),
-(2, 'test2', '123 123 ', '123123123', '10:30:00', '11:30:00', '20', 'test.com', 'test2@123', 1, 'pdf', '123123', NULL);
+INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
+(1, 'Facultad de informatica', '120 y 500', '12345678', '10:00:00', '11:30:00', '1', 'https://www.info.unlp.edu.ar/', 'difusion@info.unlp.edu.ar', 1, 'pdf', -34.9159, -57.9924, 3),
+(2, 'test2', '123 123 ', '123123123', '10:30:00', '11:30:00', '20', 'test.com', 'test2@123', 1, 'pdf', -34.8901, -57.9624, 1),
+(3, 'centro_test2', '22', '22', '11:11:00', '11:11:00', '1', 'centro_test2', 'centro_test2@centro', 1, 'centro_test2', -34.9801, -57.9024, 1),
+(4, 'centro_test2', '22', '22', '11:11:00', '11:11:00', '1', 'centro_test2', 'centro_test2@centro', 1, 'centro_test2', -34.9201, -57.8024, 2),
+(5, 'centro_test2', '22', '22', '11:11:00', '11:11:00', '1', 'centro_test2', 'centro_test2@centro', 1, 'centro_test2', -34.9901, -57.7024, 3),
+(14, 'asd', 'asd', 'asd', '11:01:00', '01:11:00', '1', '1', '1@asd', 1, '1', -34.9901, -57.9024, 1),
+(15, 'asd', 'asd', 'asd', '11:01:00', '01:11:00', '1', '1', '1@asd', 1, '1', -34.9901, -57.9024, 1),
+(16, 'asd', 'asd', 'asd', '11:01:00', '01:11:00', '1', '1', '1@asd', 1, '1', -34.9901, -57.9024, 1),
+(17, 'asdas', 'dasd', 'asd', '12:03:00', '12:03:00', '1', 'asd', 'dasdas@asdasdasdasd', 1, 'asdas', -34.9901, -57.9024, 1),
+(18, 'zzzzz', 'zzzzz', 'zzzzz', '11:01:00', '11:01:00', '17', 'zzzzz', 'zzzzz@zzzzz', 1, 'zzzzz', -34.9901, -57.7024, 1),
+(19, 'paseito', 'paseito', 'paseito', '11:01:00', '11:01:00', '1', 'paseito', 'paseito@paseito', 1, 'paseito', -34.9159, -57.9924, 1);
 
 -- --------------------------------------------------------
 
