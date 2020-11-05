@@ -3,6 +3,7 @@ from wtforms import StringField,PasswordField,SubmitField, TextAreaField,TimeFie
 from wtforms.validators import InputRequired as InputRequired
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
+from wtforms.widgets.html5 import NumberInput
 import requests
 
 class CenterForm(FlaskForm):
@@ -34,9 +35,11 @@ class TurnoForm(FlaskForm):
 
 class ConfigForm(FlaskForm):
     titulo = StringField('titulo',validators =[InputRequired()])
-    description = TextAreaField('description',validators =[InputRequired()])
+    description = StringField('description',validators =[InputRequired()])
     email = StringField('email',validators =[InputRequired()])
-    elementos = SelectField('elementos',validators =[InputRequired()],choices=[ 5,25,50])
+    elementos = IntegerField('elementos',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=None))
     estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])
+
+
    
       
