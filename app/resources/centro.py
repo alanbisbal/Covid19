@@ -3,6 +3,7 @@ from app import db
 from app.models.config import Config
 from app.helpers.auth import authenticated
 from app.models.centro import Centro
+from app.models.tipo_centro import Tipo_centro
 from app.helpers.forms import CenterForm
 
 from app.helpers.validates import form_config_update
@@ -29,8 +30,10 @@ def new():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
 
-    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()
+
     form = CenterForm()
+    tipos = Tipo_centro.all()
+    form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
     return render_template("centro/new.html",form=form)
 
 def create():
@@ -56,8 +59,12 @@ def update(centro_id):
     if not has_permit('centro_update'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
+    tipos = Tipo_centro.all()
     centro = Centro.with_id(centro_id)
     form = CenterForm()
+    tipos = Tipo_centro.all()
+    form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
+    form.tipo_centro.default = centro.tipo_centro # deberia ser algo de este estilo
     return render_template("centro/update.html",centro = centro, form=form)
 
 def update_new():
@@ -74,7 +81,6 @@ def update_new():
     for mun in municipios:
         if municipios[mun]['name'] == data['municipio_id']:
             id=municipios[mun]['id']
-
     centro.update(data, id)
     flash("Actualización exitosa.","success")
     return redirect(url_for("centro_index"))
