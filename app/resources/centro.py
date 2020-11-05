@@ -30,7 +30,7 @@ def new():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
 
-    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()
+
     form = CenterForm()
     tipos = Tipo_centro.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
@@ -64,7 +64,6 @@ def update(centro_id):
     form = CenterForm()
     tipos = Tipo_centro.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    print(centro.tipo_centro)
     form.tipo_centro.default = centro.tipo_centro # deberia ser algo de este estilo
     return render_template("centro/update.html",centro = centro, form=form)
 
