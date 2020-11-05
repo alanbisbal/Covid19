@@ -1,5 +1,6 @@
 from flask import request
 from sqlalchemy.orm import relationship
+from collections import defaultdict
 
 from app import db
 
@@ -22,3 +23,6 @@ class Tipo_centro(db.Model):
 
     def all():
         return db.session.query(Tipo_centro).all()
+
+    def with_id(data):
+        return db.session.query(Tipo_centro).get(data)

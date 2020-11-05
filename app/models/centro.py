@@ -39,7 +39,7 @@ class Centro(db.Model):
             self.estado = 0
         self.protocolo = data['protocolo']
         self.coordenadas = data['coordenadas']
-        tipo_centro = 1
+        self.tipo_centro = data['tipo_centro']
         db.session.commit()
 
     @classmethod
@@ -85,6 +85,8 @@ class Centro(db.Model):
             self.protocolo = data['protocolo']
         if self.coordenadas != data['coordenadas']:
             self.coordenadas = data['coordenadas']
+        if self.tipo_centro != data['tipo_centro']:
+            self.tipo_centro = data['tipo_centro']
         db.session.commit()
 
     def delete(self):
