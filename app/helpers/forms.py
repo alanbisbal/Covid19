@@ -38,7 +38,7 @@ class ConfigForm(FlaskForm):
     description = StringField('description',validators =[InputRequired()])
     email = StringField('email',validators =[InputRequired()])
     elementos = IntegerField('elementos',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=None))
-    estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])
+   # estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])
 
 
    
