@@ -35,7 +35,7 @@ def indexall():
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
     turnos = Turno.query.paginate(page,per_page,error_out=False)
-    return render_template("turno/index.html", turnos=turnos)
+    return render_template("turno/index_all.html", turnos=turnos)
 
 def new():
     if not authenticated(session):
@@ -101,3 +101,25 @@ def show(turno_id):
     # validacion de acceso administrador y si lo es retorna el usuario enviado por id
     turno = Turno.with_id(turno_id)
     return render_template("turno/show.html",turno = turno)
+
+#def search():
+ #   if not authenticated(session):
+  #      abort(401)
+    # validacion de acceso administrador
+   # if not has_permit('turno_index'):
+    #    flash("No posee permisos","danger")
+     #   return redirect(url_for("home"))
+
+    #email = request.args.get("email")
+    #filter = request.args.get("filtro")
+    # se aplica filtro independientemente del email
+    #per_page = Config.getConfig().elementos
+    #page = request.args.get("page", 1, type=int)
+    #if email == '---':
+    #    turnos = Turno.with_filter(filter).paginate(page,per_page,error_out=False)
+    #   return render_template("turno/index.html", turnos=turnos, email=email)
+    # se aplica filtro con email
+    #if email == Turno.obtenerEmail(filter):
+     #   turnos = Turno.email_with_filter(filter).paginate(page,per_page,error_out=False)
+      #  return render_template("turno/index.html", turnos=turnos, email=email)
+   

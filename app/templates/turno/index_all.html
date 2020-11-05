@@ -11,7 +11,7 @@
     <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
 </form>
 <form class="form-inline md-form mr-auto mb-4" action="">
-  <h1 class="my-0 mr-md-auto font-weight-normal">Turnos del centro</h1>
+  <h1 class="my-0 mr-md-auto font-weight-normal">Todos los turnos</h1>
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Búscar.." aria-label="Search">
     <select class='form-control mr-sm-2' name='estado'>
       <option value='---'{% if estado=="---" %} selected="selected" {% endif %} selected>---</option>
@@ -27,6 +27,7 @@
   <table class="table">
   <thead>
     <tr>
+      <th scope="col">Centro</th>
       <th scope="col">Email</th>
       <th scope="col">Telefono</th>
       <th scope="col">Hora</th>
@@ -42,6 +43,8 @@
   <tbody>
      {% for turno in turnos.items %}
     <tr>
+      <!--centro-->
+      <td>{{ turno.centro.nombre }}</td>
       <!--email-->
       <td>{{ turno.email }}</td>
       <!--telefono-->
