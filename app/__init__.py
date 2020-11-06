@@ -17,6 +17,7 @@ from app.helpers.permits import has_permit, is_admin
 from flask_bootstrap import Bootstrap
 from flask import jsonify
 from app.resources.api import centros
+from flask_googlemaps import GoogleMaps
 
 
 db = SQLAlchemy()
@@ -24,6 +25,11 @@ db = SQLAlchemy()
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
+
+
+    api_key = 'AIzaSyCLV1EU7HG-O5I9HEoSXY1XuRA9iXPITGE' # change this to your api key
+    GoogleMaps(app, key=api_key)
+
     Bootstrap(app)
     app.config['SECRET_KEY'] = 'ThisIsAVerySecretKey'
     # Carga de la configuración

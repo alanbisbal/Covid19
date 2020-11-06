@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2020 a las 18:33:16
+-- Tiempo de generación: 06-11-2020 a las 10:08:14
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -37,9 +37,10 @@ CREATE TABLE `centros` (
   `municipio_id` varchar(255) NOT NULL,
   `web` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `estado` tinyint(1) NOT NULL,
-  `protocolo` blob NOT NULL,
-  `coordenadas` varchar(255) NOT NULL,
+  `estado_id` int(11) DEFAULT NULL,
+  `protocolo` blob DEFAULT NULL,
+  `latitud` float NOT NULL,
+  `longitud` float NOT NULL,
   `tipo_centro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -47,9 +48,10 @@ CREATE TABLE `centros` (
 -- Volcado de datos para la tabla `centros`
 --
 
-INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado`, `protocolo`, `coordenadas`, `tipo_centro`) VALUES
-(1, 'Facultad de informatica', '120 y 50', '12345678', '10:00:00', '11:30:00', '19', 'https://www.info.unlp.edu.ar/', 'difusion@info.unlp.edu.ar', 1, 0x706466, '1231231232', 1),
-(2, 'test2', '123 123 ', '123123123', '10:30:00', '11:30:00', '20', 'test.com', 'test2@123', 1, 0x706466, '123123', NULL);
+INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
+(1, 'Centro_publicado', 'Centro_publicado', 'Centro_publicado', '11:01:00', '11:01:00', '9', 'asd@asd', 'asdasdasd@asd', 1, 0x5072c3a1637469636120322e706466, -34.9159, -57.9924, 1),
+(2, 'Centro_pendiente', 'Centro_pendiente', 'Centro_pendiente', '11:01:00', '11:01:00', '19', 'Centro_pendiente', 'Centro_pendiente@Centro', 3, 0x506172746531477275706f3037202832292e706466, -34.9159, -57.9924, 2),
+(3, 'Centro_despublicado', 'Centro_despublicado', 'Centro_despublicado', '12:23:00', '12:23:00', '23', 'Centro_despublicado', 'Centro_despublicado@Centro', 2, 0x4179454420323031392d436c61736520342d4f626a657469766f732d5445202833292e706466, -34.9159, -57.9924, 3);
 
 -- --------------------------------------------------------
 
@@ -72,6 +74,26 @@ CREATE TABLE `configs` (
 
 INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
 (1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 50, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estados`
+--
+
+CREATE TABLE `estados` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`id`, `nombre`) VALUES
+(1, 'Publicado'),
+(2, 'Despublicado'),
+(3, 'Pendiente');
 
 -- --------------------------------------------------------
 
@@ -215,13 +237,6 @@ CREATE TABLE `turnos` (
   `centro_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `turnos`
---
-
-INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
-(1, 'admin@admin', '12312312', '11:11:00', '11:11:00', '2020-11-11', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -306,12 +321,19 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 --
 ALTER TABLE `centros`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `estado_id` (`estado_id`),
   ADD KEY `tipo_centro` (`tipo_centro`);
 
 --
 -- Indices de la tabla `configs`
 --
 ALTER TABLE `configs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `estados`
+--
+ALTER TABLE `estados`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -371,13 +393,19 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
 --
 ALTER TABLE `configs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `estados`
+--
+ALTER TABLE `estados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -407,7 +435,7 @@ ALTER TABLE `tipo_centros`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -429,7 +457,8 @@ ALTER TABLE `users_rols`
 -- Filtros para la tabla `centros`
 --
 ALTER TABLE `centros`
-  ADD CONSTRAINT `centros_ibfk_1` FOREIGN KEY (`tipo_centro`) REFERENCES `tipo_centros` (`id`);
+  ADD CONSTRAINT `centros_ibfk_1` FOREIGN KEY (`estado_id`) REFERENCES `estados` (`id`),
+  ADD CONSTRAINT `centros_ibfk_2` FOREIGN KEY (`tipo_centro`) REFERENCES `tipo_centros` (`id`);
 
 --
 -- Filtros para la tabla `rols_permisos`

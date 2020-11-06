@@ -3,6 +3,8 @@
 {% block title %}Centro{% endblock %}
 {% block head %}
   {{ super() }}
+  <link rel="stylesheet" href="https://developers.google.com//maps/documentation/javascript/demos/demos.css">
+  <style>#map { height: 100%; width: 100%; }</style>
 {% endblock %}
 
 {% block content %}
@@ -33,11 +35,12 @@
   {{wtf.form_field(form.municipio_id)}}
   {{wtf.form_field(form.web, value=centro.web)}}
   {{wtf.form_field(form.email, value=centro.email)}}
-  {{wtf.form_field(form.protocolo, value=centro.protocolo)}}
-  {{wtf.form_field(form.coordenadas, value=centro.coordenadas)}}
-  {{wtf.form_field(form.tipo_centro)}}  
-  {{wtf.form_field(form.estado, value=centro.estado)}}
-
+  {{"por simplificacion ahora no updateo el pdf y hay que lograr dejar predeterminados los select"}}
+  {{wtf.form_field(form.tipo_centro)}}
+  {{wtf.form_field(form.estado_id, value=centro.estado_id)}}
+  {{wtf.form_field(form.longitud)}}
+  {{wtf.form_field(form.latitud)}}
+  {{map.html}}{{map.js}}
   </div>
 
 
