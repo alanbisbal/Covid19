@@ -36,6 +36,10 @@ class Turno(db.Model):
     def with_id(data):
         return db.session.query(Turno).get(data)
 
+    def email_with_filter(filter):
+        return db.session.query(Turno).filter(Turno.email.contains(filter))
+    
+
     #'bloque' no sabemos bien como definirlo
     def update(self,data):
         if self.email != data['email']:
