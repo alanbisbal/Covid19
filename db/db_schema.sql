@@ -38,18 +38,18 @@ CREATE TABLE `centros` (
   `web` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `estado` tinyint(1) NOT NULL,
-  `protocolo` varchar(255) NOT NULL,
+  `protocolo` blob NOT NULL,
   `coordenadas` varchar(255) NOT NULL,
   `tipo_centro` int(11) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `centros`
 --
 
 INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado`, `protocolo`, `coordenadas`, `tipo_centro`) VALUES
-(1, 'Facultad de informatica', '120 y 50', '12345678', '10:00:00', '11:30:00', '19', 'https://www.info.unlp.edu.ar/', 'difusion@info.unlp.edu.ar', 1, 'pdf', '1231231232', 1),
-(2, 'test2', '123 123 ', '123123123', '10:30:00', '11:30:00', '20', 'test.com', 'test2@123', 1, 'pdf', '123123', NULL);
+(1, 'Facultad de informatica', '120 y 50', '12345678', '10:00:00', '11:30:00', '19', 'https://www.info.unlp.edu.ar/', 'difusion@info.unlp.edu.ar', 1, 0x706466, '1231231232', 1),
+(2, 'test2', '123 123 ', '123123123', '10:30:00', '11:30:00', '20', 'test.com', 'test2@123', 1, 0x706466, '123123', NULL);
 
 -- --------------------------------------------------------
 
@@ -371,7 +371,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`

@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField,DateField
-from wtforms.validators import InputRequired as InputRequired
+from wtforms import StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField,DateField, FileField
+from wtforms.validators import InputRequired as InputRequired, regexp
+
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 import requests
@@ -19,7 +20,8 @@ class CenterForm(FlaskForm):
     web = StringField('Sitio Web',validators =[InputRequired()])
     email = EmailField('Email',validators =[InputRequired()])
     estado = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
-    protocolo = StringField('Protocolo',validators =[InputRequired()])
+    protocolo = FileField('Protocolo', validators= regexp(u'^[^/\\]\.pdf$')) #HABRIA QUE CAMBIARLO??
+
     coordenadas = StringField('Ubicacion (coordenadas)',validators =[InputRequired()])
     tipo_centro = SelectField('Tipo',validators =[InputRequired()])
 

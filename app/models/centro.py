@@ -18,7 +18,7 @@ class Centro(db.Model):
     web = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     estado =  db.Column(db.Boolean, nullable=False)
-    protocolo = db.Column(db.String(255), nullable=False)
+    protocolo = db.Column(db.LargeBinary(), nullable=False) #ya no es mas tipo string
     coordenadas = db.Column(db.String(255), nullable=False)
     tipo_centro = db.Column(db.Integer, db.ForeignKey('tipo_centros.id'))
     tipo = relationship("Tipo_centro")
@@ -81,8 +81,6 @@ class Centro(db.Model):
             self.estado = 1
         else:
             self.estado = 0
-        if self.protocolo != data['protocolo']:
-            self.protocolo = data['protocolo']
         if self.coordenadas != data['coordenadas']:
             self.coordenadas = data['coordenadas']
         if self.tipo_centro != data['tipo_centro']:
