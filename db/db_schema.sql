@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-11-2020 a las 09:20:30
+-- Tiempo de generación: 06-11-2020 a las 10:08:14
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -49,7 +49,9 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
-(1, 'asdasd', 'asdasd', 'asdasd', '11:01:00', '11:01:00', '1', 'asd@asd', 'asdasdasd@asd', 2, 0x5072c3a1637469636120322e706466, -34.9159, -57.9924, 1);
+(1, 'Centro_publicado', 'Centro_publicado', 'Centro_publicado', '11:01:00', '11:01:00', '9', 'asd@asd', 'asdasdasd@asd', 1, 0x5072c3a1637469636120322e706466, -34.9159, -57.9924, 1),
+(2, 'Centro_pendiente', 'Centro_pendiente', 'Centro_pendiente', '11:01:00', '11:01:00', '19', 'Centro_pendiente', 'Centro_pendiente@Centro', 3, 0x506172746531477275706f3037202832292e706466, -34.9159, -57.9924, 2),
+(3, 'Centro_despublicado', 'Centro_despublicado', 'Centro_despublicado', '12:23:00', '12:23:00', '23', 'Centro_despublicado', 'Centro_despublicado@Centro', 2, 0x4179454420323031392d436c61736520342d4f626a657469766f732d5445202833292e706466, -34.9159, -57.9924, 3);
 
 -- --------------------------------------------------------
 
@@ -391,7 +393,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
