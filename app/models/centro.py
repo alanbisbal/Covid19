@@ -88,22 +88,12 @@ class Centro(db.Model):
             self.web = data['web']
         if self.email != data['email']:
             self.email = data['email']
-<<<<<<< HEAD
-        if data['estado'] == 'y':
-            self.estado = 1
-        else:
-            self.estado = 0
-        if self.coordenadas != data['coordenadas']:
-            self.coordenadas = data['coordenadas']
-=======
         if self.estado_id != data['estado_id']:
             self.estado_id = data['estado_id']
-
         if self.latitud != data['latitud']:
             self.latitud = data['latitud']
         if self.longitud != data['longitud']:
             self.longitud = data['longitud']
->>>>>>> 148c8845cae8a4842cfd2d81be007b7d01ad5b15
         if self.tipo_centro != data['tipo_centro']:
             self.tipo_centro = data['tipo_centro']
         db.session.commit()
