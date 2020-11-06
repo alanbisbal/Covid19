@@ -18,11 +18,6 @@ class Centro(db.Model):
     municipio_id = db.Column(db.String(255), nullable=False)
     web = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
-<<<<<<< HEAD
-    estado =  db.Column(db.Boolean, nullable=False)
-    protocolo = db.Column(db.LargeBinary(), nullable=False) #ya no es mas tipo string
-    coordenadas = db.Column(db.String(255), nullable=False)
-=======
 
     estado_id = db.Column(db.Integer, db.ForeignKey('estados.id'))
     estado =  db.relationship("Estado")
@@ -31,7 +26,6 @@ class Centro(db.Model):
     latitud = db.Column(db.Float(),nullable=False)
     longitud = db.Column(db.Float(),nullable=False)
 
->>>>>>> 148c8845cae8a4842cfd2d81be007b7d01ad5b15
     tipo_centro = db.Column(db.Integer, db.ForeignKey('tipo_centros.id'))
     tipo = db.relationship("Tipo_centro")
 
@@ -90,6 +84,7 @@ class Centro(db.Model):
             self.email = data['email']
         if self.estado_id != data['estado_id']:
             self.estado_id = data['estado_id']
+
         if self.latitud != data['latitud']:
             self.latitud = data['latitud']
         if self.longitud != data['longitud']:
