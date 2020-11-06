@@ -125,11 +125,14 @@ def search():
         centros = Centro.with_filter(filter).paginate(page,per_page,error_out=False)
         return render_template("centro/index.html", centros=centros, estado=estado)
     # se aplica filtro con estado activo
-    if estado == 'aceptado':
-        centros = Centro.active_with_filter(filter).paginate(page,per_page,error_out=False)
+    if estado == 'publicado':
+        centros = Centro.publicate(filter).paginate(page,per_page,error_out=False)
+        return render_template("centro/index.html", centros=centros, estado=estado)
+    if estado == 'despublicado':
+        centros = Centro.despublicate(filter).paginate(page,per_page,error_out=False)
         return render_template("centro/index.html", centros=centros, estado=estado)
     # se aplica filtro con estado inactivo
-    centros = Centro.deactive_with_filter(filter).paginate(page,per_page,error_out=False)
+    centros = Centro.pending(filter).paginate(page,per_page,error_out=False)
     return render_template("centro/index.html", centros=centros, estado=estado)
 
 

@@ -12,8 +12,9 @@
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Buscar.." aria-label="Search">
     <select class='form-control mr-sm-2' name='estado'>
       <option value='---'{% if estado=="---" %} selected="selected" {% endif %}>---</option>
-      <option value='aceptado'{% if estado=="aceptado" %} selected="selected" {% endif %}>Publicado</option>
-      <option value='rechazado'{% if estado=="rechazado" %} selected="selected" {% endif %}>Despublicado</option>
+      <option value='publicado'{% if estado=="publicado" %} selected="selected" {% endif %}>Publicado</option>
+      <option value='despublicado'{% if estado=="despublicado" %} selected="selected" {% endif %}>Despublicado</option>
+      <option value='pendiente'{% if estado=="pendiente" %} selected="selected" {% endif %}>Pendiente</option>
     </select>
     <button class="btn btn-light my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
@@ -51,7 +52,6 @@
         {% else %}
         Despublicado
         {%endif%}</td>
-
       <td>{{ centro.direccion }}</td>
       <td>{{ centro.hora_inicio }}</td>
       <td>{{ centro.hora_fin }}</td>

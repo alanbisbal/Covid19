@@ -5,6 +5,7 @@ from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey,Float,LargeBinary
 from app.models import tipo_centro,turno,estado
+from app.models.estado import Estado
 
 class Centro(db.Model):
     __tablename__ = 'centros'
@@ -83,7 +84,7 @@ class Centro(db.Model):
             self.email = data['email']
         if self.estado_id != data['estado_id']:
             self.estado_id = data['estado_id']
-        
+
         if self.latitud != data['latitud']:
             self.latitud = data['latitud']
         if self.longitud != data['longitud']:
@@ -100,10 +101,13 @@ class Centro(db.Model):
         return db.session.query(Centro).filter(Centro.nombre.contains(filter))
 
     def publicate(filter):
-        return db.session.query(Centro).filter(Centro.estado.nombre == "Publicado",Centro.nombre.contains(filter))
+        publicado =  db.session.query(Estado).filter(Estado.nombre == "Publicado").first()
+        return db.session.query(Centro).filter(Centro.estado_id == publicado.id,Centro.nombre.contains(filter))
 
     def despublicate(filter):
-        return db.session.query(Centro).filter(Centro.estado.nombre == "Despublicado",Centro.nombre.contains(filter))
+        despublicado =  db.session.query(Estado).filter(Estado.nombre == "Despublicado").first()
+        return db.session.query(Centro).filter(Centro.estado_id == despublicado.id,Centro.nombre.contains(filter))
 
     def pending(filter):
-        return db.session.query(Centro).filter(Centro.estado.nombre == "Pendiente",Centro.nombre.contains(filter))
+        pendiente =  db.session.query(Estado).filter(Estado.nombre == "Pendiente").first()
+        return db.session.query(Centro).filter(Centro.estado_id == pendiente.id,Centro.nombre.contains(filter))
