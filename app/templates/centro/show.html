@@ -26,14 +26,7 @@
      </div>
     <p ><strong >Sitio web:</strong> {{centro.web }}</p>
     <p ><strong >Email:</strong> {{centro.email }}</p>
-    <p ><strong >Estado:</strong>
-      {% if centro.estado %}
-      Publicado
-      {% else %}
-      Despublicado
-      {%endif%}
-
-    </p>
+    <p ><strong >Estado:</strong> {{centro.estado.nombre}}</p>
     <p ><strong >Protocolo:</strong> {{centro.protocolo }}</p>
     <p ><strong >Tipo de centro:</strong> {{centro.tipo.nombre }}</p>
 

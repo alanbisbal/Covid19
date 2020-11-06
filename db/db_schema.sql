@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-11-2020 a las 23:15:58
+-- Tiempo de generación: 06-11-2020 a las 09:20:30
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -37,29 +37,19 @@ CREATE TABLE `centros` (
   `municipio_id` varchar(255) NOT NULL,
   `web` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `estado` tinyint(1) DEFAULT NULL,
-  `protocolo` varchar(255) NOT NULL,
+  `estado_id` int(11) DEFAULT NULL,
+  `protocolo` blob DEFAULT NULL,
   `latitud` float NOT NULL,
   `longitud` float NOT NULL,
   `tipo_centro` int(11) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `centros`
 --
 
-INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
-(1, 'Facultad de informatica', '120 y 500', '12345678', '10:00:00', '11:30:00', '1', 'https://www.info.unlp.edu.ar/', 'difusion@info.unlp.edu.ar', 1, 'pdf', -34.9159, -57.9924, 3),
-(2, 'test2', '123 123 ', '123123123', '10:30:00', '11:30:00', '20', 'test.com', 'test2@123', 1, 'pdf', -34.8901, -57.9624, 1),
-(3, 'centro_test2', '22', '22', '11:11:00', '11:11:00', '1', 'centro_test2', 'centro_test2@centro', 1, 'centro_test2', -34.9801, -57.9024, 1),
-(4, 'centro_test2', '22', '22', '11:11:00', '11:11:00', '1', 'centro_test2', 'centro_test2@centro', 1, 'centro_test2', -34.9201, -57.8024, 2),
-(5, 'centro_test2', '22', '22', '11:11:00', '11:11:00', '1', 'centro_test2', 'centro_test2@centro', 1, 'centro_test2', -34.9901, -57.7024, 3),
-(14, 'asd', 'asd', 'asd', '11:01:00', '01:11:00', '1', '1', '1@asd', 1, '1', -34.9901, -57.9024, 1),
-(15, 'asd', 'asd', 'asd', '11:01:00', '01:11:00', '1', '1', '1@asd', 1, '1', -34.9901, -57.9024, 1),
-(16, 'asd', 'asd', 'asd', '11:01:00', '01:11:00', '1', '1', '1@asd', 1, '1', -34.9901, -57.9024, 1),
-(17, 'asdas', 'dasd', 'asd', '12:03:00', '12:03:00', '1', 'asd', 'dasdas@asdasdasdasd', 1, 'asdas', -34.9901, -57.9024, 1),
-(18, 'zzzzz', 'zzzzz', 'zzzzz', '11:01:00', '11:01:00', '17', 'zzzzz', 'zzzzz@zzzzz', 1, 'zzzzz', -34.9901, -57.7024, 1),
-(19, 'paseito', 'paseito', 'paseito', '11:01:00', '11:01:00', '1', 'paseito', 'paseito@paseito', 1, 'paseito', -34.9159, -57.9924, 1);
+INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
+(1, 'asdasd', 'asdasd', 'asdasd', '11:01:00', '11:01:00', '1', 'asd@asd', 'asdasdasd@asd', 2, 0x5072c3a1637469636120322e706466, -34.9159, -57.9924, 1);
 
 -- --------------------------------------------------------
 
@@ -82,6 +72,26 @@ CREATE TABLE `configs` (
 
 INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
 (1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 50, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estados`
+--
+
+CREATE TABLE `estados` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`id`, `nombre`) VALUES
+(1, 'Publicado'),
+(2, 'Despublicado'),
+(3, 'Pendiente');
 
 -- --------------------------------------------------------
 
@@ -225,13 +235,6 @@ CREATE TABLE `turnos` (
   `centro_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `turnos`
---
-
-INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
-(1, 'admin@admin', '12312312', '11:11:00', '11:11:00', '2020-11-11', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -316,12 +319,19 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 --
 ALTER TABLE `centros`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `estado_id` (`estado_id`),
   ADD KEY `tipo_centro` (`tipo_centro`);
 
 --
 -- Indices de la tabla `configs`
 --
 ALTER TABLE `configs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `estados`
+--
+ALTER TABLE `estados`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -381,13 +391,19 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
 --
 ALTER TABLE `configs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `estados`
+--
+ALTER TABLE `estados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -417,7 +433,7 @@ ALTER TABLE `tipo_centros`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -439,7 +455,8 @@ ALTER TABLE `users_rols`
 -- Filtros para la tabla `centros`
 --
 ALTER TABLE `centros`
-  ADD CONSTRAINT `centros_ibfk_1` FOREIGN KEY (`tipo_centro`) REFERENCES `tipo_centros` (`id`);
+  ADD CONSTRAINT `centros_ibfk_1` FOREIGN KEY (`estado_id`) REFERENCES `estados` (`id`),
+  ADD CONSTRAINT `centros_ibfk_2` FOREIGN KEY (`tipo_centro`) REFERENCES `tipo_centros` (`id`);
 
 --
 -- Filtros para la tabla `rols_permisos`

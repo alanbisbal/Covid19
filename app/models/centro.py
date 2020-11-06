@@ -3,8 +3,8 @@ from sqlalchemy.orm import relationship
 
 from app.db import db
 
-from sqlalchemy import Table, Column, Integer, ForeignKey,Float
-from app.models import tipo_centro,turno
+from sqlalchemy import Table, Column, Integer, ForeignKey,Float,LargeBinary
+from app.models import tipo_centro,turno,estado
 
 class Centro(db.Model):
     __tablename__ = 'centros'
@@ -17,12 +17,17 @@ class Centro(db.Model):
     municipio_id = db.Column(db.String(255), nullable=False)
     web = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
-    estado =  db.Column(db.Boolean, nullable=False)
-    protocolo = db.Column(db.String(255), nullable=False)
+
+    estado_id = db.Column(db.Integer, db.ForeignKey('estados.id'))
+    estado =  db.relationship("Estado")
+
+    protocolo = db.Column(db.LargeBinary)
     latitud = db.Column(db.Float(),nullable=False)
     longitud = db.Column(db.Float(),nullable=False)
+
     tipo_centro = db.Column(db.Integer, db.ForeignKey('tipo_centros.id'))
-    tipo = relationship("Tipo_centro")
+    tipo = db.relationship("Tipo_centro")
+
     turnos = db.relationship("Turno",backref= "centros")
 
     def __init__(self, data,id):
@@ -34,11 +39,8 @@ class Centro(db.Model):
         self.municipio_id = id
         self.web = data['web']
         self.email = data['email']
-        if data['estado'] == 'y':
-            self.estado = 1
-        else:
-            self.estado = 0
-        self.protocolo = data['protocolo']
+        self.estado_id = data['estado_id']
+        self.protocolo = bytes(data['protocolo'],encoding='utf8')
         self.latitud = data['latitud']
         self.longitud = data['longitud']
         self.tipo_centro = data['tipo_centro']
@@ -79,12 +81,9 @@ class Centro(db.Model):
             self.web = data['web']
         if self.email != data['email']:
             self.email = data['email']
-        if data['estado'] == 'y':
-            self.estado = 1
-        else:
-            self.estado = 0
-        if self.protocolo != data['protocolo']:
-            self.protocolo = data['protocolo']
+        if self.estado_id != data['estado_id']:
+            self.estado_id = data['estado_id']
+        
         if self.latitud != data['latitud']:
             self.latitud = data['latitud']
         if self.longitud != data['longitud']:
@@ -100,8 +99,11 @@ class Centro(db.Model):
     def with_filter(filter):
         return db.session.query(Centro).filter(Centro.nombre.contains(filter))
 
-    def active_with_filter(filter):
-        return db.session.query(Centro).filter(Centro.estado == True,Centro.nombre.contains(filter))
+    def publicate(filter):
+        return db.session.query(Centro).filter(Centro.estado.nombre == "Publicado",Centro.nombre.contains(filter))
 
-    def deactive_with_filter(filter):
-        return db.session.query(Centro).filter(Centro.estado == False,Centro.nombre.contains(filter))
+    def despublicate(filter):
+        return db.session.query(Centro).filter(Centro.estado.nombre == "Despublicado",Centro.nombre.contains(filter))
+
+    def pending(filter):
+        return db.session.query(Centro).filter(Centro.estado.nombre == "Pendiente",Centro.nombre.contains(filter))

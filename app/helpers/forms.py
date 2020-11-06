@@ -4,6 +4,7 @@ from wtforms.validators import InputRequired ,NumberRange,Regexp,DataRequired
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 import requests
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 class CenterForm(FlaskForm):
     data = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
@@ -18,10 +19,10 @@ class CenterForm(FlaskForm):
     municipio_id = SelectField('Municipio',validate_choice=False ,choices= municipios)
     web = StringField('Sitio Web',validators =[InputRequired()])
     email = EmailField('Email',validators =[InputRequired()])
-    estado = BooleanField('Estado (publicado o despublicado)',validators =[InputRequired()], render_kw={'checked': True})
-    protocolo = StringField('Protocolo',validators =[InputRequired()])
+    protocolo = FileField('Protocolo')
     latitud = FloatField('latitud (coordenadas)',default="-34.9159",validators =[DataRequired()])
     longitud = FloatField('Longitud (coordenadas)',default="-57.9924",validators =[DataRequired()])
+    estado_id = SelectField('Estado',validators =[InputRequired()])
     tipo_centro = SelectField('Tipo',validators =[InputRequired()])
 
 

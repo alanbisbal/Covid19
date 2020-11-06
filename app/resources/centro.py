@@ -4,6 +4,7 @@ from app.models.config import Config
 from app.helpers.auth import authenticated
 from app.models.centro import Centro
 from app.models.tipo_centro import Tipo_centro
+from app.models.estado import Estado
 from app.helpers.forms import CenterForm
 
 from app.helpers import maps
@@ -33,8 +34,10 @@ def new():
         return redirect(url_for("home"))
     form = CenterForm()
     tipos = Tipo_centro.all()
+    estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    map = maps.index()  
+    form.estado_id.choices = [(e.id, e.nombre) for e in estados]
+    map = maps.index()
     return render_template("centro/new.html",form=form,map=map)
 
 def create():
@@ -64,8 +67,10 @@ def update(centro_id):
     centro = Centro.with_id(centro_id)
     form = CenterForm()
     tipos = Tipo_centro.all()
+    estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
     form.tipo_centro.default = centro.tipo_centro # deberia ser algo de este estilo
+    form.estado_id.choices = [(e.id, e.nombre) for e in estados]
     map = maps.showLoc(centro.latitud,centro.longitud)
     return render_template("centro/update.html",centro = centro, form=form,map=map)
 
