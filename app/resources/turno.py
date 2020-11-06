@@ -25,7 +25,7 @@ def index(centro_id):
     turnos = Turno.with_filter(centro_id).paginate(page,per_page,error_out=False)
     return render_template("turno/index.html", turnos=turnos)
 
-def indexall():
+def index_all():
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_index'):
@@ -102,24 +102,22 @@ def show(turno_id):
     turno = Turno.with_id(turno_id)
     return render_template("turno/show.html",turno = turno)
 
-#def search():
- #   if not authenticated(session):
-  #      abort(401)
-    # validacion de acceso administrador
-   # if not has_permit('turno_index'):
-    #    flash("No posee permisos","danger")
-     #   return redirect(url_for("home"))
+def search():
+    if not authenticated(session):
+        abort(401)
+    # validacion de acceso 
+    if not has_permit('turno_index'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
 
-    #email = request.args.get("email")
-    #filter = request.args.get("filtro")
+    email = request.args.get("email")
+    filter = request.args.get("filtro")
     # se aplica filtro independientemente del email
-    #per_page = Config.getConfig().elementos
-    #page = request.args.get("page", 1, type=int)
-    #if email == '---':
-    #    turnos = Turno.with_filter(filter).paginate(page,per_page,error_out=False)
-    #   return render_template("turno/index.html", turnos=turnos, email=email)
-    # se aplica filtro con email
-    #if email == Turno.obtenerEmail(filter):
-     #   turnos = Turno.email_with_filter(filter).paginate(page,per_page,error_out=False)
-      #  return render_template("turno/index.html", turnos=turnos, email=email)
+    print('primero aca--------------------------')    
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
+    if email == 'email':
+        turnos = Turno.email_with_filter(filter).paginate(page,per_page,error_out=False)
+    print('ojala que llege aca--------------------------')    
+    return render_template("turno/index.html", turnos=turnos, email=email)
    
