@@ -36,8 +36,7 @@
   {{wtf.form_field(form.web, value=centro.web)}}
   {{wtf.form_field(form.email, value=centro.email)}}
   {{"por simplificacion ahora no updateo el pdf y hay que lograr dejar predeterminados los select"}}
-  {{wtf.form_field(form.tipo_centro)}}
-  {{wtf.form_field(form.estado_id, value=centro.estado_id)}}
+  {{wtf.form_field(form.tipo_centro(value={{centro.estado}}))}}
   {{wtf.form_field(form.longitud)}}
   {{wtf.form_field(form.latitud)}}
   {{map.html}}{{map.js}}
