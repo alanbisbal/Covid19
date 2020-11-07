@@ -67,13 +67,20 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/update/user_delete_rol", "user_rol_delete", user.rol_delete, methods=["POST"])
     app.add_url_rule("/usuarios/update/user_add_rols", "user_add_rols", user.add_rols, methods=["POST"])
 
-    app.add_url_rule("/turnos/index/<centro_id>", "turno_index", turno.index)
-    app.add_url_rule("/turnos", "turno_create", turno.create, methods=["POST"])
-    app.add_url_rule("/turnos/nuevo", "turno_new", turno.new)
-    app.add_url_rule("/turnos/update/<turno_id>", "turno_update", turno.update)
-    app.add_url_rule("/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
-    app.add_url_rule("/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
-    app.add_url_rule("/turnos/show/<turno_id>", "turno_show", turno.show)
+    # Rutas de turnos un centro en particular
+    app.add_url_rule("/centros/turnos/index/<centro_id>", "turno_index", turno.index)
+    app.add_url_rule("/centros/turnos/nuevo/create", "turno_create", turno.create, methods=["POST"])
+    app.add_url_rule("/centros/turnos/nuevo", "turno_new", turno.new, methods=["POST"])
+    app.add_url_rule("/centros/turnos/update/<turno_id>", "turno_update", turno.update)
+    app.add_url_rule("/centros/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
+    app.add_url_rule("/centros/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
+    app.add_url_rule("/centros/turnos/show/<turno_id>", "turno_show", turno.show)
+    app.add_url_rule("/centros/turnos/search/<centro_id>", "turno_search", turno.search)
+
+    #Rutas de todos los turnos
+    app.add_url_rule("/turnos", "turno_index_all", turno.index)
+    app.add_url_rule("/turnos/show/<turno_id>", "turno_show_all", turno.show)
+    app.add_url_rule("/centros/turnos/search", "turno_search_all", turno.search)
 
     # Rutas de Centros
     app.add_url_rule("/centros", "centro_index", centro.index)

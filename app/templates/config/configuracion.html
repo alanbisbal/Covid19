@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Configuración{% endblock %}
 {% block head %}
   {{ super() }}
@@ -15,33 +16,22 @@
 
     <div class="card-body">
       <div class="form-group">
-        <label for="titulo"><strong>Título de Inicio:</strong></label>
-        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese el título de inicio" value="{{config.titulo}}"  required>
+        {{ form.csrf_token }}
+        {% if form.csrf_token.errors %}
+          <div class="warning">You have submitted an invalid CSRF token</div>
+        {% endif %}
+        {{wtf.form_field(form.titulo, value=config.titulo)}}
+        {{wtf.form_field(form.description, value=config.description)}}
+        {{wtf.form_field(form.email, value=config.email,type="email")}}
+        {{wtf.form_field(form.elementos, value=config.elementos , selected=selected)}}
+      
       </div>
-
-      <div class="form-group">
-        <label for="description"><strong>Descripción de inicio:</strong></label>
-        <textarea class="form-control" name="description" id="description" placeholder="Ingrese la descripción de inicio" rows="3"  required >{{config.description}}</textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="email"><strong>Correo de contacto:</strong></label>
-        <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Ingrese el correo de contacto" value="{{config.email}}"  required>
-      </div>
-
-        <div class="form-group">
-          <label class="my-1 mr-2" for="elementos"><strong>Cantidad de elementos por pagina a mostrar</strong></label>
-            <select class="custom-select my-1 mr-sm-2" name="elementos" id="elementos">
-              <option value="5"{% if config.cant_elements()==5 %} selected="selected"{% endif %}> 5</option>
-              <option value="25"{% if config.cant_elements()==25 %} selected="selected"{% endif %}> 25</option>
-              <option value="50"{% if config.cant_elements()==50 %} selected="selected"{% endif %}> 50</option>
-            </select>
-        </div>
-        <label ><strong>Estado:</strong></label>
+        <label >Estado:</label>
       <select class='form-control mr-sm-2' name='estado'>
         <option value='habilitado'{% if config.is_active()==1 %} selected="selected"{% endif %}>Habilitado</option>
         <option value='deshabilitado'{% if config.is_active()==0 %} selected="selected"{% endif %}>Deshabilitado</option>
       </select>
+
 
 
       <div class="form-inline">
