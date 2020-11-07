@@ -114,5 +114,14 @@ def search(centro_id = None):
         return render_template("turno/index.html", turnos=turnos,centro_id=centro_id)
     centro = request.args.get("centro")
     # para el buscador de  turnos de todos los centros
+    if centro=="" and email == "":
+        turnos = Turno.query.paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos)
+    if centro != "" and email == "":
+        turnos = Turno.with_nombre_centro(centro).paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos)
+    if centro == "" and email != "":
+        turnos = Turno.with_email(email).paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos)
     turnos = Turno.with_email_centro(email,centro).paginate(page,per_page,error_out=False)
     return render_template("turno/index.html", turnos=turnos)

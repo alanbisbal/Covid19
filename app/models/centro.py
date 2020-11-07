@@ -62,6 +62,9 @@ class Centro(db.Model):
     def with_id(data):
         return db.session.query(Centro).get(data)
 
+    def with_name(data):
+        return db.session.query(Centro).contains(data)
+
     def with_email(data):
         return db.session.query(Centro).filter_by(email = data).first()
 
