@@ -22,7 +22,9 @@
     {{wtf.form_field(form.hora_inicio,type="Time")}}
     {{wtf.form_field(form.hora_fin,type="Time")}}
     {{wtf.form_field(form.fecha,type="Date")}}
-    {{wtf.form_field(form.centro_id)}}
+    {% if centro_id is not defined %}
+      {{wtf.form_field(form.centro_id)}}
+    {% endif %}
 
     </div>
 

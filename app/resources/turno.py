@@ -7,7 +7,7 @@ from app.models.config import Config
 
 from app.helpers.auth import authenticated
 
-from app.helpers.forms import TurnoForm
+from app.helpers.forms import TurnoForm, TurnoFormAll
 
 #from app.helpers.validates import
 from app.helpers.permits import has_permit, is_admin
@@ -30,13 +30,19 @@ def index(centro_id = None):
         return render_template("turno/index.html", turnos=turnos)
 
 
-def new():
+def new(centro_id = None):
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-    form = TurnoForm()
+    if centro_id:
+        form = TurnoForm()
+        return render_template("turno/new.html",form=form, centro_id=centro_id)
+    else:
+        form = TurnoFormAll()
+        centros = Centro.all()
+        form.centro_id.choices = [(t.id, t.nombre) for t in centros]
     # retorna vista de creacion de turnos
     return render_template("turno/new.html",form=form)
 
