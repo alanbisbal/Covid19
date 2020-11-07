@@ -15,7 +15,7 @@ class Turno(db.Model):
     hora_fin = db.Column(db.Time(timezone=True),nullable=False)
     fecha = db.Column(db.Date)
     centro_id = db.Column(db.Integer, db.ForeignKey('centros.id'))
-    centro = relationship("Centro")
+    centro = relationship("Centro", backref= "centro")
 
     def __init__(self, data):
         self.email = data['email']
@@ -30,15 +30,25 @@ class Turno(db.Model):
     def __str__(self):
         return '<Turno {}>'.format(self.email)
 
-    def with_filter(filter):
+    def with_centro_id(filter):
         return db.session.query(Turno).filter(Turno.centro_id == filter)
 
     def with_id(data):
         return db.session.query(Turno).get(data)
 
-    def email_with_filter(filter):
-        return db.session.query(Turno).filter(Turno.email.contains(filter))
-    
+    def with_email(email):
+        return db.session.query(Turno).filter(Turno.email.contains(email))
+
+    def with_nombre_centro(filter):
+        return db.session.query(Turno).filter(Turno.centro.nombre.contains(filter))
+
+    def with_email_centro_id(email,centro_id):
+        return db.session.query(Turno).filter(Turno.email.contains(email)).filter(Turno.centro.has(id=centro_id))
+
+    def with_email_centro(email,centro):
+        con_mail = db.session.query(Turno).filter(Turno.email.contains(email))
+        con_centro = db.session.query(Turno).filter(Turno.centro.has(nombre=centro))
+        return con_mail.union(con_centro)
 
     #'bloque' no sabemos bien como definirlo
     def update(self,data):
