@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-11-2020 a las 10:08:14
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.34
+-- Tiempo de generación: 06-11-2020 a las 15:35:53
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -38,7 +39,7 @@ CREATE TABLE `centros` (
   `web` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `estado_id` int(11) DEFAULT NULL,
-  `protocolo` blob DEFAULT NULL,
+  `protocolo` varchar(255) DEFAULT NULL,
   `latitud` float NOT NULL,
   `longitud` float NOT NULL,
   `tipo_centro` int(11) DEFAULT NULL
@@ -49,9 +50,12 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
-(1, 'Centro_publicado', 'Centro_publicado', 'Centro_publicado', '11:01:00', '11:01:00', '9', 'asd@asd', 'asdasdasd@asd', 1, 0x5072c3a1637469636120322e706466, -34.9159, -57.9924, 1),
-(2, 'Centro_pendiente', 'Centro_pendiente', 'Centro_pendiente', '11:01:00', '11:01:00', '19', 'Centro_pendiente', 'Centro_pendiente@Centro', 3, 0x506172746531477275706f3037202832292e706466, -34.9159, -57.9924, 2),
-(3, 'Centro_despublicado', 'Centro_despublicado', 'Centro_despublicado', '12:23:00', '12:23:00', '23', 'Centro_despublicado', 'Centro_despublicado@Centro', 2, 0x4179454420323031392d436c61736520342d4f626a657469766f732d5445202833292e706466, -34.9159, -57.9924, 3);
+(1, 'Centro_publicado', 'Centro_publicado', 'Centro_publicado', '11:01:00', '11:01:00', '9', 'asd@asd', 'asdasdasd@asd', 1, 'Práctica 2.pdf', -34.9159, -57.9924, 1),
+(2, 'Centro_pendiente', 'Centro_pendiente', 'Centro_pendiente', '11:01:00', '11:01:00', '19', 'Centro_pendiente', 'Centro_pendiente@Centro', 3, 'Parte1Grupo07 (2).pdf', -34.9159, -57.9924, 2),
+(3, 'Centro_despublicado', 'Centro_despublicado', 'Centro_despublicado', '12:23:00', '12:23:00', '23', 'Centro_despublicado', 'Centro_despublicado@Centro', 2, 'AyED 2019-Clase 4-Objetivos-TE (3).pdf', -34.9159, -57.9924, 3),
+(4, 'NUEVO CENTRO', 'Calle 190', '334343434', '09:00:00', '18:00:00', '11', 'asasas.com', 'nuevo@gmail.com', 1, 'Apunte Ingenieria en sorfware II.pdf', -34.9159, -57.9924, 1),
+(5, 'KIOSDOASDA', 'cale 23', '4534534', '09:00:00', '18:00:00', '8', 'sdsd.com', 'ssssss@gmail.com', 1, 'EJERCICIOS ALGEBRA TP2.docx.pdf', -34.9159, -57.9924, 1),
+(6, 'SANTI CENTRO', 'calsds 11', '32423423', '09:00:00', '18:00:00', '1', 'asas.com', 'hhhh@gmail.com', 1, '2.pdf', -34.9159, -57.9924, 1);
 
 -- --------------------------------------------------------
 
@@ -393,7 +397,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`

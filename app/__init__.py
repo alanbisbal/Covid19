@@ -78,7 +78,7 @@ def create_app(environment="development"):
     # Rutas de Centros
     app.add_url_rule("/centros", "centro_index", centro.index)
     app.add_url_rule("/centros", "centro_create", centro.create, methods=["POST"])
-    app.add_url_rule("/centro/nuevo", "centro_new", centro.new)
+    app.add_url_rule("/centros/nuevo", "centro_new", centro.new)
     app.add_url_rule("/centros/show/<centro_id>", "centro_show", centro.show)
     app.add_url_rule("/centros/delete", "centro_delete", centro.delete, methods=["POST"])
     app.add_url_rule("/centros/update/<centro_id>", "centro_update", centro.update)
