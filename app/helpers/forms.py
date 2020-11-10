@@ -48,7 +48,7 @@ class TurnoForm(FlaskForm):
     hora_inicio = TimeField('hora_inicio',validators =[InputRequired()])
     hora_fin = TimeField('hora_fin',validators =[InputRequired()])
     fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = HiddenField(validators =[InputRequired()])
+    centro_id = HiddenField('centro_id', validators =[InputRequired()])
 
 class TurnoFormAll(FlaskForm):
     email = StringField('email',validators =[InputRequired()])
