@@ -16,7 +16,7 @@ from app.models.user import User
 from app.helpers.permits import has_permit, is_admin
 from flask_bootstrap import Bootstrap
 from flask import jsonify
-from app.resources.api import centros
+from app.resources.api import centros as api_centros
 from flask_googlemaps import GoogleMaps
 
 
@@ -105,10 +105,9 @@ def create_app(environment="development"):
             return render_template("home.html", config=configuracion)
         return render_template("mantenimiento.html")
 
-    # Ruta para la api con el listado de centros
-    @app.route('/centros')
-    def getCentros():
-        return jsonify(centros)
+    # Ruta para la api de centros
+    app.add_url_rule("/api/centros", "centro_list", api_centros.center_list)
+    app.add_url_rule("/api/centros/<id>", "centro_info", api_centros.center)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
