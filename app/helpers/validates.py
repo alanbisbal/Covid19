@@ -114,5 +114,3 @@ def form_turno(data):
         return True
     else:
         return False
-
-    

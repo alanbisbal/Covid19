@@ -4,7 +4,10 @@ from app.models.config import Config
 from app.helpers.auth import authenticated
 from app.models.centro import Centro
 from app.models.tipo_centro import Tipo_centro
+from app.models.estado import Estado
 from app.helpers.forms import CenterForm
+
+from app.helpers import maps
 
 from app.helpers.validates import form_config_update
 from app.helpers.permits import has_permit, is_admin
@@ -29,12 +32,13 @@ def new():
     if not has_permit('centro_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-
-
     form = CenterForm()
     tipos = Tipo_centro.all()
+    estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    return render_template("centro/new.html",form=form)
+    form.estado_id.choices = [(e.id, e.nombre) for e in estados]
+    map = maps.index()
+    return render_template("centro/new.html",form=form,map=map)
 
 def create():
     if not authenticated(session):
@@ -63,9 +67,12 @@ def update(centro_id):
     centro = Centro.with_id(centro_id)
     form = CenterForm()
     tipos = Tipo_centro.all()
+    estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
     form.tipo_centro.default = centro.tipo_centro # deberia ser algo de este estilo
-    return render_template("centro/update.html",centro = centro, form=form)
+    form.estado_id.choices = [(e.id, e.nombre) for e in estados]
+    map = maps.showLoc(centro.latitud,centro.longitud)
+    return render_template("centro/update.html",centro = centro, form=form,map=map)
 
 def update_new():
     if not authenticated(session):
@@ -118,11 +125,14 @@ def search():
         centros = Centro.with_filter(filter).paginate(page,per_page,error_out=False)
         return render_template("centro/index.html", centros=centros, estado=estado)
     # se aplica filtro con estado activo
-    if estado == 'aceptado':
-        centros = Centro.active_with_filter(filter).paginate(page,per_page,error_out=False)
+    if estado == 'publicado':
+        centros = Centro.publicate(filter).paginate(page,per_page,error_out=False)
+        return render_template("centro/index.html", centros=centros, estado=estado)
+    if estado == 'despublicado':
+        centros = Centro.despublicate(filter).paginate(page,per_page,error_out=False)
         return render_template("centro/index.html", centros=centros, estado=estado)
     # se aplica filtro con estado inactivo
-    centros = Centro.deactive_with_filter(filter).paginate(page,per_page,error_out=False)
+    centros = Centro.pending(filter).paginate(page,per_page,error_out=False)
     return render_template("centro/index.html", centros=centros, estado=estado)
 
 
@@ -136,4 +146,5 @@ def show(centro_id):
         return redirect(url_for("home"))
     # validacion de acceso administrador y si lo es retorna el usuario enviado por id
     centro = Centro.with_id(centro_id)
-    return render_template("centro/show.html",centro = centro)
+    map = maps.showLoc(centro.latitud,centro.longitud)
+    return render_template("centro/show.html",centro = centro,map=map)
