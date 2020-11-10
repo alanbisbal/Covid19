@@ -10,4 +10,4 @@ def upload_pdf(filedata):
         filename = str(uuid.uuid1()) + '.pdf'
         fullname = os.path.join(get_real_path(),filename)
         filedata.save(fullname)
-        return fullname
+        return filename
