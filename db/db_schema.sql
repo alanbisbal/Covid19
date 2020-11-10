@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-11-2020 a las 15:35:53
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.2.28
+-- Tiempo de generación: 10-11-2020 a las 18:53:28
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -50,12 +49,7 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
-(1, 'Centro_publicado', 'Centro_publicado', 'Centro_publicado', '11:01:00', '11:01:00', '9', 'asd@asd', 'asdasdasd@asd', 1, 'Práctica 2.pdf', -34.9159, -57.9924, 1),
-(2, 'Centro_pendiente', 'Centro_pendiente', 'Centro_pendiente', '11:01:00', '11:01:00', '19', 'Centro_pendiente', 'Centro_pendiente@Centro', 3, 'Parte1Grupo07 (2).pdf', -34.9159, -57.9924, 2),
-(3, 'Centro_despublicado', 'Centro_despublicado', 'Centro_despublicado', '12:23:00', '12:23:00', '23', 'Centro_despublicado', 'Centro_despublicado@Centro', 2, 'AyED 2019-Clase 4-Objetivos-TE (3).pdf', -34.9159, -57.9924, 3),
-(4, 'NUEVO CENTRO', 'Calle 190', '334343434', '09:00:00', '18:00:00', '11', 'asasas.com', 'nuevo@gmail.com', 1, 'Apunte Ingenieria en sorfware II.pdf', -34.9159, -57.9924, 1),
-(5, 'KIOSDOASDA', 'cale 23', '4534534', '09:00:00', '18:00:00', '8', 'sdsd.com', 'ssssss@gmail.com', 1, 'EJERCICIOS ALGEBRA TP2.docx.pdf', -34.9159, -57.9924, 1),
-(6, 'SANTI CENTRO', 'calsds 11', '32423423', '09:00:00', '18:00:00', '1', 'asas.com', 'hhhh@gmail.com', 1, '2.pdf', -34.9159, -57.9924, 1);
+(4, 'Centro_publicado', '123 123', '123123', '09:00:00', '16:00:00', '19', 'info.unlp.com', 'centro_test@cesadas', 1, 'C:\\Users\\alan\\Desktop\\Proyecto\\project\\grupo37\\app/static/uploads\\07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 2);
 
 -- --------------------------------------------------------
 
@@ -241,6 +235,13 @@ CREATE TABLE `turnos` (
   `centro_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `turnos`
+--
+
+INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
+(4, 'admin@admin', 'test2123', '11:01:00', '11:01:00', '1111-11-11', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -397,7 +398,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
@@ -439,7 +440,7 @@ ALTER TABLE `tipo_centros`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
