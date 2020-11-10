@@ -33,9 +33,9 @@ def new():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     form = CenterForm()
-    tipos = Tipo_centro.all()
+    #tipos = Tipo_centro.all()
     estados = Estado.all()
-    form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
+    #form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
     form.estado_id.choices = [(e.id, e.nombre) for e in estados]
     map = maps.index()
     return render_template("centro/new.html",form=form,map=map)
@@ -47,12 +47,9 @@ def create():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # validaciones de acceso administrador
-    data = request.form
-    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
-    for mun in municipios:
-        if municipios[mun]['name'] == data['municipio_id']:
-            id=municipios[mun]['id']
-    Centro.add(data,id)
+    form = CenterForm()
+    #centro = Centro.with_id(data['centro_id']) #Seguir pensandolo
+    Centro.add(form.data)
     flash("Insercion exitosa","success")
     return redirect(url_for("centro_index"))
 
@@ -81,14 +78,8 @@ def update_new():
     if not has_permit('centro_update'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
-    data= request.form
-    # Hacer todas estas funciones para el centro
-    centro = Centro.with_id(data['centro_id']) #Seguir pensandolo
-    municipios = requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
-    for mun in municipios:
-        if municipios[mun]['name'] == data['municipio_id']:
-            id=municipios[mun]['id']
-    centro.update(data, id)
+
+    Centro.add(form.data)
     flash("Actualización exitosa.","success")
     return redirect(url_for("centro_index"))
 

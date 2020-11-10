@@ -9,6 +9,7 @@ class BaseConfig(object):
     DB_PASS = "db_pass"
     DB_NAME = "db_name"
     SECRET_KEY = "secret"
+    FILES_FOLDER= "app/static/uploads"
 
     @staticmethod
     def configure(app):
