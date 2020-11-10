@@ -7,13 +7,13 @@ from app.models.config import Config
 
 from app.helpers.auth import authenticated
 
-from app.helpers.forms import TurnoForm
+from app.helpers.forms import TurnoForm, TurnoFormAll
 
 #from app.helpers.validates import
 from app.helpers.permits import has_permit, is_admin
 
 
-def index(centro_id):
+def index(centro_id = None):
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_index'):
@@ -22,28 +22,27 @@ def index(centro_id):
     # retorna todos los turnos
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
-    turnos = Turno.with_filter(centro_id).paginate(page,per_page,error_out=False)
-    return render_template("turno/index.html", turnos=turnos)
+    if centro_id:
+        turnos = Turno.with_centro_id(centro_id).paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos, centro_id=centro_id)
+    else:
+        turnos = Turno.query.paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos)
 
-def index_all():
-    if not authenticated(session):
-        abort(401)
-    if not has_permit('turno_index'):
-        flash("No posee permisos","danger")
-        return redirect(url_for("home"))
-    # retorna todos los turnos paginados
-    per_page = Config.getConfig().elementos
-    page = request.args.get("page", 1, type=int)
-    turnos = Turno.query.paginate(page,per_page,error_out=False)
-    return render_template("turno/index_all.html", turnos=turnos)
 
-def new():
+def new(centro_id = None):
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-    form = TurnoForm()
+    if centro_id:
+        form = TurnoForm()
+        return render_template("turno/new.html",form=form, centro_id=centro_id)
+    else:
+        form = TurnoFormAll()
+        centros = Centro.all()
+        form.centro_id.choices = [(t.id, t.nombre) for t in centros]
     # retorna vista de creacion de turnos
     return render_template("turno/new.html",form=form)
 
@@ -102,10 +101,10 @@ def show(turno_id):
     turno = Turno.with_id(turno_id)
     return render_template("turno/show.html",turno = turno)
 
-def search():
+def search(centro_id = None):
     if not authenticated(session):
         abort(401)
-    # validacion de acceso 
+    # validacion de acceso
     if not has_permit('turno_index'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
@@ -113,11 +112,13 @@ def search():
     email = request.args.get("email")
     filter = request.args.get("filtro")
     # se aplica filtro independientemente del email
-    print('primero aca--------------------------')    
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
-    if email == 'email':
-        turnos = Turno.email_with_filter(filter).paginate(page,per_page,error_out=False)
-    print('ojala que llege aca--------------------------')    
-    return render_template("turno/index.html", turnos=turnos, email=email)
-   
+    # para el buscador de  turnos de centro en particular
+    if centro_id:
+        turnos = Turno.with_email_centro_id(email,centro_id).paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos,centro_id=centro_id)
+    centro = request.args.get("centro")
+    # para el buscador de  turnos de todos los centros
+    turnos = Turno.with_email_centro(email,centro).paginate(page,per_page,error_out=False)
+    return render_template("turno/index.html", turnos=turnos)

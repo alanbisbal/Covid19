@@ -5,27 +5,46 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ url_for('turno_new') }}" method="POST">
-  {{csrf_token}}
-  <input type="hidden" id="centro_id" name="centro_id" value="{{centro_id}}">
+{% if centro_id is defined %}
+  <form action="{{ url_for('turno_new',centro_id = centro_id) }}">
+    {{csrf_token}}
     <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
-</form>
-<form class="form-inline md-form mr-auto mb-4" action="{{ url_for('turno_search') }}">
-  <h1 class="my-0 mr-md-auto font-weight-normal">Turnos del centro</h1>
-  <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Búscar.." aria-label="Search">
-    <select class='form-control mr-sm-2' name='email'>
-      <option value='email'>Email</option>
-    </select>
-    <button class="btn btn-light my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-      <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-    </svg></button>
   </form>
+{% else %}
+  <form action="{{ url_for('turno_new_all') }}">
+    {{csrf_token}}
+      <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+  </form>
+{% endif %}
+
+{% if centro_id is defined %}
+  <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('turno_search', centro_id=centro_id) }}">
+    <h1 class="my-0 mr-md-auto font-weight-normal">Turnos del centro</h1>
+    <input class="form-control mr-sm-2" type="text" name="email" placeholder="Ingrese email" aria-label="Search">
+      <button class="btn btn-light my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+      </svg></button>
+    </form>
+{% else %}
+  <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('turno_search_all') }}">
+    <h1 class="my-0 mr-md-auto font-weight-normal">Turnos del centro</h1>
+    <input class="form-control mr-sm-2" type="text" name="email" placeholder="Ingrese email" aria-label="Search">
+    <input class="form-control mr-sm-2" type="text" name="centro" placeholder="Ingrese nombre de centro" aria-label="Search">
+      <button class="btn btn-light my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+      </svg></button>
+    </form>
+{% endif %}
 
   <div class="table-responsive-md">
   <table class="table">
   <thead>
     <tr>
+      {% if centro_id is not defined %}
+        <th scope="col">Centro</th>
+      {% endif %}
       <th scope="col">Email</th>
       <th scope="col">Telefono</th>
       <th scope="col">Hora</th>
@@ -41,6 +60,10 @@
   <tbody>
      {% for turno in turnos.items %}
     <tr>
+      {% if centro_id is not defined %}
+        <!--centro-->
+        <td>{{ turno.centro.nombre }}</td>
+      {% endif %}
       <!--email-->
       <td>{{ turno.email }}</td>
       <!--telefono-->

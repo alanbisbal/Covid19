@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import validators,StringField,PasswordField,SubmitField, TimeField,IntegerField,SelectField,BooleanField,DateField,FloatField
-from wtforms.validators import InputRequired ,NumberRange,Regexp,DataRequired
+from wtforms import StringField,PasswordField,SubmitField, TextAreaField,TimeField,IntegerField,SelectField,BooleanField,DateField, HiddenField
+from wtforms.validators import InputRequired as InputRequired
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 from wtforms.widgets.html5 import NumberInput
@@ -33,7 +33,15 @@ class TurnoForm(FlaskForm):
     hora_inicio = TimeField('hora_inicio',validators =[InputRequired()])
     hora_fin = TimeField('hora_fin',validators =[InputRequired()])
     fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = IntegerField('centro_id',validators =[InputRequired()])
+    centro_id = HiddenField(validators =[InputRequired()])
+
+class TurnoFormAll(FlaskForm):
+    email = StringField('email',validators =[InputRequired()])
+    telefono = StringField('telefono')
+    hora_inicio = TimeField('hora_inicio',validators =[InputRequired()])
+    hora_fin = TimeField('hora_fin',validators =[InputRequired()])
+    fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
+    centro_id = SelectField('centro_id',validators =[InputRequired()])
 
 class ConfigForm(FlaskForm):
     titulo = StringField('titulo',validators =[InputRequired()])
@@ -41,7 +49,3 @@ class ConfigForm(FlaskForm):
     email = StringField('email',validators =[InputRequired()])
     elementos = IntegerField('elementos',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=None))
    # estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])
-
-
-   
-      
