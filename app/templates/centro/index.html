@@ -46,12 +46,7 @@
       <td>{{ centro.nombre }}</td>
       <td>{{ centro.email }}</td>
 
-      <td>
-        {% if centro.estado %}
-        Publicado
-        {% else %}
-        Despublicado
-        {%endif%}</td>
+      <td>{{centro.estado.nombre}}</td>
       <td>{{ centro.direccion }}</td>
       <td>{{ centro.hora_inicio }}</td>
       <td>{{ centro.hora_fin }}</td>

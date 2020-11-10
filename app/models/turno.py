@@ -39,16 +39,17 @@ class Turno(db.Model):
     def with_email(email):
         return db.session.query(Turno).filter(Turno.email.contains(email))
 
-    def with_nombre_centro(filter):
-        return db.session.query(Turno).filter(Turno.centro.nombre.contains(filter))
+    def with_nombre_centro(data):
+        return db.session.query(Turno).filter(Turno.centro.has(nombre=data))
 
     def with_email_centro_id(email,centro_id):
-        return db.session.query(Turno).filter(Turno.email.contains(email)).filter(Turno.centro.has(id=centro_id))
+        return db.session.query(Turno).filter(Turno.email.contains(email)).filter(Turno.centro.has(nombre=centro))
 
     def with_email_centro(email,centro):
         con_mail = db.session.query(Turno).filter(Turno.email.contains(email))
         con_centro = db.session.query(Turno).filter(Turno.centro.has(nombre=centro))
-        return con_mail.union(con_centro)
+        return con_mail.intersect(con_centro)
+
 
     #'bloque' no sabemos bien como definirlo
     def update(self,data):

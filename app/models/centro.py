@@ -6,6 +6,7 @@ from app.db import db
 from sqlalchemy import Table, Column, Integer, ForeignKey,Float,LargeBinary
 from app.models import tipo_centro,turno,estado
 from app.models.estado import Estado
+from app.helpers.upload import upload_pdf
 
 class Centro(db.Model):
     __tablename__ = 'centros'
@@ -22,7 +23,7 @@ class Centro(db.Model):
     estado_id = db.Column(db.Integer, db.ForeignKey('estados.id'))
     estado =  db.relationship("Estado")
 
-    protocolo = db.Column(db.LargeBinary)
+    protocolo = db.Column(db.String(255), nullable=True)
     latitud = db.Column(db.Float(),nullable=False)
     longitud = db.Column(db.Float(),nullable=False)
 
@@ -31,17 +32,17 @@ class Centro(db.Model):
 
     turnos = db.relationship("Turno",backref= "centros")
 
-    def __init__(self, data,id):
+    def __init__(self, data):
         self.nombre = data['nombre']
         self.direccion = data['direccion']
         self.telefono = data['telefono']
         self.hora_inicio = data['hora_inicio']
         self.hora_fin =  data['hora_fin']
-        self.municipio_id = id
+        self.municipio_id = data['municipio_id']
         self.web = data['web']
         self.email = data['email']
         self.estado_id = data['estado_id']
-        self.protocolo = bytes(data['protocolo'],encoding='utf8')
+
         self.latitud = data['latitud']
         self.longitud = data['longitud']
         self.tipo_centro = data['tipo_centro']
@@ -51,9 +52,10 @@ class Centro(db.Model):
     def __str__(self):
         return '<Centro {}>'.format(self.nombre)
 
-
-    def add(data,id):
-        db.session.add(Centro(data,id))
+    def add(data):
+        centro = Centro(data)
+        centro.protocolo = upload_pdf(data['protocolo'])
+        db.session.add(centro)
         db.session.commit()
 
     def all():
