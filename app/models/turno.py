@@ -5,7 +5,7 @@ from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
-from datetime import datetime
+from datetime import datetime,time,timedelta,date
 
 
 
@@ -59,6 +59,7 @@ class Turno(db.Model):
     def bloques_disponibles(id,fecha):
         bloques = []
         turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).all()
+    
         return turnos
 
 
