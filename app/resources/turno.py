@@ -48,7 +48,7 @@ def new(centro_id = None):
         form.centro_id.data = data["centro_id"]
     # retorna vista de creacion de turnos
     bloques = Turno.bloques_disponibles(form.centro_id.data, form.fecha.data)
-    print(bloques[0].fecha)
+    print(bloques)
     return render_template("turno/new.html",form=form)
 
 def create():
