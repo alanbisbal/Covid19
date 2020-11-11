@@ -38,6 +38,7 @@ def new(centro_id = None):
         return redirect(url_for("home"))
     if centro_id:
         form = TurnoForm()
+        form.centro_id.data = centro_id
         return render_template("turno/new.html",form=form, centro_id=centro_id)
     else:
         form = TurnoFormAll()

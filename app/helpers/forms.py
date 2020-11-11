@@ -43,24 +43,24 @@ class CenterForm(FlaskForm):
         self.municipio_id.choices = choices
 
 class TurnoForm(FlaskForm):
-    email = StringField('email',validators =[InputRequired()])
-    telefono = StringField('telefono')
-    hora_inicio = TimeField('hora_inicio',validators =[InputRequired()])
-    hora_fin = TimeField('hora_fin',validators =[InputRequired()])
-    fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = HiddenField('centro_id', validators =[InputRequired()])
+    email = StringField('Email',validators =[InputRequired()])
+    telefono = StringField('Telefono')
+    hora_inicio = TimeField('Hora inicio',validators =[InputRequired()])
+    hora_fin = TimeField('Hora fin',validators =[InputRequired()])
+    fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
+    centro_id = IntegerField('centro_id', validators =[InputRequired()])
 
 class TurnoFormAll(FlaskForm):
-    email = StringField('email',validators =[InputRequired()])
-    telefono = StringField('telefono')
-    hora_inicio = TimeField('hora_inicio',validators =[InputRequired()])
-    hora_fin = TimeField('hora_fin',validators =[InputRequired()])
-    fecha = DateField('fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = SelectField('centro_id',validators =[InputRequired()])
+    email = StringField('Email',validators =[InputRequired()])
+    telefono = StringField('Telefono')
+    hora_inicio = TimeField('Hora inicio',validators =[InputRequired()])
+    hora_fin = TimeField('Hora fin',validators =[InputRequired()])
+    fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
+    centro_id = SelectField('Nombre de centro',validators =[InputRequired()])
 
 class ConfigForm(FlaskForm):
-    titulo = StringField('titulo',validators =[InputRequired()])
-    description = StringField('description',validators =[InputRequired()])
-    email = StringField('email',validators =[InputRequired()])
-    elementos = IntegerField('elementos',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=None))
+    titulo = StringField('Titulo',validators =[InputRequired()])
+    description = StringField('Description',validators =[InputRequired()])
+    email = StringField('Email',validators =[InputRequired()])
+    elementos = IntegerField('Cantidad de elementos por pagina',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=None))
    # estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])
