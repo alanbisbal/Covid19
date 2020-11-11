@@ -42,6 +42,9 @@ def new(centro_id = None):
     form = TurnoForm()
     fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
     form.fecha.data = fecha
+    if(fecha < datetime.today()):
+        flash("la fecha no puede ser menor a la fecha actual","danger") 
+        return redirect(url_for("home"))
     if centro_id:
         form.centro_id.data = centro_id
     else:
