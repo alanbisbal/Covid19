@@ -7,10 +7,11 @@ from app.models.config import Config
 
 from app.helpers.auth import authenticated
 
-from app.helpers.forms import TurnoForm
+from app.helpers.forms import TurnoForm, NewTurnoForm
 
 #from app.helpers.validates import
 from app.helpers.permits import has_permit, is_admin
+from datetime import datetime
 
 
 def index(centro_id = None):
@@ -20,24 +21,34 @@ def index(centro_id = None):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     # retorna todos los turnos
+    form =  NewTurnoForm()
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
     if centro_id:
         turnos = Turno.with_centro_id(centro_id).paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos, centro_id=centro_id)
+        return render_template("turno/index.html", turnos=turnos, centro_id=centro_id, form=form)
     else:
         turnos = Turno.query.paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos)
+        return render_template("turno/index.html", turnos=turnos, form=form)
 
 
-def new():
+def new(centro_id = None):
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
+    data = request.args
     form = TurnoForm()
+    fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
+    form.fecha.data = fecha
+    if centro_id:
+        form.centro_id.data = centro_id
+    else:
+        form.centro_id.data = data["centro_id"]
     # retorna vista de creacion de turnos
+    bloques = Turno.bloques_disponibles(form.centro_id.data, form.fecha.data)
+    print(bloques[0].fecha)
     return render_template("turno/new.html",form=form)
 
 def create():

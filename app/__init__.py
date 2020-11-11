@@ -17,6 +17,7 @@ from app.helpers.permits import has_permit, is_admin
 from flask_bootstrap import Bootstrap
 from flask import jsonify
 from app.resources.api import centros as api_centros
+from app.resources.api import turnos as api_turnos
 from flask_googlemaps import GoogleMaps
 
 
@@ -70,7 +71,7 @@ def create_app(environment="development"):
     # Rutas de turnos un centro en particular
     app.add_url_rule("/centros/turnos/index/<centro_id>", "turno_index", turno.index)
     app.add_url_rule("/centros/turnos/nuevo/create", "turno_create", turno.create, methods=["POST"])
-    app.add_url_rule("/centros/turnos/nuevo", "turno_new", turno.new, methods=["POST"])
+    app.add_url_rule("/centros/turnos/index/<centro_id>/nuevo", "turno_new", turno.new)
     app.add_url_rule("/centros/turnos/update/<turno_id>", "turno_update", turno.update)
     app.add_url_rule("/centros/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
     app.add_url_rule("/centros/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
@@ -81,6 +82,7 @@ def create_app(environment="development"):
     app.add_url_rule("/turnos", "turno_index_all", turno.index)
     app.add_url_rule("/turnos/show/<turno_id>", "turno_show_all", turno.show)
     app.add_url_rule("/centros/turnos/search", "turno_search_all", turno.search)
+    app.add_url_rule("/turnos/nuevo", "turno_new_all", turno.new)
 
     # Rutas de Centros
     app.add_url_rule("/centros", "centro_index", centro.index)
@@ -107,6 +109,10 @@ def create_app(environment="development"):
     # Ruta para la api de centros
     app.add_url_rule("/api/centros", "centro_list", api_centros.center_list)
     app.add_url_rule("/api/centros/<id>", "centro_info", api_centros.center)
+
+    # Ruta para la api de turnos
+    app.add_url_rule("/api/centros/<id>/turnos_disponibles/<fecha>", "turno_list", api_turnos.turno_list)
+    app.add_url_rule("/api/centros/<id>/turnos_disponibles/", "turno_list", api_turnos.turno_list)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

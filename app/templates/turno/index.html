@@ -1,15 +1,26 @@
 {% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Turnos{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
 
 {% block content %}
-<form action="{{ url_for('turno_new') }}" method="POST">
-  {{csrf_token}}
-  <input type="hidden" id="centro_id" name="centro_id" value="{{centro_id}}">
+{% if centro_id is defined %}
+  <form action="{{ url_for('turno_new', centro_id=centro_id) }}">
+    {{csrf_token}}
     <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
-</form>
+    {{wtf.form_field(form.fecha,type="Date")}}
+  </form>
+{% else %}
+  <form action="{{ url_for('turno_new_all') }}">
+    {{csrf_token}}
+      <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+      {{wtf.form_field(form.fecha,type="Date")}}
+      {{wtf.form_field(form.centro_id)}}
+  </form>
+{% endif %}
+
 {% if centro_id is defined %}
   <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('turno_search', centro_id=centro_id) }}">
     <h1 class="my-0 mr-md-auto font-weight-normal">Turnos del centro</h1>

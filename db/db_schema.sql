@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-11-2020 a las 18:53:28
+-- Tiempo de generación: 11-11-2020 a las 15:27:30
 -- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.34
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,6 +49,9 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
+(1, 'Centro de donaciones', '1 y 32', '12314412', '09:00:00', '09:30:00', '19', 'lkifajmkaqfmj@afhaiof', 'luahdwa@kujgherswougs', 1, 'usafhuosafhnioa', -34.9159, -57.9924, 2),
+(2, 'Comedor religioso', '2 y 33', '13241234', '09:00:00', '16:00:00', '19', 'upogposwjgpesa@silhjgiosa', 'eswjgnhesokj@slkiegisejn', 1, 'oeifhiuaeswfoiesa', -34.9152, -57.9925, 1),
+(3, 'Centro culturar Test', '3 y 34', '1298746127986487126', '09:00:00', '16:00:00', '19', 'fkojnajnfa@alksfhja', 'efanhjniloae@akfnklanfa', 1, 'fiawqhjaiok;f', -34.914, -57.998, 4),
 (4, 'Centro_publicado', '123 123', '123123', '09:00:00', '16:00:00', '19', 'info.unlp.com', 'centro_test@cesadas', 1, 'C:\\Users\\alan\\Desktop\\Proyecto\\project\\grupo37\\app/static/uploads\\07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 2);
 
 -- --------------------------------------------------------
@@ -240,7 +243,12 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
-(4, 'admin@admin', 'test2123', '11:01:00', '11:01:00', '1111-11-11', 4);
+(4, 'admin@admin', 'test2123', '11:01:00', '11:01:00', '1111-11-11', 4),
+(7, 'admin@admin', '12312312', '17:00:00', '17:30:00', '2020-11-13', 4),
+(8, 'uiyoui@ytiyti', '12313123', '09:00:00', '09:30:00', '2020-11-20', 4),
+(9, 'qfhdqiwo@alkifhjgia', '123123123', '09:00:00', '09:30:00', '2020-11-12', 1),
+(10, 'iojaufhiaj@;keagnjkase', '999999', '10:00:00', '10:30:00', '2020-11-14', 3),
+(11, 'awfwq@qwefhguewq', '21312321', '12:00:00', '12:30:00', '2020-11-17', 2);
 
 -- --------------------------------------------------------
 
@@ -440,7 +448,7 @@ ALTER TABLE `tipo_centros`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
