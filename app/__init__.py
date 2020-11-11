@@ -17,6 +17,7 @@ from app.helpers.permits import has_permit, is_admin
 from flask_bootstrap import Bootstrap
 from flask import jsonify
 from app.resources.api import centros as api_centros
+from app.resources.api import turnos as api_turnos
 from flask_googlemaps import GoogleMaps
 
 
@@ -108,6 +109,10 @@ def create_app(environment="development"):
     # Ruta para la api de centros
     app.add_url_rule("/api/centros", "centro_list", api_centros.center_list)
     app.add_url_rule("/api/centros/<id>", "centro_info", api_centros.center)
+
+    # Ruta para la api de turnos
+    app.add_url_rule("/api/centros/<id>/turnos_disponibles/<fecha>", "turno_list", api_turnos.turno_list)
+    app.add_url_rule("/api/centros/<id>/turnos_disponibles/", "turno_list", api_turnos.turno_list)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

@@ -3,8 +3,9 @@ from sqlalchemy.orm import relationship
 
 from app.db import db
 
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Table, Column, Integer, ForeignKey 
 from app.models import centro
+
 
 class Turno(db.Model):
     __tablename__ = 'turnos'
@@ -49,6 +50,10 @@ class Turno(db.Model):
         con_mail = db.session.query(Turno).filter(Turno.email.contains(email))
         con_centro = db.session.query(Turno).filter(Turno.centro.has(nombre=centro))
         return con_mail.intersect(con_centro)
+
+    def with_id_fecha(id,fecha):
+       return db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha) 
+
 
 
     #'bloque' no sabemos bien como definirlo
