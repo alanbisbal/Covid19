@@ -59,10 +59,6 @@ class Turno(db.Model):
     def bloques_disponibles(id,fecha):
         bloques = []
         turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).all()
-        for i in range(9,16):
-            for j in (00,30):
-                hora = 
-                db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).filter(Turno.hora_inicio=)
         return turnos
 
 
