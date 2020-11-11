@@ -1,26 +1,25 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, \
                     TimeField, IntegerField, SelectField, BooleanField, \
-                    DateField, FloatField
+                    DateField, FloatField, DecimalField
 from flask_wtf.file import FileField
-from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional
+from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional,EqualTo,Regexp
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 from wtforms.widgets.html5 import NumberInput
-import requests
+import requests, time
 # from flask_wtf.file import FileField, FileAllowed, FileRequired
-
 
 class CenterForm(FlaskForm):
     nombre = StringField('Nombre',validators =[InputRequired()])
     direccion = StringField('Direccion',validators =[InputRequired()])
     telefono =StringField('Telefono',validators =[InputRequired()])
-    hora_inicio = TimeField('Hora de apertura',validators =[InputRequired()])
-    hora_fin = TimeField('Hora de cierre',validators =[InputRequired()])
+    hora_inicio = TimeField('Hora de apertura',default= time ,validators =[InputRequired()])
+    hora_fin = TimeField('Hora de cierre',default= time,validators =[InputRequired()])
     municipio_id = SelectField('Municipio',validate_choice=False, choices=[])
     web = StringField('Sitio Web',validators =[InputRequired()])
     email = EmailField('Email',validators =[InputRequired()])
-    protocolo = FileField(label="Protocolo")
+    protocolo = FileField(label="Protocolo",validators =[InputRequired()])
     latitud = FloatField('latitud (coordenadas)',default="-34.9159",validators =[DataRequired()])
     longitud = FloatField('Longitud (coordenadas)',default="-57.9924",validators =[DataRequired()])
     estado_id = SelectField('Estado',validators =[InputRequired()])
@@ -34,8 +33,6 @@ class CenterForm(FlaskForm):
         for _type in tipos:
             choices.append((_type.id, _type.nombre))
         self.tipo_centro.choices = choices
-
-
         choices = []
         municipios= requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
         for mun in municipios:
