@@ -3,8 +3,10 @@ from sqlalchemy.orm import relationship
 
 from app.db import db
 
-from sqlalchemy import Table, Column, Integer, ForeignKey 
+from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
+from datetime import datetime
+
 
 
 class Turno(db.Model):
@@ -52,8 +54,26 @@ class Turno(db.Model):
         return con_mail.intersect(con_centro)
 
     def with_id_fecha(id,fecha):
-       return db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha) 
+       return db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha)
 
+    def bloques_disponibles(id,fecha):
+        bloques = []
+        ocupados = []
+        turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).all()
+        for t in turnos:
+            ocupados.append((t.hora_inicio))
+        print (ocupados)
+        print ("ajhfahsgfahjygfagfakgfakjafsguyasfgyuiafsguyasfguiafsgfa")
+        for i in range(9,16):
+            for j in (00,30):
+                hora = str(fecha.year) +"-"+ str(fecha.month) +"-"+ str(fecha.day) + str(i)+":"+str(j)+":"+"00"
+                hora = datetime.strptime(hora,'%Y-%m-%d' '%H:%M:%S')
+                #print(hora)
+                bloques.append((hora.time()))
+        print(bloques)
+        print('jasfnhkjafjaafkaflawafnafklwfawkjfawlkfawjlkifawawfklfawjkaflwjklajwfkljafwaflkwjafwlkfawjklafwjfawaf')
+        result = list(set(bloques) -  set(ocupados))
+        return result
 
 
     #'bloque' no sabemos bien como definirlo
