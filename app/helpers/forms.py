@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, \
                     TimeField, IntegerField, SelectField, BooleanField, \
-                    DateField, FloatField, HiddenField
+                    DateField, FloatField
 from flask_wtf.file import FileField
 from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional
 from wtforms.fields.html5 import EmailField
@@ -50,13 +50,9 @@ class TurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
     centro_id = IntegerField('centro_id', validators =[InputRequired()])
 
-class TurnoFormAll(FlaskForm):
-    email = StringField('Email',validators =[InputRequired()])
-    telefono = StringField('Telefono')
-    hora_inicio = TimeField('Hora inicio',validators =[InputRequired()])
-    hora_fin = TimeField('Hora fin',validators =[InputRequired()])
+class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = SelectField('Nombre de centro',validators =[InputRequired()])
+    centro_id = IntegerField('centro_id', validators =[InputRequired()])
 
 class ConfigForm(FlaskForm):
     titulo = StringField('Titulo',validators =[InputRequired()])
