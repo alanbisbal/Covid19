@@ -95,6 +95,11 @@ class Turno(db.Model):
         db.session.add(Turno(data))
         db.session.commit()
 
+    def add_and_return(data):  
+        turno = Turno(data)
+        db.session.add(turno)
+        db.session.commit()
+        return turno  
 
     def all():
         return db.session.query(Turno).all()
