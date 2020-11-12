@@ -48,6 +48,9 @@ def create():
         return redirect(url_for("home"))
     # validaciones de acceso administrador
     form = CenterForm()
+    if not form.validate_on_submit():
+        return redirect(request.referrer)
+    print (form.errors.items())
     #centro = Centro.with_id(data['centro_id']) #Seguir pensandolo
     Centro.add(form.data)
     flash("Insercion exitosa","success")
