@@ -105,8 +105,10 @@ def create_app(environment="development"):
         return render_template("mantenimiento.html")
 
     # Ruta para la api de centros
+    app.config['JSON_AS_ASCII'] = False
     app.add_url_rule("/api/centros", "centro_list", api_centros.center_list)
     app.add_url_rule("/api/centros/<id>", "centro_info", api_centros.center)
+    app.add_url_rule("/api/centros", "centro_carga", api_centros.center_create, methods=["POST"])
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
