@@ -45,10 +45,10 @@ class CenterForm(FlaskForm):
 class TurnoForm(FlaskForm):
     email = StringField('Email',validators =[InputRequired()])
     telefono = StringField('Telefono')
-    hora_inicio = TimeField('Hora inicio',validators =[InputRequired()])
-    hora_fin = TimeField('Hora fin',validators =[InputRequired()])
+    hora_inicio = SelectField('Hora inicio',validators =[InputRequired()])
+    hora_fin = StringField('Hora fin',validators =[InputRequired()])
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = IntegerField('centro_id', validators =[InputRequired()])
+    centro_id = IntegerField('', validators =[InputRequired()])
 
 class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])

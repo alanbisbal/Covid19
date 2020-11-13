@@ -43,7 +43,7 @@ def new(centro_id = None):
     fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
     form.fecha.data = fecha
     if(fecha < datetime.today()):
-        flash("la fecha no puede ser menor a la fecha actual","danger") 
+        flash("la fecha no puede ser menor a la fecha actual","danger")
         return redirect(url_for("home"))
     if centro_id:
         form.centro_id.data = centro_id
@@ -51,7 +51,9 @@ def new(centro_id = None):
         form.centro_id.data = data["centro_id"]
     # retorna vista de creacion de turnos
     bloques = Turno.bloques_disponibles(form.centro_id.data, form.fecha.data)
-    print(bloques)
+    ordenados = sorted(bloques)
+    ordenados.insert(0,"-- seleccione una opcion --")
+    form.hora_inicio.choices = ordenados
     return render_template("turno/new.html",form=form)
 
 def create():
