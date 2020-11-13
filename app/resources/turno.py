@@ -41,7 +41,11 @@ def new(centro_id = None):
     data = request.args
     form = TurnoForm()
     fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
+    print('fecha',fecha)
     form.fecha.data = fecha
+    print('form_fecha.data',form.fecha.data)
+    form.hora_inicio.choices = Turno.bloques_disponibles(form.centro_id.data,fecha)
+    print('form_fecha',form.fecha)
     if(fecha < datetime.today()):
         flash("la fecha no puede ser menor a la fecha actual","danger") 
         return redirect(url_for("home"))
@@ -49,9 +53,12 @@ def new(centro_id = None):
         form.centro_id.data = centro_id
     else:
         form.centro_id.data = data["centro_id"]
-    # retorna vista de creacion de turnos
-    bloques = Turno.bloques_disponibles(form.centro_id.data, form.fecha.data)
-    print(bloques)
+    # hay ue revisar si funciona en la vista 
+    #if str(form.hora_inicio.data) not in Turno.bloques_disponibles(form.centro_id,form.fecha):
+     #   flash("El turno no se encuentra disponible","danger") 
+      #  return redirect(url_for("home"))
+    #bloques = Turno.bloques_disponibles(form.centro_id.data, form.fecha.data)
+    #print(bloques)
     return render_template("turno/new.html",form=form)
 
 def create():
@@ -61,6 +68,7 @@ def create():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     data = request.form
+    #data['hora_fin'] = data['hora_inicio'] 
     Turno.add(data)
     flash("Insercion exitosa","success")
     return redirect(url_for('turno_index', centro_id=data['centro_id']))

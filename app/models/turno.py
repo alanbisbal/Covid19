@@ -15,7 +15,7 @@ class Turno(db.Model):
     email = db.Column(db.String(255),nullable=False)
     telefono =  db.Column(db.String(255),nullable=False)
     hora_inicio = db.Column(db.Time(timezone=True),nullable=False)
-    hora_fin = db.Column(db.Time(timezone=True),nullable=False)
+    hora_fin = db.Column(db.Time(timezone=True),nullable=True)
     fecha = db.Column(db.Date)
     centro_id = db.Column(db.Integer, db.ForeignKey('centros.id'))
     centro = relationship("Centro", backref= "centro")
@@ -57,22 +57,28 @@ class Turno(db.Model):
        return db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha)
 
     def bloques_disponibles(id,fecha):
+        print("----------")
+        print(fecha)
+        print("----------")
         bloques = []
         ocupados = []
         turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).all()
         for t in turnos:
-            ocupados.append((t.hora_inicio))
-        print (ocupados)
-        print ("ajhfahsgfahjygfagfakgfakjafsguyasfgyuiafsguyasfguiafsgfa")
+            ocupados.append(str(t.hora_inicio))
+        print("ocupados",ocupados)    
+        fecha = datetime.strptime(fecha,'%Y-%m-%d')
+        print("fecha",fecha)
+        print("----------")
         for i in range(9,16):
             for j in (00,30):
                 hora = str(fecha.year) +"-"+ str(fecha.month) +"-"+ str(fecha.day) + str(i)+":"+str(j)+":"+"00"
-                hora = datetime.strptime(hora,'%Y-%m-%d' '%H:%M:%S')
-                #print(hora)
-                bloques.append((hora.time()))
-        print(bloques)
-        print('jasfnhkjafjaafkaflawafnafklwfawkjfawlkfawjlkifawawfklfawjkaflwjklajwfkljafwaflkwjafwlkfawjklafwjfawaf')
+                hora = datetime.strptime(hora, '%Y-%m-%d''%H:%M:%S')
+                bloques.append(str(hora.time()))
         result = list(set(bloques) -  set(ocupados))
+        print("bloques",bloques)
+        print("----------")
+        print("resultado",result)
+        print("----------")
         return result
 
 
@@ -95,11 +101,12 @@ class Turno(db.Model):
         db.session.add(Turno(data))
         db.session.commit()
 
-    def add_and_return(data):  
+    def add_and_return(data):
         turno = Turno(data)
         db.session.add(turno)
         db.session.commit()
         return turno  
+        
 
     def all():
         return db.session.query(Turno).all()

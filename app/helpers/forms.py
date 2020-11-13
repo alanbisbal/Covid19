@@ -8,6 +8,7 @@ from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 from wtforms.widgets.html5 import NumberInput
 import requests
+from app.models.turno import Turno
 # from flask_wtf.file import FileField, FileAllowed, FileRequired
 
 
@@ -45,10 +46,11 @@ class CenterForm(FlaskForm):
 class TurnoForm(FlaskForm):
     email = StringField('Email',validators =[InputRequired()])
     telefono = StringField('Telefono')
-    hora_inicio = TimeField('Hora inicio',validators =[InputRequired()])
-    hora_fin = TimeField('Hora fin',validators =[InputRequired()])
+    hora_inicio = SelectField('Hora inicio',validators =[InputRequired()])
+    #hora_fin = TimeField('Hora fin',validators =[InputRequired()])
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
     centro_id = IntegerField('centro_id', validators =[InputRequired()])
+   
 
 class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])

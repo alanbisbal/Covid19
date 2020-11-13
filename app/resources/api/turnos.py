@@ -29,14 +29,20 @@ def turno_list(id,fecha=date.today()):
 def turno_create(id):
     try:
         centro = Centro.with_id(id)
-        if(( centro )and (id == request.args['centro_id'])):
-            turno = Turno.add_and_return(request.args)
+        if not centro:
+            return Response(status=400)
+        turnos_disponibles=Turno.bloques_disponibles(request.args['centro_id'],request.args['fecha'])
+        if(id == request.args['centro_id']):
+            print("hora inicio:")
+            print(request.args['hora_inicio'])
+            if str(request.args['hora_inicio']) not in  turnos_disponibles:
+                return Response('el turno no esta disponible',status=400)
+        turno = Turno.add_and_return(request.args)
 
     except:
-        return Response(status=500)
-
-    if not turno:
         return Response(status=400)
+
+    
 
     turno_creado= {}
 
