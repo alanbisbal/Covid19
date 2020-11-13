@@ -76,7 +76,7 @@ class Centro(db.Model):
             self.telefono = data['telefono']
         if self.hora_inicio != data['hora_inicio']:
             self.hora_inicio = data['hora_inicio']
-        if self.hora_fin != data['hora_fin']:
+        if self.hora_fin !=data['hora_fin'] :
             self.hora_fin = data['hora_fin']
         if self.municipio_id != id:
             self.municipio_id = id
@@ -84,9 +84,10 @@ class Centro(db.Model):
             self.web = data['web']
         if self.email != data['email']:
             self.email = data['email']
+        if data['protocolo'] is not None:
+            self.protocolo = upload_pdf(data['protocolo'])
         if self.estado_id != data['estado_id']:
             self.estado_id = data['estado_id']
-
         if self.latitud != data['latitud']:
             self.latitud = data['latitud']
         if self.longitud != data['longitud']:

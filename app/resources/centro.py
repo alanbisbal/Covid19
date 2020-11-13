@@ -50,7 +50,6 @@ def create():
     form = CenterForm()
     if not form.validate_on_submit():
         return redirect(request.referrer)
-    print (form.errors.items())
     #centro = Centro.with_id(data['centro_id']) #Seguir pensandolo
     Centro.add(form.data)
     flash("Insercion exitosa","success")
@@ -66,13 +65,18 @@ def update(centro_id):
     tipos = Tipo_centro.all()
     centro = Centro.with_id(centro_id)
     form = CenterForm()
+
     tipos = Tipo_centro.all()
     estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    form.tipo_centro.default = centro.tipo_centro # deberia ser algo de este estilo
+    form.tipo_centro.default = centro.tipo.id # deberia ser algo de este estilo
     form.estado_id.choices = [(e.id, e.nombre) for e in estados]
+    form.protocolo.value = centro.protocolo
+    form.hora_inicio.data = centro.hora_inicio
+    form.hora_fin.data = centro.hora_fin
     map = maps.showLoc(centro.latitud,centro.longitud)
     return render_template("centro/update.html",centro = centro, form=form,map=map)
+
 
 def update_new():
     if not authenticated(session):
@@ -81,8 +85,11 @@ def update_new():
     if not has_permit('centro_update'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
-
-    Centro.add(form.data)
+    form = CenterForm()
+    centro = Centro.with_id(request.form['centro_id'])
+    if not form.validate_on_submit() or not centro:
+        return redirect(request.referrer)
+    centro.update(form.data,centro.id)
     flash("Actualización exitosa.","success")
     return redirect(url_for("centro_index"))
 

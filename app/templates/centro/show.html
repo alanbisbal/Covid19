@@ -29,7 +29,8 @@
     <p ><strong >Estado:</strong> {{centro.estado.nombre}}</p>
     <p ><strong >Protocolo:</strong> <a href="{{url_for('static', filename='uploads/'+centro.protocolo)}}">Protocolo</a></p>
     <p ><strong >Tipo de centro:</strong> {{centro.tipo.nombre }}</p>
-
+    <p ><strong >Latitud:</strong> {{centro.latitud }}</p>
+    <p ><strong >Longitud:</strong> {{centro.longitud }}</p>
    {{map.html}}{{map.js}}
 
     <script type="text/javascript">

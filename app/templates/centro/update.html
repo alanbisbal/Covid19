@@ -26,16 +26,16 @@
   {% endif %}
 
   <input type="hidden" class="form-control"  id="centro_id" name="centro_id" value="{{centro.id}}">
-
   {{wtf.form_field(form.nombre, value=centro.nombre)}}
   {{wtf.form_field(form.direccion, value=centro.direccion)}}
   {{wtf.form_field(form.telefono, value=centro.telefono)}}
-  {{wtf.form_field(form.hora_inicio,type="Time", value=centro.hora_inicio)}}
-  {{wtf.form_field(form.hora_fin,type="Time", value=centro.hora_fin)}}
+  {{wtf.form_field(form.hora_inicio,type="Time")}}
+  {{wtf.form_field(form.hora_fin,type="Time")}}
   {{wtf.form_field(form.municipio_id)}}
   {{wtf.form_field(form.web, value=centro.web)}}
   {{wtf.form_field(form.email, value=centro.email)}}
-  {{form.protocolo.label(class="form-control-label")}}
+  {{form.protocolo.label(class="form-control-label",value=centro.protocolo)}}
+  <a href="{{url_for('static', filename='uploads/'+centro.protocolo)}}">Protocolo</a></p>
   {{form.protocolo(accept=".pdf")}}
   <!--{{"por simplificacion ahora no updateo el pdf y hay que lograr dejar predeterminados los select"}}-->
   {{wtf.form_field(form.tipo_centro)}}
