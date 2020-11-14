@@ -9,16 +9,22 @@
 {% if centro_id is defined %}
   <form action="{{ url_for('turno_new', centro_id=centro_id) }}">
     {{csrf_token}}
-    <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+    <div class="form-inline">
     {{wtf.form_field(form.fecha,type="Date")}}
+    <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+  </div>
   </form>
 {% else %}
+
   <form action="{{ url_for('turno_new_all') }}">
-    {{csrf_token}}
-      <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+      {{csrf_token}}
+      <div class="form-inline">
       {{wtf.form_field(form.fecha,type="Date")}}
       {{wtf.form_field(form.centro_id)}}
+      <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+    </div>
   </form>
+
 {% endif %}
 
 {% if centro_id is defined %}
@@ -103,22 +109,41 @@
 </div>
 <hr class="my-4">
 <!--botones  de paginacion-->
+{% if centro_id is defined %}
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if turnos.has_prev %}
+          <li class="page-item"> <a class="btn btn-secondary" href="{{ url_for('turno_index',centro_id=centro_id, page=turnos.prev_num) }}">Anterior</a></li>
+        {% else %}
+          <li class="page-item"><a class="btn btn-secondary btn disabled" href="#">Anterior</a></li>
+        {% endif %}
 
+
+        {% if turnos.has_next %}
+          <li class="page-item"> <a class="btn btn-primary" href="{{ url_for('turno_index',centro_id=centro_id, page=turnos.next_num) }}">Siguiente</a></li>
+        {% else %}
+          <li class="page-item"><a class="btn btn-primary btn disabled" href="#">Siguiente</a></li>
+        {% endif %}
+
+    </ul>
+  </nav>
+{% else %}
 <nav aria-label="Page navigation example">
   <ul class="pagination">
       {% if turnos.has_prev %}
-        <li class="page-item"> <a class="btn btn-secondary" href="{{ url_for('turno_index',centro_id=centro_id, page=turnos.prev_num) }}">Anterior</a></li>
+        <li class="page-item"> <a class="btn btn-secondary" href="{{ url_for('turno_index_all', page=turnos.prev_num) }}">Anterior</a></li>
       {% else %}
         <li class="page-item"><a class="btn btn-secondary btn disabled" href="#">Anterior</a></li>
       {% endif %}
 
 
       {% if turnos.has_next %}
-        <li class="page-item"> <a class="btn btn-primary" href="{{ url_for('turno_index',centro_id=centro_id, page=turnos.next_num) }}">Siguiente</a></li>
+        <li class="page-item"> <a class="btn btn-primary" href="{{ url_for('turno_index_all', page=turnos.next_num) }}">Siguiente</a></li>
       {% else %}
         <li class="page-item"><a class="btn btn-primary btn disabled" href="#">Siguiente</a></li>
       {% endif %}
 
   </ul>
 </nav>
+{% endif %}
 {% endblock %}

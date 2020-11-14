@@ -7,6 +7,8 @@ from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired,
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 from wtforms.widgets.html5 import NumberInput
+import requests
+from app.models.turno import Turno
 import requests, time
 # from flask_wtf.file import FileField, FileAllowed, FileRequired
 
@@ -42,18 +44,19 @@ class CenterForm(FlaskForm):
 class TurnoForm(FlaskForm):
     email = StringField('Email',validators =[InputRequired()])
     telefono = StringField('Telefono')
-    hora_inicio = TimeField('Hora inicio',validators =[InputRequired()])
-    hora_fin = TimeField('Hora fin',validators =[InputRequired()])
+    hora_inicio = SelectField('Hora inicio',validators =[InputRequired()])
+    hora_fin = StringField('',validators =[InputRequired()])
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = IntegerField('centro_id', validators =[InputRequired()])
+    centro_id = IntegerField('', validators =[InputRequired()])
+
 
 class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = IntegerField('centro_id', validators =[InputRequired()])
+    centro_id = SelectField('centro_id', validators =[InputRequired()])
 
 class ConfigForm(FlaskForm):
     titulo = StringField('Titulo',validators =[InputRequired()])
     description = StringField('Description',validators =[InputRequired()])
     email = StringField('Email',validators =[InputRequired()])
-    elementos = IntegerField('Cantidad de elementos por pagina',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=None))
+    elementos = IntegerField('Cantidad de elementos por pagina',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=50))
    # estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])

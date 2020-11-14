@@ -117,6 +117,7 @@ def create_app(environment="development"):
     # Ruta para la api de turnos
     app.add_url_rule("/api/centros/<id>/turnos_disponibles/<fecha>", "turno_list", api_turnos.turno_list)
     app.add_url_rule("/api/centros/<id>/turnos_disponibles/", "turno_list", api_turnos.turno_list)
+    app.add_url_rule("/api/centros/<id>/reserva", "turno_carga", api_turnos.turno_create, methods=["POST"])
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
