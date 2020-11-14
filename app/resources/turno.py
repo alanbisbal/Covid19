@@ -63,8 +63,11 @@ def create():
     if not has_permit('turno_new'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-    data = request.form
-    Turno.add(data)
+    form = TurnoForm()
+    if not form.validate_on_submit():
+        flash("El tipo de dato ingresado es incorrecto","danger")
+        return redirect(request.referrer)
+    Turno.add(form.data)
     flash("Insercion exitosa","success")
     return redirect(url_for('turno_index', centro_id=data['centro_id']))
 
@@ -87,9 +90,12 @@ def update_new():
     if not has_permit('turno_update'):
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
-    data = request.form
-    turno = Turno.with_id(data['turno_id'])
-    turno.update(data)
+    form = TurnoForm()
+    turno = Turno.with_id(request.form['turno_id'])
+    if not form.validate_on_submit() or not turno:
+        flash("El tipo de dato ingresado es incorrecto","danger")
+        return redirect(request.referrer)
+    turno.update(form.data)
     flash("Actualización exitosa.","success")
     return redirect(url_for('turno_index', centro_id=turno.centro_id))
 
