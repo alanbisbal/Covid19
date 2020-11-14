@@ -35,6 +35,9 @@
       <th scope="col">Direccion</th>
       <th scope="col">Apertura</th>
       <th scope="col">Cierre</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <script type="text/javascript">
@@ -53,22 +56,29 @@
       <td>{{ centro.direccion }}</td>
       <td>{{ centro.hora_inicio }}</td>
       <td>{{ centro.hora_fin }}</td>
-      <td>
+
      <div class="form-inline ">
+       <td>
+       <form action="{{ url_for('centro_show', centro_id = centro.id ) }}"  >
+         {{csrf_token}}
+         <button type="submit" class="btn btn-warning mt-2 ml-2">Ver</button>
+       </form>
+       </td>
+       <td>
        <form action="{{ url_for('centro_publicar', centro_id = centro.id ) }}" method ="post" >
            {{csrf_token }}
          <button type="submit" class="btn btn-primary mt-2">Publicar</button>
        </form>
-
-
+       </td>
+       <td>
        <form action="{{ url_for('centro_despublicar',centro_id = centro.id)}}" method ="post" >
            {{csrf_token }}
          <button type="submit" class="btn btn-info mt-2 ml-2">Despublicar</button>
        </form>
+      </td>
 
 
       </div>
-      </td>
 
     </tr>
   </tbody>

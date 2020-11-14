@@ -42,6 +42,7 @@ def center_list():
 
 
 def center(id):
+
     try:
         centro= Centro.with_id(id)
     except:

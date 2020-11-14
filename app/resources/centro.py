@@ -61,12 +61,10 @@ def update(centro_id):
     if not has_permit('centro_update'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
-
     centro = Centro.with_id(centro_id)
     if not centro:
         flash("Url invalida.","danger")
         return redirect(url_for("home"))
-
     tipos = Tipo_centro.all()
     form = CenterForm()
     tipos = Tipo_centro.all()
@@ -91,7 +89,7 @@ def update_new():
     centro = Centro.with_id(request.form['centro_id'])
     if not form.validate_on_submit() or not centro:
         return redirect(request.referrer)
-    centro.update(form.data,centro.id)
+    centro.update(form.data)
     flash("Actualización exitosa.","success")
     return redirect(url_for("centro_index"))
 
@@ -156,8 +154,6 @@ def show(centro_id):
         flash("Url invalida.","danger")
         return redirect(url_for("home"))
     return render_template("centro/show.html",centro = centro)
-
-
 
 def pendientes():
     if not authenticated(session):

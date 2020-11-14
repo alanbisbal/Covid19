@@ -69,7 +69,7 @@ class Centro(db.Model):
     def with_email(data):
         return db.session.query(Centro).filter_by(email = data).first()
 
-    def update(self,data, id):
+    def update(self,data):
         if self.nombre != data['nombre']:
             self.nombre = data['nombre']
         if self.direccion != data['direccion']:
@@ -80,8 +80,8 @@ class Centro(db.Model):
             self.hora_inicio = data['hora_inicio']
         if self.hora_fin !=data['hora_fin'] :
             self.hora_fin = data['hora_fin']
-        if self.municipio_id != id:
-            self.municipio_id = id
+        if self.municipio_id != data['municipio_id']:
+            self.municipio_id = data['municipio_id']
         if self.web != data['web']:
             self.web = data['web']
         if self.email != data['email']:
