@@ -69,7 +69,7 @@ class Centro(db.Model):
     def with_email(data):
         return db.session.query(Centro).filter_by(email = data).first()
 
-    def update(self,data, id):
+    def update(self,data):
         if self.nombre != data['nombre']:
             self.nombre = data['nombre']
         if self.direccion != data['direccion']:
@@ -78,17 +78,18 @@ class Centro(db.Model):
             self.telefono = data['telefono']
         if self.hora_inicio != data['hora_inicio']:
             self.hora_inicio = data['hora_inicio']
-        if self.hora_fin != data['hora_fin']:
+        if self.hora_fin !=data['hora_fin'] :
             self.hora_fin = data['hora_fin']
-        if self.municipio_id != id:
-            self.municipio_id = id
+        if self.municipio_id != data['municipio_id']:
+            self.municipio_id = data['municipio_id']
         if self.web != data['web']:
             self.web = data['web']
         if self.email != data['email']:
             self.email = data['email']
+        if data['protocolo'] is not None:
+            self.protocolo = upload_pdf(data['protocolo'])
         if self.estado_id != data['estado_id']:
             self.estado_id = data['estado_id']
-
         if self.latitud != data['latitud']:
             self.latitud = data['latitud']
         if self.longitud != data['longitud']:
@@ -112,9 +113,17 @@ class Centro(db.Model):
         despublicado =  db.session.query(Estado).filter(Estado.nombre == "Despublicado").first()
         return db.session.query(Centro).filter(Centro.estado_id == despublicado.id,Centro.nombre.contains(filter))
 
-    def pending(filter):
+    def pending():
         pendiente =  db.session.query(Estado).filter(Estado.nombre == "Pendiente").first()
-        return db.session.query(Centro).filter(Centro.estado_id == pendiente.id,Centro.nombre.contains(filter))
+        return db.session.query(Centro).filter(Centro.estado_id == "3")
+
+    def publicar(self):
+        self.estado_id = 1
+        db.session.commit()
+
+    def despublicar(self):
+        self.estado_id = 2
+        db.session.commit()
 
     @classmethod
     def count_approved(cls):

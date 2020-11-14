@@ -19,7 +19,7 @@ def center_list():
     try:
         centros_paginados = Centro.query.filter_by(estado_id=1).paginate(page,per_page,error_out=False)
     except:
-        abort(500)
+        return Response(status=500)
 
     data_centro = []
 
@@ -42,6 +42,7 @@ def center_list():
 
 
 def center(id):
+
     try:
         centro= Centro.with_id(id)
     except:

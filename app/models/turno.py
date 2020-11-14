@@ -6,7 +6,7 @@ from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
-from datetime import datetime, timedelta
+from datetime import datetime,time,timedelta,date
 
 
 
