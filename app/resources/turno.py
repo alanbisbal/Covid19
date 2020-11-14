@@ -31,6 +31,8 @@ def index(centro_id = None):
         return render_template("turno/index.html", turnos=turnos, centro_id=centro_id, form=form)
     else:
         turnos = Turno.with_next_two().paginate(page,per_page,error_out=False)
+        centros = Centro.all()
+        form.centro_id.choices = [(e.id, e.nombre) for e in centros]
         return render_template("turno/index.html", turnos=turnos, form=form)
 
 
