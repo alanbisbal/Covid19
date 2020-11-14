@@ -54,9 +54,11 @@ class Centro(db.Model):
 
     def add(data):
         centro = Centro(data)
-        centro.protocolo = upload_pdf(data['protocolo'])
+        if data["protocolo"]:
+            centro.protocolo = upload_pdf(data['protocolo'])
         db.session.add(centro)
         db.session.commit()
+        return centro
 
     def all():
         return db.session.query(Centro).all()
@@ -113,3 +115,8 @@ class Centro(db.Model):
     def pending(filter):
         pendiente =  db.session.query(Estado).filter(Estado.nombre == "Pendiente").first()
         return db.session.query(Centro).filter(Centro.estado_id == pendiente.id,Centro.nombre.contains(filter))
+
+    @classmethod
+    def count_approved(cls):
+        """Retorna la cantidad total de centros aprobados"""
+        return Centro.query.filter_by(estado_id=1).count()

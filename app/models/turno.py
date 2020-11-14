@@ -15,7 +15,7 @@ class Turno(db.Model):
     email = db.Column(db.String(255),nullable=False)
     telefono =  db.Column(db.String(255),nullable=False)
     hora_inicio = db.Column(db.Time(timezone=True),nullable=False)
-    hora_fin = db.Column(db.Time(timezone=True),nullable=False)
+    hora_fin = db.Column(db.Time(timezone=True),nullable=True)
     fecha = db.Column(db.Date)
     centro_id = db.Column(db.Integer, db.ForeignKey('centros.id'))
     centro = relationship("Centro", backref= "centro")
@@ -24,7 +24,7 @@ class Turno(db.Model):
         self.email = data['email']
         self.telefono = data ['telefono']
         self.hora_inicio = data['hora_inicio']
-        self.hora_fin = data['hora_fin']
+        self.hora_fin = data['hora_inicio']
         self.fecha = data['fecha']
         self.centro_id = data['centro_id']
         db.session.commit()
@@ -61,14 +61,15 @@ class Turno(db.Model):
         ocupados = []
         turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).all()
         for t in turnos:
-            ocupados.append((t.hora_inicio))
+            ocupados.append(str(t.hora_inicio))
+        fecha = datetime.strptime(fecha,'%Y-%m-%d')
         for i in range(9,16):
             for j in (00,30):
                 hora = str(fecha.year) +"-"+ str(fecha.month) +"-"+ str(fecha.day) + str(i)+":"+str(j)+":"+"00"
-                hora = datetime.strptime(hora,'%Y-%m-%d' '%H:%M:%S')
-                #print(hora)
-                bloques.append(( hora.time()))
+                hora = datetime.strptime(hora, '%Y-%m-%d''%H:%M:%S')
+                bloques.append(str(hora.time()))
         result = list(set(bloques) -  set(ocupados))
+        result = sorted(result)
         return result
 
 
@@ -90,6 +91,12 @@ class Turno(db.Model):
     def add(data):
         db.session.add(Turno(data))
         db.session.commit()
+
+    def add_and_return(data):
+        turno = Turno(data)
+        db.session.add(turno)
+        db.session.commit()
+        return turno
 
 
     def all():

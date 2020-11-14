@@ -17,10 +17,9 @@
     {% if form.csrf_token.errors %}
       <div class="warning">You have submitted an invalid CSRF token</div>
     {% endif %}
-    {{ wtf.form_field(form.email) }}
-    {{ wtf.form_field(form.telefono) }}
-    {{ wtf.form_field(form.hora_inicio,class="nieve") }}
-    {{ wtf.form_field(form.hora_fin,readonly=true) }}
+    {{wtf.form_field(form.email)}}
+    {{wtf.form_field(form.telefono)}}
+    {{wtf.form_field(form.hora_inicio)}}
     <p><strong>Nota:</strong>Los turnos son en bloques de 30 minutos</p>
     {{ wtf.form_field(form.fecha,type="Date",readonly=true) }}
     {{ wtf.form_field(form.centro_id,readonly=true,hidden= "true") }}

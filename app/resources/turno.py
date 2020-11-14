@@ -49,11 +49,7 @@ def new(centro_id = None):
         form.centro_id.data = centro_id
     else:
         form.centro_id.data = data["centro_id"]
-    # retorna vista de creacion de turnos
-    bloques = Turno.bloques_disponibles(form.centro_id.data, form.fecha.data)
-    ordenados = sorted(bloques)
-    ordenados.insert(0,"-- seleccione una opcion --")
-    form.hora_inicio.choices = ordenados
+    form.hora_inicio.choices = Turno.bloques_disponibles(form.centro_id.data,request.args['fecha'])
     return render_template("turno/new.html",form=form)
 
 def create():
