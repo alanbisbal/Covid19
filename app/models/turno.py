@@ -1,5 +1,6 @@
 from flask import request
 from sqlalchemy.orm import relationship
+from sqlalchemy import between,and_
 
 from app.db import db
 
@@ -71,6 +72,17 @@ class Turno(db.Model):
         result = list(set(bloques) -  set(ocupados))
         result = sorted(result)
         return result
+
+
+    def with_next_two_date(centro_id):
+        hoy = datetime.today()
+        en_dos_dias = datetime.today() + timedelta(days=2)
+        return db.session.query(Turno).filter(Turno.centro_id==centro_id).filter(Turno.fecha.between(hoy,en_dos_dias))
+
+    def with_next_two():
+        hoy = datetime.today()
+        en_dos_dias = datetime.today() + timedelta(days=2)
+        return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias))    
 
 
     #'bloque' no sabemos bien como definirlo

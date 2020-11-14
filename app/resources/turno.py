@@ -1,6 +1,8 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.db import connection
 
+from sqlalchemy import asc
+
 from app.models.turno import Turno
 from app.models.centro import Centro
 from app.models.config import Config
@@ -25,10 +27,10 @@ def index(centro_id = None):
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
     if centro_id:
-        turnos = Turno.with_centro_id(centro_id).paginate(page,per_page,error_out=False)
+        turnos = Turno.with_next_two_date(centro_id).paginate(page,per_page,error_out=False)
         return render_template("turno/index.html", turnos=turnos, centro_id=centro_id, form=form)
     else:
-        turnos = Turno.query.paginate(page,per_page,error_out=False)
+        turnos = Turno.with_next_two().paginate(page,per_page,error_out=False)
         return render_template("turno/index.html", turnos=turnos, form=form)
 
 
@@ -42,7 +44,9 @@ def new(centro_id = None):
     form = TurnoForm()
     fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
     form.fecha.data = fecha
-    if(fecha < datetime.today()):
+    print(fecha.today())
+    print(datetime.today())
+    if(fecha.today() < datetime.today()):
         flash("la fecha no puede ser menor a la fecha actual","danger")
         return redirect(url_for("home"))
     if centro_id:
