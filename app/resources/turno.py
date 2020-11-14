@@ -11,7 +11,7 @@ from app.helpers.forms import TurnoForm, NewTurnoForm
 
 #from app.helpers.validates import
 from app.helpers.permits import has_permit, is_admin
-from datetime import datetime
+from datetime import datetime,time,timedelta,date
 
 
 def index(centro_id = None):
@@ -45,8 +45,6 @@ def new(centro_id = None):
     form = TurnoForm()
     fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
     form.fecha.data = fecha
-    print(fecha.today())
-    print(datetime.today())
     if(fecha.today() < datetime.today()):
         flash("la fecha no puede ser menor a la fecha actual","danger")
         return redirect(url_for("home"))

@@ -25,7 +25,7 @@ class Turno(db.Model):
         self.email = data['email']
         self.telefono = data ['telefono']
         self.hora_inicio = data['hora_inicio']
-        self.hora_fin = data['hora_inicio']
+        self.hora_fin = datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
         self.fecha = data['fecha']
         self.centro_id = data['centro_id']
         db.session.commit()
@@ -93,8 +93,8 @@ class Turno(db.Model):
             self.telefono = data['telefono']
         if self.hora_inicio != data['hora_inicio']:
             self.hora_inicio = data['hora_inicio']
-        if self.hora_fin != data['hora_inicio']:
-            self.hora_fin = data['hora_inicio']
+        if self.hora_fin != datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30):
+            self.hora_fin = datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
         if self.fecha != data['fecha']:
             self.fecha = data['fecha']
         db.session.commit()
