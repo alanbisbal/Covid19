@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block content %}
-<a href="{{ url_for('centro_pendientes') }}" class="btn btn-success mr-sm-2">Centros pendientes</a>
+<a href="{{ url_for('centro_index') }}" class="btn btn-success mr-sm-2">Centros</a>
 <a href="{{ url_for('centro_new') }}" class="btn btn-success mr-sm-2">Crear Centro</a>
 <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('centro_search') }}">
   {{csrf_token }}
-  <h1 class="my-0 mr-md-auto font-weight-normal">Centros</h1>
+  <h1 class="my-0 mr-md-auto font-weight-normal">Centros Pendientes </h1>
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Buscar.." aria-label="Search">
     <select class='form-control mr-sm-2' name='estado'>
       <option value='---'{% if estado=="---" %} selected="selected" {% endif %}>---</option>
@@ -25,7 +25,6 @@
 
 
 
-
   <div class="table-responsive-md">
   <table class="table">
   <thead>
@@ -36,6 +35,9 @@
       <th scope="col">Direccion</th>
       <th scope="col">Apertura</th>
       <th scope="col">Cierre</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <script type="text/javascript">
@@ -44,8 +46,8 @@
     }
   </script>
 
+  {% for centro in centros.items %}
   <tbody>
-     {% for centro in centros.items %}
     <tr>
       <td>{{ centro.nombre }}</td>
       <td>{{ centro.email }}</td>
@@ -54,37 +56,33 @@
       <td>{{ centro.direccion }}</td>
       <td>{{ centro.hora_inicio }}</td>
       <td>{{ centro.hora_fin }}</td>
-      <td>
+
      <div class="form-inline ">
+       <td>
        <form action="{{ url_for('centro_show', centro_id = centro.id ) }}"  >
          {{csrf_token}}
-         <button type="submit" class="btn btn-primary mt-2">Ver</button>
+         <button type="submit" class="btn btn-warning mt-2 ml-2">Ver</button>
        </form>
-
-       <form action="{{ url_for('centro_update', centro_id = centro.id ) }}"  >
-         {{csrf_token}}
-         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+       </td>
+       <td>
+       <form action="{{ url_for('centro_publicar', centro_id = centro.id ) }}" method ="post" >
+           {{csrf_token }}
+         <button type="submit" class="btn btn-primary mt-2">Publicar</button>
        </form>
-
-       <form action="{{ url_for('turno_index',centro_id = centro.id)}}" >
-         {{csrf_token}}
-         <button type="submit" class="btn btn-info mt-2 ml-2">Turno</button>
+       </td>
+       <td>
+       <form action="{{ url_for('centro_despublicar',centro_id = centro.id)}}" method ="post" >
+           {{csrf_token }}
+         <button type="submit" class="btn btn-info mt-2 ml-2">Despublicar</button>
        </form>
-
-
-       {% if has_permit('centro_destroy') %}
-        <form action="{{ url_for('centro_delete') }}" method="POST" enctype="multipart/form-data">
-          {{csrf_token}}
-          <input type="hidden" id="centro_id" name="centro_id" value="{{centro.id}}">
-          <button type="submite" class="btn btn-danger mt-2 ml-2"  onclick="return ConfirmDelete()" >eliminar</button>
-        </form>
-      {% endif%}
-      </div>
       </td>
 
+
+      </div>
+
     </tr>
-    {% endfor %}
   </tbody>
+  {% endfor %}
 
 </table>
 </div>

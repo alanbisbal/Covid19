@@ -6,7 +6,7 @@ from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
-from datetime import datetime, timedelta
+from datetime import datetime,time,timedelta,date
 
 
 
@@ -25,7 +25,7 @@ class Turno(db.Model):
         self.email = data['email']
         self.telefono = data ['telefono']
         self.hora_inicio = data['hora_inicio']
-        self.hora_fin = data['hora_inicio']
+        self.hora_fin = datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
         self.fecha = data['fecha']
         self.centro_id = data['centro_id']
         db.session.commit()
@@ -77,12 +77,12 @@ class Turno(db.Model):
     def with_next_two_date(centro_id):
         hoy = datetime.today()
         en_dos_dias = datetime.today() + timedelta(days=2)
-        return db.session.query(Turno).filter(Turno.centro_id==centro_id).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc()) 
+        return db.session.query(Turno).filter(Turno.centro_id==centro_id).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())
 
     def with_next_two():
         hoy = datetime.today()
         en_dos_dias = datetime.today() + timedelta(days=2)
-        return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())    
+        return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())
 
 
     #'bloque' no sabemos bien como definirlo
@@ -93,8 +93,8 @@ class Turno(db.Model):
             self.telefono = data['telefono']
         if self.hora_inicio != data['hora_inicio']:
             self.hora_inicio = data['hora_inicio']
-        if self.hora_fin != data['hora_inicio']:
-            self.hora_fin = data['hora_inicio']
+        if self.hora_fin != datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30):
+            self.hora_fin = datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
         if self.fecha != data['fecha']:
             self.fecha = data['fecha']
         db.session.commit()
