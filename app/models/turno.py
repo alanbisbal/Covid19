@@ -77,12 +77,12 @@ class Turno(db.Model):
     def with_next_two_date(centro_id):
         hoy = datetime.today()
         en_dos_dias = datetime.today() + timedelta(days=2)
-        return db.session.query(Turno).filter(Turno.centro_id==centro_id).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(asc(Turno.fecha))
+        return db.session.query(Turno).filter(Turno.centro_id==centro_id).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc()) 
 
     def with_next_two():
         hoy = datetime.today()
         en_dos_dias = datetime.today() + timedelta(days=2)
-        return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(asc(Turno.fecha))    
+        return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())    
 
 
     #'bloque' no sabemos bien como definirlo
