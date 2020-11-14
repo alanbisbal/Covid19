@@ -62,16 +62,6 @@ class Turno(db.Model):
         ocupados = []
         turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).all()
         for t in turnos:
-<<<<<<< HEAD
-            ocupados.append((t.hora_inicio))
-
-        for i in range(9,16):
-            for j in (00,30):
-                hora = str(fecha.year) +"-"+ str(fecha.month) +"-"+ str(fecha.day) + str(i)+":"+str(j)+":"+"00"
-                hora = datetime.strptime(hora,'%Y-%m-%d' '%H:%M:%S')
-                #print(hora)
-                bloques.append((hora.time()))
-=======
             ocupados.append(str(t.hora_inicio))
         fecha = datetime.strptime(fecha,'%Y-%m-%d')
         for i in range(9,16):
@@ -79,7 +69,6 @@ class Turno(db.Model):
                 hora = str(fecha.year) +"-"+ str(fecha.month) +"-"+ str(fecha.day) + str(i)+":"+str(j)+":"+"00"
                 hora = datetime.strptime(hora, '%Y-%m-%d''%H:%M:%S')
                 bloques.append(str(hora.time()))
->>>>>>> 6c8fd9a18602ff08c3b67adfa8447c0dddceb931
         result = list(set(bloques) -  set(ocupados))
         result = sorted(result)
         return result
