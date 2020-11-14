@@ -81,8 +81,8 @@ class Turno(db.Model):
             self.telefono = data['telefono']
         if self.hora_inicio != data['hora_inicio']:
             self.hora_inicio = data['hora_inicio']
-        if self.hora_fin != data['hora_fin']:
-            self.hora_fin = data['hora_fin']
+        if self.hora_fin != data['hora_inicio']:
+            self.hora_fin = data['hora_inicio']
         if self.fecha != data['fecha']:
             self.fecha = data['fecha']
         db.session.commit()
