@@ -54,7 +54,7 @@ class TurnoForm(FlaskForm):
 
 class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = SelectField('centro_id', validators =[InputRequired()])
+    centro_id = SelectField('nombre de centro', validators =[InputRequired()])
 
 class ConfigForm(FlaskForm):
     titulo = StringField('Titulo',validators =[InputRequired()])
