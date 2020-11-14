@@ -46,8 +46,6 @@ class Turno(db.Model):
     def with_nombre_centro(data):
         return db.session.query(Turno).filter(Turno.centro.has(nombre=data))
 
-    def with_email_centro_id(email,centro_id):
-        return db.session.query(Turno).filter(Turno.email.contains(email)).filter(Turno.centro.has(nombre=centro))
 
     def with_email_centro(email,centro):
         con_mail = db.session.query(Turno).filter(Turno.email.contains(email))

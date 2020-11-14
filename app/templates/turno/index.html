@@ -29,6 +29,7 @@
 
 {% if centro_id is defined %}
   <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('turno_search', centro_id=centro_id) }}">
+    {{csrf_token}}
     <h1 class="my-0 mr-md-auto font-weight-normal">Turnos del centro</h1>
     <input class="form-control mr-sm-2" type="text" name="email" placeholder="Ingrese email" aria-label="Search">
       <button class="btn btn-light my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -38,6 +39,7 @@
     </form>
 {% else %}
   <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('turno_search_all') }}">
+    {{csrf_token}}
     <h1 class="my-0 mr-md-auto font-weight-normal">Turnos del centro</h1>
     <input class="form-control mr-sm-2" type="text" name="email" placeholder="Ingrese email" aria-label="Search">
     <input class="form-control mr-sm-2" type="text" name="centro" placeholder="Ingrese nombre de centro" aria-label="Search">
