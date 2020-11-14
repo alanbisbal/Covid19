@@ -54,9 +54,11 @@ class Centro(db.Model):
 
     def add(data):
         centro = Centro(data)
-        centro.protocolo = upload_pdf(data['protocolo'])
+        if data["protocolo"]:
+            centro.protocolo = upload_pdf(data['protocolo'])
         db.session.add(centro)
         db.session.commit()
+        return centro
 
     def all():
         return db.session.query(Centro).all()
@@ -122,3 +124,8 @@ class Centro(db.Model):
     def despublicar(self):
         self.estado_id = 2
         db.session.commit()
+
+    @classmethod
+    def count_approved(cls):
+        """Retorna la cantidad total de centros aprobados"""
+        return Centro.query.filter_by(estado_id=1).count()
