@@ -111,6 +111,14 @@ class Centro(db.Model):
         despublicado =  db.session.query(Estado).filter(Estado.nombre == "Despublicado").first()
         return db.session.query(Centro).filter(Centro.estado_id == despublicado.id,Centro.nombre.contains(filter))
 
-    def pending(filter):
+    def pending():
         pendiente =  db.session.query(Estado).filter(Estado.nombre == "Pendiente").first()
-        return db.session.query(Centro).filter(Centro.estado_id == pendiente.id,Centro.nombre.contains(filter))
+        return db.session.query(Centro).filter(Centro.estado_id == "3")
+
+    def publicar(self):
+        self.estado_id = 1
+        db.session.commit()
+
+    def despublicar(self):
+        self.estado_id = 2
+        db.session.commit()

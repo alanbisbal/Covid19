@@ -7,7 +7,6 @@ from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.helpers.forms import CenterForm
 
-from app.helpers import maps
 
 from app.helpers.validates import form_config_update
 from app.helpers.permits import has_permit, is_admin
@@ -33,12 +32,12 @@ def new():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     form = CenterForm()
-    #tipos = Tipo_centro.all()
+    tipos = Tipo_centro.all()
     estados = Estado.all()
-    #form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
+    form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
     form.estado_id.choices = [(e.id, e.nombre) for e in estados]
-    map = maps.index()
-    return render_template("centro/new.html",form=form,map=map)
+
+    return render_template("centro/new.html",form=form)
 
 def create():
     if not authenticated(session):
@@ -62,10 +61,14 @@ def update(centro_id):
     if not has_permit('centro_update'):
         flash("No posee permisos.","danger")
         return redirect(url_for("home"))
-    tipos = Tipo_centro.all()
-    centro = Centro.with_id(centro_id)
-    form = CenterForm()
 
+    centro = Centro.with_id(centro_id)
+    if not centro:
+        flash("Url invalida.","danger")
+        return redirect(url_for("home"))
+
+    tipos = Tipo_centro.all()
+    form = CenterForm()
     tipos = Tipo_centro.all()
     estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
@@ -74,8 +77,7 @@ def update(centro_id):
     form.protocolo.value = centro.protocolo
     form.hora_inicio.data = centro.hora_inicio
     form.hora_fin.data = centro.hora_fin
-    map = maps.showLoc(centro.latitud,centro.longitud)
-    return render_template("centro/update.html",centro = centro, form=form,map=map)
+    return render_template("centro/update.html",centro = centro, form=form)
 
 
 def update_new():
@@ -102,6 +104,9 @@ def delete():
         return redirect(url_for("home"))
 
     centro = Centro.with_id(request.form['centro_id'])
+    if not centro:
+        flash("Url invalida.","danger")
+        return redirect(url_for("home"))
     centro.delete()
     flash("Eliminación exitosa.","success")
     return redirect(url_for("centro_index"))
@@ -147,5 +152,46 @@ def show(centro_id):
         return redirect(url_for("home"))
     # validacion de acceso administrador y si lo es retorna el usuario enviado por id
     centro = Centro.with_id(centro_id)
-    map = maps.showLoc(centro.latitud,centro.longitud)
-    return render_template("centro/show.html",centro = centro,map=map)
+    if not centro:
+        flash("Url invalida.","danger")
+        return redirect(url_for("home"))
+    return render_template("centro/show.html",centro = centro)
+
+
+
+def pendientes():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('centro_show'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
+    centros = Centro.pending().paginate(page,per_page,error_out=False)
+    return render_template("centro/pendientes.html",centros = centros)
+
+def publicar():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('centro_show'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
+    centro= Centro.with_id(request.args.get("centro_id"))
+    if not centro:
+        flash("Url invalida.","danger")
+        return redirect(url_for("home"))
+    centro.publicar()
+    return redirect(request.referrer)
+
+def despublicar():
+    if not authenticated(session):
+        abort(401)
+    if not has_permit('centro_show'):
+        flash("No posee permisos","danger")
+        return redirect(url_for("home"))
+    centro = Centro.with_id(request.args.get("centro_id"))
+    if not centro:
+        flash("Url invalida.","danger")
+        return redirect(url_for("home"))
+    centro.despublicar()
+    return redirect(request.referrer)

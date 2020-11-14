@@ -3,8 +3,7 @@
 {% block title %}Perfil{% endblock %}
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="https://developers.google.com//maps/documentation/javascript/demos/demos.css">
-  <style>#map { height: 100%; width: 100%; }</style>
+
 {% endblock %}
 
 {% block content %}
@@ -31,7 +30,7 @@
     <p ><strong >Tipo de centro:</strong> {{centro.tipo.nombre }}</p>
     <p ><strong >Latitud:</strong> {{centro.latitud }}</p>
     <p ><strong >Longitud:</strong> {{centro.longitud }}</p>
-   {{map.html}}{{map.js}}
+
 
     <script type="text/javascript">
   function ConfirmDelete() {
@@ -39,7 +38,7 @@
     }
   </script>
     <div class="card-body d-flex flex-wrap justify-content-end">
-      <a href="/centros" class="btn btn-secondary  mt-2 ">Volver</a>
+      <a href="javascript:history.back()" class="btn btn-secondary  mt-2 ">Volver</a>
 
       <form action="{{ url_for('centro_update', centro_id = centro.id ) }}"  >
         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>

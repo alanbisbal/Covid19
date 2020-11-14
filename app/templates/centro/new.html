@@ -5,8 +5,7 @@
 {% block content %}
 <div class="container col-md-8 col-sm-12 " style="max-width: 40rem;">
   <div class="card">
-    <link rel="stylesheet" href="https://developers.google.com//maps/documentation/javascript/demos/demos.css">
-    <style>#map { height: 100%; width: 100%; }</style>
+
   <form action="{{ url_for('centro_create') }}" method="POST" enctype="multipart/form-data">
     <div class="card-header bg-primary text-white" >
       <h5>Crear centro:</h5>
@@ -32,7 +31,7 @@
     {{wtf.form_field(form.estado_id)}}
     {{wtf.form_field(form.longitud)}}
     {{wtf.form_field(form.latitud)}}
-    {{map.html}}{{map.js}}
+
 
     </div>
     <div class="form-inline">

@@ -93,7 +93,9 @@ def create_app(environment="development"):
     app.add_url_rule("/centros/update/<centro_id>", "centro_update", centro.update)
     app.add_url_rule("/centros/update", "centro_update_new", centro.update_new, methods=["POST"])
     app.add_url_rule("/centros/search", "centro_search", centro.search)
-
+    app.add_url_rule("/centros/pendientes", "centro_pendientes", centro.pendientes)
+    app.add_url_rule("/centros/publicar", "centro_publicar", centro.publicar,methods=["POST"])
+    app.add_url_rule("/centros/despublicar", "centro_despublicar", centro.despublicar,methods=["POST"])
     #Rutas de configuracion
     app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
 
