@@ -57,24 +57,28 @@
       <td>
      <div class="form-inline ">
        <form action="{{ url_for('centro_show', centro_id = centro.id ) }}"  >
+         {{csrf_token}}
          <button type="submit" class="btn btn-primary mt-2">Ver</button>
        </form>
 
        <form action="{{ url_for('centro_update', centro_id = centro.id ) }}"  >
+         {{csrf_token}}
          <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
        </form>
 
        <form action="{{ url_for('turno_index',centro_id = centro.id)}}" >
+         {{csrf_token}}
          <button type="submit" class="btn btn-info mt-2 ml-2">Turno</button>
        </form>
 
 
-
+       {% if has_permit('centro_destroy') %}
         <form action="{{ url_for('centro_delete') }}" method="POST" enctype="multipart/form-data">
+          {{csrf_token}}
           <input type="hidden" id="centro_id" name="centro_id" value="{{centro.id}}">
           <button type="submite" class="btn btn-danger mt-2 ml-2"  onclick="return ConfirmDelete()" >eliminar</button>
         </form>
-
+      {% endif%}
       </div>
       </td>
 
