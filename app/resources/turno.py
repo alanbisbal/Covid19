@@ -1,8 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.db import connection
 
-from sqlalchemy import asc
-
 from app.models.turno import Turno
 from app.models.centro import Centro
 from app.models.config import Config
@@ -28,6 +26,7 @@ def index(centro_id = None):
     page = request.args.get("page", 1, type=int)
     if centro_id:
         turnos = Turno.with_next_two_date(centro_id).paginate(page,per_page,error_out=False)
+
         return render_template("turno/index.html", turnos=turnos, centro_id=centro_id, form=form)
     else:
         turnos = Turno.with_next_two().paginate(page,per_page,error_out=False)

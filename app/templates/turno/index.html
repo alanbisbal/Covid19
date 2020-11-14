@@ -9,16 +9,22 @@
 {% if centro_id is defined %}
   <form action="{{ url_for('turno_new', centro_id=centro_id) }}">
     {{csrf_token}}
-    <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+    <div class="form-inline">
     {{wtf.form_field(form.fecha,type="Date")}}
+    <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+  </div>
   </form>
 {% else %}
+
   <form action="{{ url_for('turno_new_all') }}">
-    {{csrf_token}}
-      <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+      {{csrf_token}}
+      <div class="form-inline">
       {{wtf.form_field(form.fecha,type="Date")}}
       {{wtf.form_field(form.centro_id)}}
+      <input type="submit" value="Crear turno"  class="btn btn-success mr-sm-2">
+    </div>
   </form>
+
 {% endif %}
 
 {% if centro_id is defined %}
