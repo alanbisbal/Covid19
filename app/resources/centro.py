@@ -140,7 +140,7 @@ def search():
         centros = Centro.despublicate(filter).paginate(page,per_page,error_out=False)
         return render_template("centro/index.html", centros=centros, estado=estado)
     # se aplica filtro con estado inactivo
-    centros = Centro.pending(filter).paginate(page,per_page,error_out=False)
+    centros = Centro.pendiente(filter).paginate(page,per_page,error_out=False)
     return render_template("centro/index.html", centros=centros, estado=estado)
 
 
