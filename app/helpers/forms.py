@@ -56,7 +56,7 @@ class NewTurnoForm(FlaskForm):
 
 class ConfigForm(FlaskForm):
     titulo = StringField('Titulo',validators =[InputRequired()])
-    description = StringField('Description',validators =[InputRequired()])
+    descripcion = StringField('Descripcion',validators =[InputRequired()])
     email = StringField('Email',validators =[InputRequired()])
     elementos = IntegerField('Cantidad de elementos por pagina',validators =[InputRequired()], widget=NumberInput(step=1, min=1, max=50))
    # estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])

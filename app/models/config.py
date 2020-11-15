@@ -10,14 +10,14 @@ class Config(db.Model):
     __tablename__ = 'configs'
     id = db.Column(db.Integer,primary_key=True)
     titulo = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(255))
+    descripcion = db.Column(db.String(255))
     email = db.Column(db.String(255),nullable=False)
     elementos = db.Column(db.Integer,nullable=False)
     estado = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, data):
         self.titulo = data['titulo']
-        self.description = data['description']
+        self.descripcion = data['descripcion']
         self.email = data['email']
         self.elementos = data['elementos']
         self.estado = 1
@@ -46,7 +46,7 @@ class Config(db.Model):
 
     def update(self, data):
         self.titulo = data['titulo']
-        self.description = data['description']
+        self.descripcion = data['descripcion']
         self.email = data['email']
         self.elementos = data['elementos']
         if data['estado'] == "habilitado":
