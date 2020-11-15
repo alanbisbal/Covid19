@@ -106,6 +106,9 @@ def delete():
     if not centro:
         flash("Url invalida.","danger")
         return redirect(url_for("home"))
+    if centro.turnos:
+        flash("No se puede eliminar ya que el centro posee turnos.","danger")
+        return redirect(url_for("centro_index"))
     centro.delete()
     flash("Eliminación exitosa.","success")
     return redirect(url_for("centro_index"))
