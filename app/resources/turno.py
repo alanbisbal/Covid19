@@ -66,11 +66,12 @@ def create():
         return redirect(url_for("home"))
     form = TurnoForm()
     if not form.validate_on_submit():
+        print('errores',form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
     Turno.add(form.data)
     flash("Insercion exitosa","success")
-    return redirect(url_for('turno_index', centro_id=data['centro_id']))
+    return redirect(url_for('turno_index', centro_id=form.centro_id.data))
 
 def update(turno_id):
     if not authenticated(session):
