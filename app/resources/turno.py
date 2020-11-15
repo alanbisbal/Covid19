@@ -11,7 +11,7 @@ from app.helpers.forms import TurnoForm, NewTurnoForm
 
 #from app.helpers.validates import
 from app.helpers.permits import has_permit, is_admin
-from datetime import datetime
+from datetime import datetime,time,timedelta,date
 
 
 def index(centro_id = None):
@@ -45,8 +45,6 @@ def new(centro_id = None):
     form = TurnoForm()
     fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
     form.fecha.data = fecha
-    print(fecha.today())
-    print(datetime.today())
     if(fecha.today() < datetime.today()):
         flash("la fecha no puede ser menor a la fecha actual","danger")
         return redirect(url_for("home"))
@@ -135,19 +133,23 @@ def search(centro_id = None):
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
     # para el buscador de  turnos de centro en particular
+    centros = Centro.all()
+    form =  NewTurnoForm()
+    form.centro_id.choices = [(e.id, e.nombre) for e in centros]
     if centro_id:
-        turnos = Turno.with_email_centro_id(email,centro_id).paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos,centro_id=centro_id)
+        centro = Centro.with_id(centro_id)
+        turnos = Turno.with_email_centro(email,centro.nombre).paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos,centro_id=centro_id,form = form)
     centro = request.args.get("centro")
     # para el buscador de  turnos de todos los centros
     if centro=="" and email == "":
         turnos = Turno.query.paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos)
+        return render_template("turno/index.html", turnos=turnos,form = form)
     if centro != "" and email == "":
         turnos = Turno.with_nombre_centro(centro).paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos)
+        return render_template("turno/index.html", turnos=turnos,form = form)
     if centro == "" and email != "":
         turnos = Turno.with_email(email).paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos)
+        return render_template("turno/index.html", turnos=turnos,form = form)
     turnos = Turno.with_email_centro(email,centro).paginate(page,per_page,error_out=False)
-    return render_template("turno/index.html", turnos=turnos)
+    return render_template("turno/index.html", turnos=turnos,form = form)
