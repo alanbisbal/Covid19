@@ -12,10 +12,9 @@ from app.helpers.forms import ConfigForm
 def update():
     if not authenticated(session):
         abort(401)
-   
+
     config = Config.getConfig()
     config.update(request.form)
     form = ConfigForm(old_elmentos=config.cant_elements)
     flash("actualizacion exitosa","success")
     return redirect(url_for('user_configuracion', config=config , form=form))
-    
