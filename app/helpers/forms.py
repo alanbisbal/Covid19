@@ -54,6 +54,10 @@ class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
     centro_id = SelectField('nombre de centro', validators =[InputRequired()])
 
+class SearchForm(FlaskForm):
+    email =  StringField('Email')
+    centro = SelectField('nombre de centro', validators =[InputRequired()])
+
 class ConfigForm(FlaskForm):
     titulo = StringField('Titulo',validators =[InputRequired()])
     description = StringField('Description',validators =[InputRequired()])
