@@ -70,8 +70,9 @@ def update(centro_id):
     tipos = Tipo_centro.all()
     estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    form.tipo_centro.default = centro.tipo.id # deberia ser algo de este estilo
+    form.tipo_centro.default = [centro.tipo.id]
     form.estado_id.choices = [(e.id, e.nombre) for e in estados]
+    form.estado_id.default = [centro.estado_id]
     form.protocolo.value = centro.protocolo
     form.hora_inicio.data = centro.hora_inicio
     form.hora_fin.data = centro.hora_fin
