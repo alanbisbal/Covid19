@@ -26,7 +26,9 @@
     <p ><strong >Sitio web:</strong> {{centro.web }}</p>
     <p ><strong >Email:</strong> {{centro.email }}</p>
     <p ><strong >Estado:</strong> {{centro.estado.nombre}}</p>
-    <p ><strong >Protocolo:</strong> <a href="{{url_for('static', filename='uploads/'+centro.protocolo)}}">Protocolo</a></p>
+    {% if centro.protocolo %}
+        <p ><strong >Protocolo:</strong> <a href="{{url_for('static', filename='uploads/'+centro.protocolo)}}">Protocolo</a></p>
+    {% endif %}    
     <p ><strong >Tipo de centro:</strong> {{centro.tipo.nombre }}</p>
     <p ><strong >Latitud:</strong> {{centro.latitud }}</p>
     <p ><strong >Longitud:</strong> {{centro.longitud }}</p>
