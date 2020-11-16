@@ -18,13 +18,13 @@ class User(db.Model):
     activo = db.Column(db.Boolean, nullable=False)
     rols = db.relationship("Rol" , secondary="users_rols")
 
-    def __init__(self, data):
+    def __init__(self, data, estado):
         self.username = data['username']
         self.first_name = data['first_name']
         self.last_name = data['last_name']
         self.email = data['email']
         self.password = data['password']
-        self.activo = 1
+        self.activo = estado
         db.session.commit()
 
     @classmethod
@@ -32,8 +32,8 @@ class User(db.Model):
         return '<User {}>'.format(self.username)
 
 
-    def add(data):
-        db.session.add(User(data))
+    def add(data,estado):
+        db.session.add(User(data,estado))
         db.session.commit()
 
     def all():
@@ -86,3 +86,16 @@ class User(db.Model):
     def has_permit(self, permit_name):
         permits = map(lambda rol: rol.has_permit(permit_name), self.rols)
         return any(permits)
+
+    def permits(self):
+        permisos = []
+        for rol in self.rols:
+            for permiso in rol.permisos:
+                permisos.append(permiso)
+        return permisos
+
+    def roles(self):
+        rols = []
+        for rol in self.rols:
+            rols.append(rol)
+        return rols

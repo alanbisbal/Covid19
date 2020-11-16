@@ -5,36 +5,79 @@
 {% endblock %}
 
 {% block content %}
-<div class="mx-auto" style="width: 500px;">
-  <h3>Editar Datos del Usuario</h3>
+
+<div class="container col-md-8 col-sm-12 " style="max-width: 40rem;">
+<div class="card">
+
 <form action="{{ url_for('user_update_new') }}" method ="POST" enctype="multipart/form-data">
+  <div class="card-header bg-primary text-white" >
+    <h5>Editar datos del usuario:</h5>
+  </div>
 
+  <div class="card-body">
   <div class="form-group">
-
     <input type="hidden" class="form-control"  id="user_id" name="user_id" value="{{user.id}}">
   </div>
 
   <div class="form-group">
-    <label for="username">Nombre de usuario:</label>
+    <label for="username"><strong >Nombre de usuario:</strong></label>
     <input type="text" class="form-control" id="username" name="username" value="{{user.username}}" required>
   </div>
 
   <div class="form-group">
-    <label for="first_name">Nombre:</label>
+    <label for="first_name"><strong>Nombre:</strong></label>
     <input type="text" class="form-control" id="first_name" name="first_name" value="{{user.first_name}}" required>
   </div>
   <div class="form-group">
-    <label for="last_name">Apellido:</label>
+    <label for="last_name"><strong>Apellido:</strong></label>
     <input type="text" class="form-control" id="last_name" name="last_name" value="{{user.last_name}}" required>
   </div>
   <div class="form-group">
-    <label for="email">Email:</label>
+    <label for="email"><strong>Email:</strong></label>
     <input type="text" class="form-control" id="email" name="email" value="{{user.email}}" required>
   </div>
 
-    <button type="submit" class="btn btn-primary my-1">Guardar</button>
 
 
+<script type="text/javascript">
+function ConfirmDelete() {
+    return confirm('Esta seguro')
+  }
+</script>
+
+<div class="form-inline">
+<strong>Roles actuales:</strong>
+{% if not user.roles()%}
+  El usuario no posee roles asignados
+{% else %}
+{% for rol in user.roles() %}
+  <form action="{{ url_for('user_rol_delete',user_id = user.id,rol_id = rol.id) }}" method="POST" enctype="multipart/form-data">
+    <span class="badge badge-info">{{rol.name}}</span>
+    <button type="submite" class="btn btn-danger mt-2 ml-2"  onclick="return ConfirmDelete()" >eliminar</button>
+  </form>
+<br>
+{% endfor %}
+{%endif%}
+</div>
+
+<div class="form-group">
+<strong>Asignar nuevos roles:</strong>
+<form action="{{ url_for('user_add_rols',user_id = user.id) }}" method="POST" enctype="multipart/form-data">
+<br>
+  {% for rol in rols %}
+      <input type="checkbox" value="{{rol.id}}" name=roles[]> {{rol.name}}
+  {% endfor %}
+  <button type="submite" class="btn btn-success mt-2 ml-2">añadir roles</button>
 </form>
+</div>
+
+<div class="form-inline">
+  <div class="card-body d-flex justify-content-between align-items-center"></div>
+ <a href="/usuarios" class="btn btn-secondary mt-2">Volver</a>
+  <button type="submit" class="btn btn-primary mt-2 ml-2">Guardar</button>
+</div>
+</div>
+</form>
+</div>
 </div>
 {% endblock %}

@@ -17,7 +17,7 @@ class Rol(db.Model):
         self.name = data['name']
         self.description = data['description']
         db.session.commit()
-        
+
     @classmethod
     def __str__(self):
         return '<Rol {}>'.format(self.name)
@@ -33,3 +33,7 @@ class Rol(db.Model):
         respecto al nombre del permisos que se paso por parametro """
         permits = map(lambda p: p.name == permit_name, self.permisos)
         return any(permits)
+
+    def except_rols(roles):
+        allrols = db.session.query(Rol).all()
+        return (set(allrols)-set(roles))

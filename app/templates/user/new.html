@@ -2,35 +2,56 @@
 {% block title %}Usuarios{% endblock %}
 
 {% block content %}
-<div class="mx-auto" style="width: 500px;">
-  <h3>Crear Usuario</h3>
+<div class="container col-md-8 col-sm-12 " style="max-width: 40rem;">
+  <div class="card">
+
   <form action="{{ url_for('user_create') }}" method="POST">
+    <div class="card-header bg-primary text-white" >
+      <h5>Crear usuario:</h5>
+    </div>
+    <div class="card-body">
+
     <div class="form-group">
-      <label for="formGroupExampleInput">Nombre</label>
+      <label for="formGroupExampleInput"><strong>Nombre</strong></label>
       <input type="text" class="form-control" name="first_name" placeholder="Nombre"  required/>
     </div>
+
     <div class="form-group">
-      <label for="formGroupExampleInput" >Apellido</label>
+      <label for="formGroupExampleInput" ><strong>Apellido</strong></label>
       <input type="text" class="form-control" name="last_name" placeholder="Apellido"  required/>
     </div>
+
     <div class="form-group">
-      <label for="formGroupExampleInput" >Nombre de Usuario</label>
+      <label for="formGroupExampleInput" ><strong>Nombre de Usuario</strong></label>
       <input type="text" class="form-control" name="username" placeholder="Nombre de usuario"  required/>
     </div>
+
     <div class="form-group">
-      <label for="exampleInputEmail1">Email</label>
+      <label for="exampleInputEmail1"><strong>Email</strong></label>
       <input type="email" class="form-control" name="email" placeholder="Correo" required>
     </div>
+
     <div class="form-group">
-      <label >Clave</label>
+      <label ><strong>Clave</strong></label>
       <input type="password" name="password" placeholder="Clave" class="form-control"  required/>
     </div>
+
+    <div class="form-group">
+      <label ><strong>Estado</strong></label>
+      <input type="radio" name="activo" value=True required>
+      <button type="submit" class="btn btn-success btn disabled" href="#">habilitado</button>
+      <input type="radio" name="activo" value=False >
+      <button type="submit" class="btn btn-danger btn disabled" href="#">deshabilitado</button>
+    </div>
+
     <!--check box-->
-    <select class='form-control mr-sm-2' name='rol'>
-       {% for rol in rols %}
-       <option value={{rol.id}} >{{rol.name}}</option>
-       {% endfor %}
-    </select>
+    <div class="form-group">
+    <label for="formGroupExampleInput" ><strong>Roles </strong></label>
+      {% for rol in rols %}
+          <input type="checkbox" value="{{rol.id}}" name=roles[]> {{rol.name}}
+      {% endfor %}
+    </div>
+
 
 
   <!--fin del check box-->
@@ -45,6 +66,8 @@
         </div>
 
    </div>
+  </div>
   </form>
+</div>
 </div>
 {% endblock %}

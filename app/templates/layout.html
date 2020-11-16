@@ -7,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <title>{% block title %}{% endblock %}</title>
-
+    <script src="https://unpkg.com/vue"></script>
     {% endblock %}
   </head>
   <body>
+
+
     <div id="navbar">
       {% block navbar %}
       <!---estas secciones son vistas por cualquier usuario-->
@@ -28,13 +30,11 @@
           <!--si el usuario es admin debera tener ademas de la seccion inicio un href diferente-->
           <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
           {% if is_authenticated(session) %}
-          <a class="p-2 text-dark" href="#">Centros de Ayuda</a>
-          <a class="p-2 text-dark" href="#">Turnos</a>
-          <a class="p-2 text-dark" href="{{ url_for('issue_index') }}">Consultas</a>
 
           <!--si el usuario es admin ademas vera estas secciones :-->
               {% if has_permit('permisos_index') %}
-                <a class="p-2 text-dark" href="#">Roles y permisos</a>
+                <a class="p-2 text-dark" href="{{ url_for('centro_index') }}">Centros de Ayuda</a>
+                <a class="p-2 text-dark" href="{{ url_for('turno_index_all') }}">Turnos</a>
               {% endif %}
               {% if has_permit('user_index') %}
                 <a class="p-2 text-dark" href="{{ url_for('user_index') }}">Usuarios</a>
@@ -51,7 +51,7 @@
 
          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido {{session.username}}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="">Perfil</a>
+              <a class="dropdown-item" href="{{ url_for('user_perfil') }}">Perfil</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ url_for('auth_logout') }}">Cerrar Sesión</a>
              </div>
@@ -61,22 +61,32 @@
       {% endblock %}
     </div>
     <div id="content">
-      {% with messages = get_flashed_messages() %}
+      {%  with messages= get_flashed_messages(with_categories=true)%}
         {% if messages %}
-          <ul class=flashes>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-          </ul>
-        {% endif %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                <span>{{ message }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+             </div>
+            {% endfor %}
+          {% endif %}
       {% endwith %}
 
       {% block content %}
-      {% block iniciarSesion %}{% endblock %}
+
       {% endblock %}
     </div>
-    <div id="footer">
+    <div id="footer" >
+      <hr class="my-4">
       {% block footer %}
+      <div class="row container">
+        <p class="p-1"> Grupo37  &copy; Proyecto de Software, 2020 |<a href="https://www.info.unlp.edu.ar/" alt="Facultad de informatica unlp" target="_blank">Facultad de
+          Informática</a> - <a href=" https://unlp.edu.ar/" alt="UNLP" target="_blank">UNLP</a>
+        </p>
+      </div>
+
       {% endblock %}
     </div>
     {% block scripts %}

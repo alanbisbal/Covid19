@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% block title %}Centros{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<a href="{{ url_for('centro_index') }}" class="btn btn-success mr-sm-2">Centros</a>
+<a href="{{ url_for('centro_new') }}" class="btn btn-success mr-sm-2">Crear Centro</a>
+<form class="form-inline md-form mr-auto mb-4" action="{{ url_for('centro_search') }}">
+  {{csrf_token }}
+  <h1 class="my-0 mr-md-auto font-weight-normal">Centros Pendientes </h1>
+  <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Buscar.." aria-label="Search">
+    <select class='form-control mr-sm-2' name='estado'>
+      <option value='---'{% if estado=="---" %} selected="selected" {% endif %}>---</option>
+      <option value='publicado'{% if estado=="publicado" %} selected="selected" {% endif %}>Publicado</option>
+      <option value='despublicado'{% if estado=="despublicado" %} selected="selected" {% endif %}>Despublicado</option>
+      <option value='pendiente'{% if estado=="pendiente" %} selected="selected" {% endif %}>Pendiente</option>
+    </select>
+    <button class="btn btn-light my-2 my-sm-0" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+      <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+    </svg></button>
+  </form>
+
+
+
+  <div class="table-responsive-md">
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Direccion</th>
+      <th scope="col">Apertura</th>
+      <th scope="col">Cierre</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <script type="text/javascript">
+  function ConfirmDelete() {
+      return confirm('Esta seguro?')
+    }
+  </script>
+
+  {% for centro in centros.items %}
+  <tbody>
+    <tr>
+      <td>{{ centro.nombre }}</td>
+      <td>{{ centro.email }}</td>
+
+      <td>{{centro.estado.nombre}}</td>
+      <td>{{ centro.direccion }}</td>
+      <td>{{ centro.hora_inicio }}</td>
+      <td>{{ centro.hora_fin }}</td>
+
+     <div class="form-inline ">
+       <td>
+       <form action="{{ url_for('centro_show', centro_id = centro.id ) }}"  >
+         {{csrf_token}}
+         <button type="submit" class="btn btn-warning mt-2 ml-2">Ver</button>
+       </form>
+       </td>
+       <td>
+       <form action="{{ url_for('centro_publicar', centro_id = centro.id ) }}" method ="post" >
+           {{csrf_token }}
+         <button type="submit" class="btn btn-primary mt-2">Publicar</button>
+       </form>
+       </td>
+       <td>
+       <form action="{{ url_for('centro_despublicar',centro_id = centro.id)}}" method ="post" >
+           {{csrf_token }}
+         <button type="submit" class="btn btn-info mt-2 ml-2">Despublicar</button>
+       </form>
+      </td>
+
+
+      </div>
+
+    </tr>
+  </tbody>
+  {% endfor %}
+
+</table>
+</div>
+<hr class="my-4">
+<!--botones  de paginacion-->
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+      {% if centros.has_prev %}
+        <li class="page-item"> <a class="btn btn-secondary" href="{{ url_for('centro_index', page=centros.prev_num) }}">Anterior</a></li>
+      {% else %}
+        <li class="page-item"><a class="btn btn-secondary btn disabled" href="#">Anterior</a></li>
+      {% endif %}
+
+
+      {% if centros.has_next %}
+        <li class="page-item"> <a class="btn btn-primary" href="{{ url_for('centro_index', page=centros.next_num) }}">Siguiente</a></li>
+      {% else %}
+        <li class="page-item"><a class="btn btn-primary btn disabled" href="#">Siguiente</a></li>
+      {% endif %}
+
+  </ul>
+</nav>
+{% endblock %}
