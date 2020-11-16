@@ -63,7 +63,7 @@ INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `
 CREATE TABLE `configs` (
   `id` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `elementos` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL
@@ -73,7 +73,7 @@ CREATE TABLE `configs` (
 -- Volcado de datos para la tabla `configs`
 --
 
-INSERT INTO `configs` (`id`, `titulo`, `description`, `email`, `elementos`, `estado`) VALUES
+INSERT INTO `configs` (`id`, `titulo`, `descripcion`, `email`, `elementos`, `estado`) VALUES
 (1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 50, 1);
 
 -- --------------------------------------------------------

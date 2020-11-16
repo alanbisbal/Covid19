@@ -81,7 +81,7 @@ class Turno(db.Model):
         hoy = datetime.today().replace(hour=0,minute=0,second=0,microsecond=0)
         print(hoy)
         en_dos_dias = datetime.today() + timedelta(days=2)
-        return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())
+        return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())    
 
 
     #'bloque' no sabemos bien como definirlo

@@ -44,10 +44,9 @@ class CenterForm(FlaskForm):
 class TurnoForm(FlaskForm):
     email = StringField('Email',validators =[InputRequired()])
     telefono = StringField('Telefono')
-    hora_inicio = SelectField('Hora inicio',validators =[InputRequired()])
-    hora_fin = StringField('',validators =[InputRequired()])
+    hora_inicio = SelectField('Hora inicio',validate_choice=False)
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
-    centro_id = IntegerField('', validators =[InputRequired()])
+    centro_id = IntegerField('')
     submit = SubmitField(label="Guardar")
 
 class NewTurnoForm(FlaskForm):
@@ -60,7 +59,7 @@ class SearchForm(FlaskForm):
 
 class ConfigForm(FlaskForm):
     titulo = StringField('Titulo',validators =[InputRequired()])
-    description = StringField('Description',validators =[InputRequired()])
+    descripcion = StringField('Descripcion',validators =[InputRequired()])
     email = StringField('Email',validators =[InputRequired()])
     elementos = IntegerField('Cantidad de elementos por pagina',validators =[InputRequired(),NumberRange(min=1, max=50)], widget=NumberInput(step=1, min=1, max=50))
    # estado = SelectField('estado',validators =[InputRequired()],choices=[ 'habilitado','deshabilitado'])
