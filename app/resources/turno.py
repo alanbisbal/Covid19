@@ -7,7 +7,7 @@ from app.models.config import Config
 
 from app.helpers.auth import authenticated
 
-from app.helpers.forms import TurnoForm, NewTurnoForm
+from app.helpers.forms import TurnoForm, NewTurnoForm, SearchForm
 
 #from app.helpers.validates import
 from app.helpers.permits import has_permit, is_admin
@@ -26,13 +26,16 @@ def index(centro_id = None):
     page = request.args.get("page", 1, type=int)
     if centro_id:
         turnos = Turno.with_next_two_date(centro_id).paginate(page,per_page,error_out=False)
-
+        form.fecha.data = date.today()
         return render_template("turno/index.html", turnos=turnos, centro_id=centro_id, form=form)
     else:
-        turnos = Turno.with_next_two().paginate(page,per_page,error_out=False)
+        search = SearchForm()
         centros = Centro.all()
         form.centro_id.choices = [(e.id, e.nombre) for e in centros]
-        return render_template("turno/index.html", turnos=turnos, form=form)
+        search.centro.choices = [(e.nombre) for e in centros]
+        form.fecha.data = date.today()
+        turnos = Turno.with_next_two().paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos, form=form, buscador=search)
 
 
 def new(centro_id = None):
@@ -63,11 +66,20 @@ def create():
         return redirect(url_for("home"))
     form = TurnoForm()
     if not form.validate_on_submit():
+        print('errores',form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
+    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
+    if not (hora.minute == 00 or hora.minute == 30):
+        flash("El horario debe finalizar con los minutos xx:00 o xx:30","danger")
+        return redirect(url_for('turno_index', centro_id=form.centro_id.data))
+    turnos_disponibles=Turno.bloques_disponibles(form.data['centro_id'],str(form.data['fecha']))
+    if str(form.data['hora_inicio']) not in  turnos_disponibles:
+        flash("Bloque de turno ocupado","danger")
+        return redirect(url_for('turno_index', centro_id=form.centro_id.data))
     Turno.add(form.data)
     flash("Insercion exitosa","success")
-    return redirect(url_for('turno_index', centro_id=data['centro_id']))
+    return redirect(url_for('turno_index', centro_id=form.centro_id.data))
 
 def update(turno_id):
     if not authenticated(session):
@@ -91,8 +103,16 @@ def update_new():
     form = TurnoForm()
     turno = Turno.with_id(request.form['turno_id'])
     if not form.validate_on_submit() or not turno:
+        print(form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
+    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
+    if not (hora.minute == 00 or hora.minute == 30):
+        flash("El horario debe finalizar con los minutos xx:00 o xx:30","danger")
+        return redirect(url_for('turno_index', centro_id=form.centro_id.data))
+    turnos_disponibles=Turno.bloques_disponibles(form.data['centro_id'],str(form.data['fecha']))
+    if str(form.data['hora_inicio']) not in  turnos_disponibles:
+        flash("Bloque de turno ocupado","danger")
     turno.update(form.data)
     flash("Actualización exitosa.","success")
     return redirect(url_for('turno_index', centro_id=turno.centro_id))
@@ -141,15 +161,18 @@ def search(centro_id = None):
         turnos = Turno.with_email_centro(email,centro.nombre).paginate(page,per_page,error_out=False)
         return render_template("turno/index.html", turnos=turnos,centro_id=centro_id,form = form)
     centro = request.args.get("centro")
+    search = SearchForm()
+    search.centro.choices = [(e.nombre) for e in centros]
     # para el buscador de  turnos de todos los centros
-    if centro=="" and email == "":
+    data = request.args
+    if data['centro']=="" and data['email'] == "":
         turnos = Turno.query.paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos,form = form, buscador=search)
+    if data['centro'] != "" and data['email'] == "":
+        turnos = Turno.with_nombre_centro(data['centro']).paginate(page,per_page,error_out=False)
+        return render_template("turno/index.html", turnos=turnos,form = form, buscador=search)
+    if data['centro'] == "" and data['email'] != "":
+        turnos = Turno.with_email(data['email']).paginate(page,per_page,error_out=False)
         return render_template("turno/index.html", turnos=turnos,form = form)
-    if centro != "" and email == "":
-        turnos = Turno.with_nombre_centro(centro).paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos,form = form)
-    if centro == "" and email != "":
-        turnos = Turno.with_email(email).paginate(page,per_page,error_out=False)
-        return render_template("turno/index.html", turnos=turnos,form = form)
-    turnos = Turno.with_email_centro(email,centro).paginate(page,per_page,error_out=False)
-    return render_template("turno/index.html", turnos=turnos,form = form)
+    turnos = Turno.with_email_centro(data['email'],data['centro']).paginate(page,per_page,error_out=False)
+    return render_template("turno/index.html", turnos=turnos,form = form, buscador=search)

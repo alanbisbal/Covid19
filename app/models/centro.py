@@ -117,6 +117,10 @@ class Centro(db.Model):
         pendiente =  db.session.query(Estado).filter(Estado.nombre == "Pendiente").first()
         return db.session.query(Centro).filter(Centro.estado_id == "3")
 
+    def pendiente(filter):
+        pendiente =  db.session.query(Estado).filter(Estado.nombre == "Pendiente").first()
+        return db.session.query(Centro).filter(Centro.estado_id == pendiente.id,Centro.nombre.contains(filter))
+
     def publicar(self):
         self.estado_id = 1
         db.session.commit()

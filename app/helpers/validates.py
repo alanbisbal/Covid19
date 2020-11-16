@@ -87,7 +87,7 @@ def form_config_update(data):
     if not data['titulo']:
         flash('El titulo no puede estar vacio',"danger")
         ok = False
-    if not data['description']:
+    if not data['descripcion']:
         flash('La descripcion no puede estar vacio',"danger")
         ok = False
     if not data['email']:

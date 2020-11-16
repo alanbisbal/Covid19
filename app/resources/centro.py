@@ -70,8 +70,9 @@ def update(centro_id):
     tipos = Tipo_centro.all()
     estados = Estado.all()
     form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    form.tipo_centro.default = centro.tipo.id # deberia ser algo de este estilo
+    form.tipo_centro.default = [centro.tipo.id]
     form.estado_id.choices = [(e.id, e.nombre) for e in estados]
+    form.estado_id.default = [centro.estado_id]
     form.protocolo.value = centro.protocolo
     form.hora_inicio.data = centro.hora_inicio
     form.hora_fin.data = centro.hora_fin
@@ -105,6 +106,9 @@ def delete():
     if not centro:
         flash("Url invalida.","danger")
         return redirect(url_for("home"))
+    if centro.turnos:
+        flash("No se puede eliminar ya que el centro posee turnos.","danger")
+        return redirect(url_for("centro_index"))
     centro.delete()
     flash("Eliminación exitosa.","success")
     return redirect(url_for("centro_index"))
@@ -136,7 +140,7 @@ def search():
         centros = Centro.despublicate(filter).paginate(page,per_page,error_out=False)
         return render_template("centro/index.html", centros=centros, estado=estado)
     # se aplica filtro con estado inactivo
-    centros = Centro.pending(filter).paginate(page,per_page,error_out=False)
+    centros = Centro.pendiente(filter).paginate(page,per_page,error_out=False)
     return render_template("centro/index.html", centros=centros, estado=estado)
 
 
