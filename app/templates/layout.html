@@ -30,7 +30,7 @@
           <!--si el usuario es admin debera tener ademas de la seccion inicio un href diferente-->
           <a class="p-2 text-dark" href="{{ url_for('home') }}">Inicio</a>
           {% if is_authenticated(session) %}
-            
+
           <!--si el usuario es admin ademas vera estas secciones :-->
               {% if has_permit('permisos_index') %}
                 <a class="p-2 text-dark" href="{{ url_for('centro_index') }}">Centros de Ayuda</a>

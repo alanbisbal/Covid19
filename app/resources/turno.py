@@ -95,6 +95,7 @@ def update_new():
     form = TurnoForm()
     turno = Turno.with_id(request.form['turno_id'])
     if not form.validate_on_submit() or not turno:
+        print(form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
     turno.update(form.data)
