@@ -69,6 +69,14 @@ def create():
         print('errores',form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
+    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
+    if not (hora.minute == 00 or hora.minute == 30):
+        flash("El horario debe finalizar con los minutos xx:00 o xx:30","danger")
+        return redirect(url_for('turno_index', centro_id=form.centro_id.data))
+    turnos_disponibles=Turno.bloques_disponibles(form.data['centro_id'],str(form.data['fecha']))
+    if str(form.data['hora_inicio']) not in  turnos_disponibles:
+        flash("Bloque de turno ocupado","danger")
+        return redirect(url_for('turno_index', centro_id=form.centro_id.data))
     Turno.add(form.data)
     flash("Insercion exitosa","success")
     return redirect(url_for('turno_index', centro_id=form.centro_id.data))
@@ -98,6 +106,13 @@ def update_new():
         print(form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
+    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
+    if not (hora.minute == 00 or hora.minute == 30):
+        flash("El horario debe finalizar con los minutos xx:00 o xx:30","danger")
+        return redirect(url_for('turno_index', centro_id=form.centro_id.data))
+    turnos_disponibles=Turno.bloques_disponibles(form.data['centro_id'],str(form.data['fecha']))
+    if str(form.data['hora_inicio']) not in  turnos_disponibles:
+        flash("Bloque de turno ocupado","danger")
     turno.update(form.data)
     flash("Actualización exitosa.","success")
     return redirect(url_for('turno_index', centro_id=turno.centro_id))
