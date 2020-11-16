@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2020 a las 15:27:30
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.33
+-- Tiempo de generación: 16-11-2020 a las 01:42:02
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,8 +49,8 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
-(1, 'Centro de donaciones', '1 y 32', '12314412', '09:00:00', '09:30:00', '19', 'lkifajmkaqfmj@afhaiof', 'luahdwa@kujgherswougs', 1, 'usafhuosafhnioa', -34.9159, -57.9924, 2),
-(2, 'Comedor religioso', '2 y 33', '13241234', '09:00:00', '16:00:00', '19', 'upogposwjgpesa@silhjgiosa', 'eswjgnhesokj@slkiegisejn', 1, 'oeifhiuaeswfoiesa', -34.9152, -57.9925, 1),
+(1, 'prueba', '1 y 32', '12314412', '09:00:00', '09:30:00', '1', 'lkifajmkaqfmj@afhaiof', 'luahdwa@kujgherswougs', 2, '4efbc174-279a-11eb-86d7-7077812ce868.pdf', -34.9159, -57.9924, 1),
+(2, 'Comedor religioso', '2 y 33', '13241234', '09:00:00', '16:00:00', '1', 'upogposwjgpesa@silhjgiosa', 'eswjgnhesokj@slkiegisejn', 1, 'oeifhiuaeswfoiesa', -34.9159, -57.9924, 1),
 (3, 'Centro culturar Test', '3 y 34', '1298746127986487126', '09:00:00', '16:00:00', '19', 'fkojnajnfa@alksfhja', 'efanhjniloae@akfnklanfa', 1, 'fiawqhjaiok;f', -34.914, -57.998, 4),
 (4, 'Centro_publicado', '123 123', '123123', '09:00:00', '16:00:00', '19', 'info.unlp.com', 'centro_test@cesadas', 1, 'C:\\Users\\alan\\Desktop\\Proyecto\\project\\grupo37\\app/static/uploads\\07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 2);
 
@@ -74,7 +74,7 @@ CREATE TABLE `configs` (
 --
 
 INSERT INTO `configs` (`id`, `titulo`, `descripcion`, `email`, `elementos`, `estado`) VALUES
-(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicados\r\nSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.\r\nTambién podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 50, 1);
+(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicadosSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.También podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.c', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -199,7 +199,8 @@ INSERT INTO `rols_permisos` (`id`, `rol_id`, `permiso_id`) VALUES
 (31, 2, 23),
 (32, 2, 21),
 (33, 2, 22),
-(34, 2, 23);
+(34, 2, 23),
+(35, 2, 16);
 
 -- --------------------------------------------------------
 
@@ -243,12 +244,22 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
-(4, 'admin@admin', 'test2123', '11:01:00', '11:01:00', '1111-11-11', 4),
+(4, 'admin@admin', 'test2123', '11:01:00', '11:01:00', '2020-11-15', 4),
 (7, 'admin@admin', '12312312', '17:00:00', '17:30:00', '2020-11-13', 4),
 (8, 'uiyoui@ytiyti', '12313123', '09:00:00', '09:30:00', '2020-11-20', 4),
 (9, 'qfhdqiwo@alkifhjgia', '123123123', '09:00:00', '09:30:00', '2020-11-12', 1),
 (10, 'iojaufhiaj@;keagnjkase', '999999', '10:00:00', '10:30:00', '2020-11-14', 3),
-(11, 'awfwq@qwefhguewq', '21312321', '12:00:00', '12:30:00', '2020-11-17', 2);
+(11, 'awfwq@qwefhguewq', '21312321', '12:00:00', '12:30:00', '2020-11-17', 2),
+(13, 'admin@admin.com', '1111111', '09:30:00', '10:00:00', '2020-11-15', 1),
+(14, 'operador@gmail.com', '1111111', '09:00:00', '09:30:00', '2020-11-15', 2),
+(15, 'admin@admin.com', '1111111', '10:00:00', '10:30:00', '2020-11-15', 1),
+(16, 'operador@gmail.com', '1111111', '09:00:00', '09:30:00', '2020-11-15', 1),
+(17, 'admin@covid.com', '56457547457', '09:00:00', '09:30:00', '2020-11-16', 1),
+(18, 'admin', '56457547457', '09:00:00', '09:30:00', '2020-11-17', 1),
+(19, 'adm@com', '11111', '11:00:00', '11:30:00', '2020-11-15', 4),
+(20, 'a@gma.com', '11111', '09:30:00', '10:00:00', '2020-11-16', 4),
+(21, 'a@gma.com', '11111', '09:30:00', '10:00:00', '2020-11-16', 3),
+(22, 'a@gma.com', '11111', '09:30:00', '10:00:00', '2020-11-16', 3);
 
 -- --------------------------------------------------------
 
@@ -406,7 +417,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
@@ -436,7 +447,7 @@ ALTER TABLE `rols`
 -- AUTO_INCREMENT de la tabla `rols_permisos`
 --
 ALTER TABLE `rols_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_centros`
@@ -448,7 +459,7 @@ ALTER TABLE `tipo_centros`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
