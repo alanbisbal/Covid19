@@ -73,7 +73,6 @@ def center_create():
         centro = Centro.add(request.args)
     except:
         return Response(status=500)
-
     if not centro:
         return Response(status=400)
 

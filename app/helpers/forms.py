@@ -6,6 +6,7 @@ from flask_wtf.file import FileField
 from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional,EqualTo,Regexp
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
+from app.models.estado import Estado
 from wtforms.widgets.html5 import NumberInput
 import requests
 from app.models.turno import Turno
@@ -31,10 +32,14 @@ class CenterForm(FlaskForm):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         tipos = Tipo_centro.all()
+        estados = Estado.all()
         choices = []
         for _type in tipos:
             choices.append((_type.id, _type.nombre))
         self.tipo_centro.choices = choices
+        for _type in estados:
+            choices.append((_type.id, _type.nombre))
+        self.estado_id.choices = choices
         choices = []
         municipios= requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
         for mun in municipios:

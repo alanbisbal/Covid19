@@ -48,9 +48,9 @@ def new(centro_id = None):
     form = TurnoForm()
     fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
     form.fecha.data = fecha
-    if(fecha.today() < datetime.today()):
+    if(fecha < (datetime.today()+ timedelta(days=-1))):
         flash("la fecha no puede ser menor a la fecha actual","danger")
-        return redirect(url_for("home"))
+        return redirect(request.referrer)
     if centro_id:
         form.centro_id.data = centro_id
     else:
@@ -66,7 +66,6 @@ def create():
         return redirect(url_for("home"))
     form = TurnoForm()
     if not form.validate_on_submit():
-        print('errores',form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
     hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
@@ -103,7 +102,6 @@ def update_new():
     form = TurnoForm()
     turno = Turno.with_id(request.form['turno_id'])
     if not form.validate_on_submit() or not turno:
-        print(form.errors)
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
     hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
