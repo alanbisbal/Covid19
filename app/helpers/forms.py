@@ -53,7 +53,6 @@ class TurnoForm(FlaskForm):
     hora_inicio = SelectField('Hora inicio',validate_choice=False)
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
     centro_id = IntegerField('')
-    submit = SubmitField(label="Guardar")
 
 class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
