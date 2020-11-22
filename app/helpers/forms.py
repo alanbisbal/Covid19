@@ -37,6 +37,7 @@ class CenterForm(FlaskForm):
         for _type in tipos:
             choices.append((_type.id, _type.nombre))
         self.tipo_centro.choices = choices
+        choices = []
         for _type in estados:
             choices.append((_type.id, _type.nombre))
         self.estado_id.choices = choices
