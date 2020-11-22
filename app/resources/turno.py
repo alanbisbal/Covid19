@@ -90,7 +90,7 @@ def update(turno_id):
     form = TurnoForm()
     form.fecha.data = turno.fecha
     form.hora_inicio.choices = Turno.bloques_disponibles(turno.centro_id,str(form.fecha.data))
-
+    form.process()
     return render_template("turno/update.html",form = form,turno=turno)
 
 def update_new():

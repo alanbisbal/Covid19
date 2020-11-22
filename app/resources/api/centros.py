@@ -1,5 +1,6 @@
 from app.models.centro import Centro
 from app.models.tipo_centro import Tipo_centro
+from app.models.estado import Estado
 from app.models.config import Config
 from app.helpers.forms import CenterForm
 from app.db import db
@@ -70,7 +71,24 @@ def center(id):
 
 def center_create():
     try:
-        centro = Centro.add(request.args)
+        form= CenterForm(csrf_enabled=False)
+        form.nombre= request.form['nombre']
+        form.direccion= request.form['direccion']
+        form.telefono= request.form['telefono']
+        form.hora_inicio= request.form['hora_inicio']
+        form.hora_fin= request.form['hora_fin']
+        form.municipio_id= request.form['municipio_id']
+        #form.protocolo = request.form['protocolo']
+        form.web= request.form['web']
+        form.email= request.form['email']
+        form.estado_id= request.form['estado_id']
+        form.latitud= request.form['latitud']
+        form.longitud= request.form['longitud']
+        form.tipo_centro= request.form['tipo_centro']
+        if not form.validate():
+            print(form.errors)
+            return Response(status=400)
+        centro = Centro.add(form.data)
     except:
         return Response(status=500)
     if not centro:
