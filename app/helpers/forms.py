@@ -6,6 +6,7 @@ from flask_wtf.file import FileField
 from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional,EqualTo,Regexp
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
+from app.models.estado import Estado
 from wtforms.widgets.html5 import NumberInput
 import requests
 from app.models.turno import Turno
@@ -31,10 +32,15 @@ class CenterForm(FlaskForm):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         tipos = Tipo_centro.all()
+        estados = Estado.all()
         choices = []
         for _type in tipos:
             choices.append((_type.id, _type.nombre))
         self.tipo_centro.choices = choices
+        choices = []
+        for _type in estados:
+            choices.append((_type.id, _type.nombre))
+        self.estado_id.choices = choices
         choices = []
         municipios= requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
         for mun in municipios:
@@ -42,12 +48,11 @@ class CenterForm(FlaskForm):
         self.municipio_id.choices = choices
 
 class TurnoForm(FlaskForm):
-    email = StringField('Email',validators =[InputRequired()])
+    email = EmailField('Email',validators =[InputRequired()])
     telefono = StringField('Telefono')
     hora_inicio = SelectField('Hora inicio',validate_choice=False)
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
     centro_id = IntegerField('')
-    submit = SubmitField(label="Guardar")
 
 class NewTurnoForm(FlaskForm):
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])

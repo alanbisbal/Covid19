@@ -65,17 +65,14 @@ def update(centro_id):
     if not centro:
         flash("Url invalida.","danger")
         return redirect(url_for("home"))
-    tipos = Tipo_centro.all()
     form = CenterForm()
-    tipos = Tipo_centro.all()
-    estados = Estado.all()
-    form.tipo_centro.choices = [(t.id, t.nombre) for t in tipos]
-    form.tipo_centro.default = [centro.tipo.id]
-    form.estado_id.choices = [(e.id, e.nombre) for e in estados]
-    form.estado_id.default = [centro.estado_id]
+    form.municipio_id.default = centro.municipio_id
+    form.tipo_centro.default = centro.tipo.id
+    form.estado_id.default = centro.estado_id
     form.protocolo.value = centro.protocolo
-    form.hora_inicio.data = centro.hora_inicio
-    form.hora_fin.data = centro.hora_fin
+    form.hora_inicio.default = centro.hora_inicio
+    form.hora_fin.default = centro.hora_fin
+    form.process()
     return render_template("centro/update.html",centro = centro, form=form)
 
 

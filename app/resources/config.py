@@ -18,4 +18,4 @@ def update():
         return redirect(request.referrer)
     config.update(request.form)
     flash("actualizacion exitosa","success")
-    return redirect(url_for('user_configuracion', config=config , form=form))
+    return redirect(url_for('user_configuracion'))
