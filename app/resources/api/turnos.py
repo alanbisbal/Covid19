@@ -1,5 +1,6 @@
 from app.models.turno import Turno
 from app.models.centro import Centro
+from app.helpers.forms import TurnoForm
 from flask import jsonify, request, abort,Response
 from datetime import date
 import json
@@ -27,17 +28,26 @@ def turno_list(id,fecha=date.today()):
 
 
 def turno_create(id):
+    form= TurnoForm(csrf_enabled=False)
+    form.email= request.form['email']
+    form.telefono= request.form['telefono']
+    form.hora_inicio= request.form['hora_inicio']
+    form.fecha= request.form['fecha']
+    form.centro_id= id
+    if not form.validate_on_submit():
+        print("errores de validacion",form.errors)
+        return Response("soyElerror",status=400)
+
     try:
         centro = Centro.with_id(id)
+        print("centro",Centro.with_id(id))
         if not centro:
             return Response(status=400)
-        turnos_disponibles=Turno.bloques_disponibles(request.args['centro_id'],request.args['fecha'])
-        if(id == request.args['centro_id']):
-            print("hora inicio:")
-            print(request.args['hora_inicio'])
-            if str(request.args['hora_inicio']) not in  turnos_disponibles:
+        turnos_disponibles=Turno.bloques_disponibles(form.centro_id,form.fecha)
+        if id == form.centro_id:
+            if str(form.hora_inicio) not in  turnos_disponibles:
                 return Response('el turno no esta disponible',status=400)
-        turno = Turno.add_and_return(request.args)
+        turno = Turno.add_and_return(form.data)
 
     except:
         return Response(status=400)
