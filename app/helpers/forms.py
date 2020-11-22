@@ -48,7 +48,7 @@ class CenterForm(FlaskForm):
         self.municipio_id.choices = choices
 
 class TurnoForm(FlaskForm):
-    email = StringField('Email',validators =[InputRequired()])
+    email = EmailField('Email',validators =[InputRequired()])
     telefono = StringField('Telefono')
     hora_inicio = SelectField('Hora inicio',validate_choice=False)
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])

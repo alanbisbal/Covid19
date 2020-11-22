@@ -33,10 +33,12 @@ def turno_create(id):
     form.telefono= request.form['telefono']
     form.hora_inicio= request.form['hora_inicio']
     form.fecha= request.form['fecha']
-    form.centro_id= id
+    form.centro_id= request.form['centro_id']
+    
     if not form.validate_on_submit():
         return Response('Error de validacion',status=400)
-
+    if not form.centro_id == id:
+        return Response('Error de validacion del centro',status=400)
     try:
         centro = Centro.with_id(id)
         if not centro:
