@@ -69,13 +69,33 @@ def center(id):
 
 
 def center_create():
+    form= CenterForm()
+    form.nombre= request.form['nombre']
+    form.direccion= request.form['direccion']
+    form.telefono= request.form['telefono']
+    form.hora_inicio= request.form['hora_inicio']
+    form.hora_fin= request.form['hora_fin']
+    form.municipio_id= request.form['municipio_id']
+    form.web= request.form['web']
+    form.email= request.form['email']
+    form.estado_id= 3
+    form.protocolo= request.form['protocolo']
+    form.latitud= request.form['latitud']
+    form.longitud= request.form['longitud']
+    form.tipo_centro= request.form['tipo_centro']
+
+    print("QUE DEVUELVE:", form.nombre)
+
+    if not form.validate_on_submit():
+        return Response(status=400)
+
     try:
-        centro = Centro.add(request.args)
+        centro = Centro.add(form.data)
     except:
         return Response(status=500)
 
-    if not centro:
-        return Response(status=400)
+    #if not centro:
+        #return Response(status=400)
 
     centro_creado= {}
 

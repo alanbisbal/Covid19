@@ -7,7 +7,7 @@ import json
 
 def turno_list(id,fecha=date.today()):
     try:
-     turno= Turno.with_id_fecha(id,fecha)    
+     turno= Turno.with_id_fecha(id,fecha)
     except:
         return Response(status=500)
 
@@ -42,7 +42,7 @@ def turno_create(id):
     except:
         return Response(status=400)
 
-    
+
 
     turno_creado= {}
 
