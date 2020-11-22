@@ -33,20 +33,21 @@ def turno_create(id):
     form.telefono= request.form['telefono']
     form.hora_inicio= request.form['hora_inicio']
     form.fecha= request.form['fecha']
-    form.centro_id= id
+    form.centro_id= request.form['centro_id']
+    
     if not form.validate_on_submit():
-        print("errores de validacion",form.errors)
-        return Response("soyElerror",status=400)
-
+        return Response('Error de validacion',status=400)
+    if not form.centro_id == id:
+        return Response('Error de validacion del centro',status=400)
     try:
         centro = Centro.with_id(id)
-        print("centro",Centro.with_id(id))
         if not centro:
-            return Response(status=400)
+            return Response('El centro no existe',status=400)
         turnos_disponibles=Turno.bloques_disponibles(form.centro_id,form.fecha)
-        if id == form.centro_id:
-            if str(form.hora_inicio) not in  turnos_disponibles:
-                return Response('el turno no esta disponible',status=400)
+       
+        if str(form.hora_inicio) not in  turnos_disponibles:
+            return Response('El turno no esta disponible',status=400)
+        
         turno = Turno.add_and_return(form.data)
 
     except:
