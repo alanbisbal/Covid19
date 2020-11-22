@@ -85,7 +85,7 @@ def center_create():
         form.latitud= request.form['latitud']
         form.longitud= request.form['longitud']
         form.tipo_centro= request.form['tipo_centro']
-        if not form.validate():
+        if not form.validate_on_submit():
             print(form.errors)
             return Response(status=400)
         centro = Centro.add(form.data)
