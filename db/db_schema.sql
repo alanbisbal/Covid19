@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-11-2020 a las 01:42:02
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.5
+-- Tiempo de generación: 28-11-2020 a las 19:14:09
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -49,10 +49,15 @@ CREATE TABLE `centros` (
 --
 
 INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `hora_fin`, `municipio_id`, `web`, `email`, `estado_id`, `protocolo`, `latitud`, `longitud`, `tipo_centro`) VALUES
-(1, 'prueba', '1 y 32', '12314412', '09:00:00', '09:30:00', '1', 'lkifajmkaqfmj@afhaiof', 'luahdwa@kujgherswougs', 2, '4efbc174-279a-11eb-86d7-7077812ce868.pdf', -34.9159, -57.9924, 1),
-(2, 'Comedor religioso', '2 y 33', '13241234', '09:00:00', '16:00:00', '1', 'upogposwjgpesa@silhjgiosa', 'eswjgnhesokj@slkiegisejn', 1, 'oeifhiuaeswfoiesa', -34.9159, -57.9924, 1),
-(3, 'Centro culturar Test', '3 y 34', '1298746127986487126', '09:00:00', '16:00:00', '19', 'fkojnajnfa@alksfhja', 'efanhjniloae@akfnklanfa', 1, 'fiawqhjaiok;f', -34.914, -57.998, 4),
-(4, 'Centro_publicado', '123 123', '123123', '09:00:00', '16:00:00', '19', 'info.unlp.com', 'centro_test@cesadas', 1, 'C:\\Users\\alan\\Desktop\\Proyecto\\project\\grupo37\\app/static/uploads\\07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 2);
+(19, 'Centro_publicado', 'calle 120 y 50', '123123', '08:00:00', '21:00:00', '19', 'info.unlp.com', 'info@unlp.com', 1, '07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 3),
+(20, 'Centro_despublicado', '120 y 500', '123123', '08:00:00', '22:00:00', '1', 'despub.com', 'despub@licado', 2, '07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 2),
+(21, 'Centro_pendiente', '50 y 21', '123123', '06:00:00', '18:00:00', '20', 'Centro_pendiente', 'Centro_pendiente@centro', 3, '07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 4),
+(22, 'asdasd', '123123', '213123', '17:06:00', '17:06:00', '9', 'asd', 'asd@asd', 3, 'dfedc882-2b6b-11eb-a4b8-107b44b7ee2c.pdf', -34.9159, -57.9924, 3),
+(29, 'alan', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
+(30, 'alan', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
+(31, 'centroAyudaMuestra', 'centroAyudaMuestra', '123123', '08:00:00', '19:00:00', '19', 'centroAyudaMuestra', 'centroAyudaMuestra@gmail.com', 1, 'ab351d3f-2dba-11eb-9ea2-107b44b7ee2c.pdf', -34.9159, -57.9924, 3),
+(32, 'alanDesdeApi', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
+(33, 'TestApiCentro', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3);
 
 -- --------------------------------------------------------
 
@@ -74,7 +79,7 @@ CREATE TABLE `configs` (
 --
 
 INSERT INTO `configs` (`id`, `titulo`, `descripcion`, `email`, `elementos`, `estado`) VALUES
-(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicadosSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.También podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.c', 1, 1);
+(1, 'Donaciones Covid19', 'En el contexto de pandemia por el cual atravesamos los mas vulnerables son los mas perjudicadosSolicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.También podes recibir donaciones en caso de necesitarlo', 'Covid19@donaciones.com', 40, 1);
 
 -- --------------------------------------------------------
 
@@ -244,22 +249,12 @@ CREATE TABLE `turnos` (
 --
 
 INSERT INTO `turnos` (`id`, `email`, `telefono`, `hora_inicio`, `hora_fin`, `fecha`, `centro_id`) VALUES
-(4, 'admin@admin', 'test2123', '11:01:00', '11:01:00', '2020-11-15', 4),
-(7, 'admin@admin', '12312312', '17:00:00', '17:30:00', '2020-11-13', 4),
-(8, 'uiyoui@ytiyti', '12313123', '09:00:00', '09:30:00', '2020-11-20', 4),
-(9, 'qfhdqiwo@alkifhjgia', '123123123', '09:00:00', '09:30:00', '2020-11-12', 1),
-(10, 'iojaufhiaj@;keagnjkase', '999999', '10:00:00', '10:30:00', '2020-11-14', 3),
-(11, 'awfwq@qwefhguewq', '21312321', '12:00:00', '12:30:00', '2020-11-17', 2),
-(13, 'admin@admin.com', '1111111', '09:30:00', '10:00:00', '2020-11-15', 1),
-(14, 'operador@gmail.com', '1111111', '09:00:00', '09:30:00', '2020-11-15', 2),
-(15, 'admin@admin.com', '1111111', '10:00:00', '10:30:00', '2020-11-15', 1),
-(16, 'operador@gmail.com', '1111111', '09:00:00', '09:30:00', '2020-11-15', 1),
-(17, 'admin@covid.com', '56457547457', '09:00:00', '09:30:00', '2020-11-16', 1),
-(18, 'admin', '56457547457', '09:00:00', '09:30:00', '2020-11-17', 1),
-(19, 'adm@com', '11111', '11:00:00', '11:30:00', '2020-11-15', 4),
-(20, 'a@gma.com', '11111', '09:30:00', '10:00:00', '2020-11-16', 4),
-(21, 'a@gma.com', '11111', '09:30:00', '10:00:00', '2020-11-16', 3),
-(22, 'a@gma.com', '11111', '09:30:00', '10:00:00', '2020-11-16', 3);
+(13, 'admin', '123123', '09:00:00', '09:30:00', '2020-11-20', 19),
+(15, 'asd', '123', '09:30:00', '10:00:00', '2020-11-20', 19),
+(16, 'admin', '123123', '09:00:00', '09:30:00', '2020-11-21', 19),
+(17, 'asd', '123', '09:00:00', '09:30:00', '2020-11-22', 19),
+(18, 'asd', '', '09:30:00', '10:00:00', '2020-11-22', 19),
+(19, 'asd', '', '10:00:00', '10:30:00', '2020-11-22', 19);
 
 -- --------------------------------------------------------
 
@@ -302,7 +297,8 @@ INSERT INTO `users` (`id`, `username`, `email`, `first_name`, `last_name`, `pass
 (38, 'yy', 'yy@yy', 'yy', 'yy', 'yyy', 1),
 (39, 'yyy', 'yy@yyy', 'yyy', 'yyy', '123123', 1),
 (40, 'con2', 'con2@rolespapu', 'alan', 'bisbal', '132123', 1),
-(41, 'qwr3f', '12awfda@afhbua', 'adqdq', 'qwrwf', '123123', 1);
+(41, 'qwr3f', '12awfda@afhbua', 'adqdq', 'qwrwf', '123123', 1),
+(43, 'asdasdasdasd', 'asdasda@asdsad', 'cosmeasdasd', 'asdasd', 'a123sad', 1);
 
 -- --------------------------------------------------------
 
@@ -322,8 +318,6 @@ CREATE TABLE `users_rols` (
 
 INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 (1, 1, 1),
-(2, 2, 2),
-(9, 1, 2),
 (10, 1, 2),
 (11, 17, 2),
 (12, 18, 2),
@@ -334,7 +328,9 @@ INSERT INTO `users_rols` (`id`, `user_id`, `rol_id`) VALUES
 (20, 40, 2),
 (21, 41, 2),
 (24, 26, 1),
-(26, 26, 2);
+(31, 2, 1),
+(32, 43, 1),
+(33, 26, 2);
 
 --
 -- Índices para tablas volcadas
@@ -417,7 +413,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
@@ -459,19 +455,19 @@ ALTER TABLE `tipo_centros`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `users_rols`
 --
 ALTER TABLE `users_rols`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Restricciones para tablas volcadas
