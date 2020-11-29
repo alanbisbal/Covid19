@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, \
                     TimeField, IntegerField, SelectField, BooleanField, \
                     DateField, FloatField, DecimalField
 from flask_wtf.file import FileField
-from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional,EqualTo,Regexp
+from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional,EqualTo,Regexp,Email
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
@@ -21,7 +21,7 @@ class CenterForm(FlaskForm):
     hora_fin = TimeField('Hora de cierre',default= time,validators =[InputRequired()])
     municipio_id = SelectField('Municipio',validate_choice=False, choices=[])
     web = StringField('Sitio Web',validators =[])
-    email = EmailField('Email',validators =[])
+    email = EmailField('Email',validators =[Email()])
     protocolo = FileField(label="Protocolo",validators =[Optional(strip_whitespace=True)])
     latitud = FloatField('Latitud (coordenadas)',default="-34.9159",widget=NumberInput())
     longitud = FloatField('Longitud (coordenadas)',default="-57.9924",widget=NumberInput())

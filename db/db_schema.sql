@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2020 a las 19:14:09
+-- Tiempo de generación: 29-11-2020 a las 23:35:11
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -34,9 +34,9 @@ CREATE TABLE `centros` (
   `telefono` varchar(255) NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fin` time NOT NULL,
-  `municipio_id` varchar(255) NOT NULL,
+  `municipio_id` varchar(255) DEFAULT NULL,
   `web` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `estado_id` int(11) DEFAULT NULL,
   `protocolo` varchar(255) DEFAULT NULL,
   `latitud` float NOT NULL,
@@ -57,7 +57,10 @@ INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `
 (30, 'alan', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
 (31, 'centroAyudaMuestra', 'centroAyudaMuestra', '123123', '08:00:00', '19:00:00', '19', 'centroAyudaMuestra', 'centroAyudaMuestra@gmail.com', 1, 'ab351d3f-2dba-11eb-9ea2-107b44b7ee2c.pdf', -34.9159, -57.9924, 3),
 (32, 'alanDesdeApi', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
-(33, 'TestApiCentro', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3);
+(33, 'TestApiCentro', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
+(38, 'Iglesia Sagrado Corazón de Jesús', 'Diagonal 73 nro 1032', '221 - 5139019', '09:30:00', '18:00:00', NULL, '', '', 3, NULL, -34.9159, -57.9924, 1),
+(40, 'Iglesia Sagrado Corazón de Jesús', 'Diagonal 73 nro 1032', '221 - 5139019', '09:30:00', '18:00:00', NULL, '', 'asdasd@asdasd.com', 3, NULL, -34.9159, -57.9924, 1),
+(41, 'Iglesia Sagrado Corazón de Jesús', 'Diagonal 73 nro 1032', '221 - 5139019', '09:30:00', '18:00:00', NULL, '', 'asdasd@asdasd.com', 3, NULL, -34.9159, -57.9924, 1);
 
 -- --------------------------------------------------------
 
@@ -413,7 +416,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
