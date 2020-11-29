@@ -28,14 +28,16 @@ def turno_list(id,fecha=date.today()):
 
 
 def turno_create(id):
+    data = request.get_json()
     form= TurnoForm(csrf_enabled=False)
-    form.email= request.form['email']
-    form.telefono= request.form['telefono']
-    form.hora_inicio= request.form['hora_inicio']
-    form.fecha= request.form['fecha']
-    form.centro_id= request.form['centro_id']
+    form.email= data['email']
+    form.telefono= data['telefono']
+    form.hora_inicio= data['hora_inicio']
+    form.fecha= data['fecha']
+    form.centro_id= data['centro_id']
     
     if not form.validate_on_submit():
+        print("form errors :",form.errors)
         return Response('Error de validacion',status=400)
     if not form.centro_id == id:
         return Response('Error de validacion del centro',status=400)
@@ -47,7 +49,7 @@ def turno_create(id):
        
         if str(form.hora_inicio) not in  turnos_disponibles:
             return Response('El turno no esta disponible',status=400)
-        
+        print("form data",form.data)
         turno = Turno.add_and_return(form.data)
 
     except:
