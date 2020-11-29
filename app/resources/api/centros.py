@@ -71,27 +71,27 @@ def center(id):
 
 def center_create():
     try:
-        datos = request.get_json()
-        print("VER IMPRESION: ", datos['nombre'])
+        data = request.get_json()
+
+        data['hora_inicio']=data['hora_apertura']
+        data['hora_fin']=data['hora_cierre']
+        tipo = Tipo_centro.with_name(data['tipo'])
+        data['estado_id'] = 3
+        data['tipo_centro'] = tipo.id
 
         form= CenterForm(csrf_enabled=False)
-
-        form.nombre= datos['nombre']
-        form.direccion= datos['direccion']
-        form.telefono= datos['telefono']
-        form.hora_inicio= datos['hora_inicio']
-        form.hora_fin= datos['hora_fin']
-        form.web= datos['web']
-        form.email= datos['email']
-        form.tipo_centro= datos['tipo_centro']
-
-
+        form.nombre= data['nombre']
+        form.direccion= data['direccion']
+        form.telefono= data['telefono']
+        form.hora_inicio= data['hora_inicio']
+        form.hora_fin= data['hora_fin']
+        form.web= data['web']
+        form.email= data['email']
+        form.tipo_centro= data['tipo_centro']
+        form.estado_id = data['estado_id']
         if not form.validate_on_submit():
-            print("errores: ", form.errors)
             return Response('Error de validacion',status=400)
-        print("VEAMOS QUE TIENE: ", form.data)
         centro = Centro.add(form.data)
-        print("QUE TIENE CENTRO: ", centro)
         if not centro:
             return Response('El centro no existe',status=400)
     except:
