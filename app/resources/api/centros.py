@@ -71,27 +71,33 @@ def center(id):
 
 def center_create():
     try:
+        data = request.get_json()
+
+        data['hora_inicio']=data['hora_apertura']
+        data['hora_fin']=data['hora_cierre']
+        tipo = Tipo_centro.with_name(data['tipo'])
+        data['estado_id'] = 3
+        data['tipo_centro'] = tipo.id
+
         form= CenterForm(csrf_enabled=False)
-        form.nombre= request.form['nombre']
-        form.direccion= request.form['direccion']
-        form.telefono= request.form['telefono']
-        form.hora_inicio= request.form['hora_inicio']
-        form.hora_fin= request.form['hora_fin']
-        form.municipio_id= request.form['municipio_id']
-        #form.protocolo = request.form['protocolo']
-        form.web= request.form['web']
-        form.email= request.form['email']
-        form.estado_id= request.form['estado_id']
-        form.latitud= request.form['latitud']
-        form.longitud= request.form['longitud']
-        form.tipo_centro= request.form['tipo_centro']
+        form.nombre= data['nombre']
+        form.direccion= data['direccion']
+        form.telefono= data['telefono']
+        form.hora_inicio= data['hora_inicio']
+        form.hora_fin= data['hora_fin']
+        form.web= data['web']
+        form.email= data['email']
+        form.tipo_centro= data['tipo_centro']
+        form.estado_id = data['estado_id']
         if not form.validate_on_submit():
-            return Response(status=400)
+            return Response('Error de validacion',status=400)
         centro = Centro.add(form.data)
+        if not centro:
+            return Response('El centro no existe',status=400)
     except:
-        return Response(status=500)
-    if not centro:
-        return Response(status=400)
+        return Response('Error de servidor',status=500)
+
+
 
     centro_creado= {}
 

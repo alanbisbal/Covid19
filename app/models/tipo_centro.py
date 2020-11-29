@@ -26,3 +26,6 @@ class Tipo_centro(db.Model):
 
     def with_id(data):
         return db.session.query(Tipo_centro).get(data)
+
+    def with_name(data):
+        return db.session.query(Tipo_centro).filter_by(nombre = data).first()
