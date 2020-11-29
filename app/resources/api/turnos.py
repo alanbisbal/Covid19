@@ -8,19 +8,17 @@ import json
 
 def turno_list(id,fecha=date.today()):
     try:
-     turno= Turno.with_id_fecha(id,fecha)
+     turno= Turno.bloques_disponibles(id,str(fecha))
     except:
         return Response(status=500)
-
     data_turno = []
 
     for i in turno:
         data_turno.append({
-            "centro_id": str(i.centro_id),
-            "email": i.email,
-            "hora_inicio": str(i.hora_inicio),
-            "hora_fin": str(i.hora_fin),
-            "fecha": str(i.fecha)
+            "centro_id": str(id),
+            "hora_inicio": str(i),
+            "hora_fin": str(i),
+            "fecha": str(fecha)
         })
 
     final = json.dumps({"turnos": data_turno}, indent=2, ensure_ascii=False)
@@ -34,7 +32,7 @@ def turno_create(id):
     form.hora_inicio= request.form['hora_inicio']
     form.fecha= request.form['fecha']
     form.centro_id= request.form['centro_id']
-    
+
     if not form.validate_on_submit():
         return Response('Error de validacion',status=400)
     if not form.centro_id == id:
@@ -44,10 +42,10 @@ def turno_create(id):
         if not centro:
             return Response('El centro no existe',status=400)
         turnos_disponibles=Turno.bloques_disponibles(form.centro_id,form.fecha)
-       
+
         if str(form.hora_inicio) not in  turnos_disponibles:
             return Response('El turno no esta disponible',status=400)
-        
+
         turno = Turno.add_and_return(form.data)
 
     except:
