@@ -71,27 +71,33 @@ def center(id):
 
 def center_create():
     try:
+        datos = request.get_json()
+        print("VER IMPRESION: ", datos['nombre'])
+
         form= CenterForm(csrf_enabled=False)
-        form.nombre= request.form['nombre']
-        form.direccion= request.form['direccion']
-        form.telefono= request.form['telefono']
-        form.hora_inicio= request.form['hora_inicio']
-        form.hora_fin= request.form['hora_fin']
-        form.municipio_id= request.form['municipio_id']
-        #form.protocolo = request.form['protocolo']
-        form.web= request.form['web']
-        form.email= request.form['email']
-        form.estado_id= request.form['estado_id']
-        form.latitud= request.form['latitud']
-        form.longitud= request.form['longitud']
-        form.tipo_centro= request.form['tipo_centro']
+
+        form.nombre= datos['nombre']
+        form.direccion= datos['direccion']
+        form.telefono= datos['telefono']
+        form.hora_inicio= datos['hora_inicio']
+        form.hora_fin= datos['hora_fin']
+        form.web= datos['web']
+        form.email= datos['email']
+        form.tipo_centro= datos['tipo_centro']
+
+
         if not form.validate_on_submit():
-            return Response(status=400)
+            print("errores: ", form.errors)
+            return Response('Error de validacion',status=400)
+        print("VEAMOS QUE TIENE: ", form.data)
         centro = Centro.add(form.data)
+        print("QUE TIENE CENTRO: ", centro)
+        if not centro:
+            return Response('El centro no existe',status=400)
     except:
-        return Response(status=500)
-    if not centro:
-        return Response(status=400)
+        return Response('Error de servidor',status=500)
+
+
 
     centro_creado= {}
 
