@@ -25,7 +25,7 @@ class Turno(db.Model):
         self.email = data['email']
         self.telefono = data ['telefono']
         self.hora_inicio = data['hora_inicio']
-        self.hora_fin = datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
+        self.hora_fin = data['hora_fin']
         self.fecha = data['fecha']
         self.centro_id = data['centro_id']
         db.session.commit()
@@ -45,7 +45,6 @@ class Turno(db.Model):
 
     def with_nombre_centro(data):
         return db.session.query(Turno).filter(Turno.centro.has(nombre=data))
-
 
     def with_email_centro(email,centro):
         con_mail = db.session.query(Turno).filter(Turno.email.contains(email))
@@ -71,7 +70,6 @@ class Turno(db.Model):
         result = sorted(result)
         return result
 
-
     def with_next_two_date(centro_id):
         hoy = datetime.today().replace(hour=0,minute=0,second=0,microsecond=0)
         en_dos_dias = datetime.today() + timedelta(days=2)
@@ -81,7 +79,6 @@ class Turno(db.Model):
         hoy = datetime.today().replace(hour=0,minute=0,second=0,microsecond=0)
         en_dos_dias = datetime.today() + timedelta(days=2)
         return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())
-
 
     #'bloque' no sabemos bien como definirlo
     def update(self,data):
@@ -97,7 +94,6 @@ class Turno(db.Model):
             self.fecha = data['fecha']
         db.session.commit()
 
-
     def add(data):
         db.session.add(Turno(data))
         db.session.commit()
@@ -107,7 +103,6 @@ class Turno(db.Model):
         db.session.add(turno)
         db.session.commit()
         return turno
-
 
     def all():
         return db.session.query(Turno).all()
