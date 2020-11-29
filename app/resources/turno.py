@@ -65,7 +65,7 @@ def create():
         flash("No posee permisos","danger")
         return redirect(url_for("home"))
     form = TurnoForm()
-    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
+    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M')
     if not form.validate_on_submit():
         flash("El tipo de dato ingresado es incorrecto","danger")
         return redirect(request.referrer)
@@ -77,8 +77,8 @@ def create():
         flash("Bloque de turno ocupado","danger")
         return redirect(url_for('turno_index', centro_id=form.centro_id.data))
     data = form.data
-    date_time = datetime.strptime(form.data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
-    data["hora_fin"]= date_time.strftime("%H:%M:%S")
+    date_time = datetime.strptime(form.data['hora_inicio'], "%H:%M") + timedelta(minutes=30)
+    data["hora_fin"]= date_time.strftime("%H:%M")
     Turno.add(data)
     flash("Insercion exitosa","success")
     return redirect(url_for('turno_index', centro_id=form.centro_id.data))

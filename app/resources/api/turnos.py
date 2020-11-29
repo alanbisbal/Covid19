@@ -8,17 +8,20 @@ import json
 
 def turno_list(id,fecha=date.today()):
     try:
-     turno= Turno.bloques_disponibles(id,str(fecha))
+        centro = Centro.with_id(id)
+        if not centro:
+            return Response('El centro no existe',status=400)
+        turno= Turno.bloques_disponibles(id,str(fecha))
     except:
         return Response(status=500)
     data_turno = []
 
     for i in turno:
-        date_time = datetime.strptime(i, "%H:%M:%S") + timedelta(minutes=30)
+        date_time = datetime.strptime(i, "%H:%M") + timedelta(minutes=30)
         data_turno.append({
             "centro_id": id,
             "hora_inicio": i,
-            "hora_fin": date_time.strftime("%H:%M:%S"),
+            "hora_fin": date_time.strftime("%H:%M"),
             "fecha": str(fecha)
         })
 
@@ -40,34 +43,31 @@ def turno_create(id):
         return Response('Error de validacion',status=400)
     if not form.centro_id == id:
         return Response('Error de validacion del centro',status=400)
-    date_time = datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
-    print(date_time.strftime("%H:%M:%S"))
-    print(data['hora_fin'])
-    if  data['hora_fin'] > date_time.strftime("%H:%M:%S") or data['hora_fin'] < date_time.strftime("%H:%M:%S"):
+    date_time = datetime.strptime(data['hora_inicio'], "%H:%M") + timedelta(minutes=30)
+    date_time = date_time.strftime("%H:%M")
+    if  (data['hora_fin'] > date_time) or (data['hora_fin'] < date_time):
         return Response('Hora fin de turno no coincide con lo esperado',status=400)
     try:
+
         centro = Centro.with_id(id)
         if not centro:
             return Response('El centro no existe',status=400)
         turnos_disponibles=Turno.bloques_disponibles(form.centro_id,form.fecha)
-        if str(form.hora_inicio) not in  turnos_disponibles:
+        if form.hora_inicio not in  turnos_disponibles:
             return Response('El turno no esta disponible',status=400)
-        print("form data",form.data)
         turno = Turno.add_and_return(data)
 
     except:
+
         return Response(status=400)
-
-
-
     turno_creado= {}
 
     turno_creado={
         "centro_id": turno.centro_id,
         "email": turno.email,
         "telefono":turno.telefono,
-        "hora_inicio": str(turno.hora_inicio),
-        "hora_fin": str(turno.hora_fin),
+        "hora_inicio": turno.hora_inicio.strftime("%H:%M"),
+        "hora_fin": turno.hora_fin.strftime("%H:%M"),
         "fecha": str(turno.fecha)
      }
 
