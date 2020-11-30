@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2020 a las 23:35:11
+-- Tiempo de generación: 30-11-2020 a las 06:15:16
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -34,14 +34,14 @@ CREATE TABLE `centros` (
   `telefono` varchar(255) NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fin` time NOT NULL,
-  `municipio_id` varchar(255) DEFAULT NULL,
+  `municipio_id` varchar(255) NOT NULL,
   `web` varchar(255) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `estado_id` int(11) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `estado_id` int(11) NOT NULL,
   `protocolo` varchar(255) DEFAULT NULL,
   `latitud` float NOT NULL,
   `longitud` float NOT NULL,
-  `tipo_centro` int(11) DEFAULT NULL
+  `tipo_centro` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -53,14 +53,8 @@ INSERT INTO `centros` (`id`, `nombre`, `direccion`, `telefono`, `hora_inicio`, `
 (20, 'Centro_despublicado', '120 y 500', '123123', '08:00:00', '22:00:00', '1', 'despub.com', 'despub@licado', 2, '07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 2),
 (21, 'Centro_pendiente', '50 y 21', '123123', '06:00:00', '18:00:00', '20', 'Centro_pendiente', 'Centro_pendiente@centro', 3, '07aef9c7-237d-11eb-8a2d-107b44b7ee2c.pdf', -34.9159, -57.9924, 4),
 (22, 'asdasd', '123123', '213123', '17:06:00', '17:06:00', '9', 'asd', 'asd@asd', 3, 'dfedc882-2b6b-11eb-a4b8-107b44b7ee2c.pdf', -34.9159, -57.9924, 3),
-(29, 'alan', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
-(30, 'alan', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
 (31, 'centroAyudaMuestra', 'centroAyudaMuestra', '123123', '08:00:00', '19:00:00', '19', 'centroAyudaMuestra', 'centroAyudaMuestra@gmail.com', 1, 'ab351d3f-2dba-11eb-9ea2-107b44b7ee2c.pdf', -34.9159, -57.9924, 3),
-(32, 'alanDesdeApi', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
-(33, 'TestApiCentro', '123123', '123123', '10:00:00', '20:00:00', '3', 'alan.com', 'alan@gmail.com', 3, NULL, 11.5555, 11.5555, 3),
-(38, 'Iglesia Sagrado Corazón de Jesús', 'Diagonal 73 nro 1032', '221 - 5139019', '09:30:00', '18:00:00', NULL, '', '', 3, NULL, -34.9159, -57.9924, 1),
-(40, 'Iglesia Sagrado Corazón de Jesús', 'Diagonal 73 nro 1032', '221 - 5139019', '09:30:00', '18:00:00', NULL, '', 'asdasd@asdasd.com', 3, NULL, -34.9159, -57.9924, 1),
-(41, 'Iglesia Sagrado Corazón de Jesús', 'Diagonal 73 nro 1032', '221 - 5139019', '09:30:00', '18:00:00', NULL, '', 'asdasd@asdasd.com', 3, NULL, -34.9159, -57.9924, 1);
+(45, 'Iglesia Sagrado Corazón de Jesús', 'Diagonal 73 nro 1032', '221 - 5139019', '09:30:00', '18:00:00', '24', '', 'asdasd@asdasd.com', 3, NULL, -34.9159, -57.9924, 1);
 
 -- --------------------------------------------------------
 
@@ -416,7 +410,7 @@ ALTER TABLE `users_rols`
 -- AUTO_INCREMENT de la tabla `centros`
 --
 ALTER TABLE `centros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `configs`
