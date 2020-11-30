@@ -38,15 +38,34 @@ def turno_create(id):
     form.fecha = data['fecha']
     form.centro_id = data['centro_id']
 
+    fecha = datetime.strptime(data["fecha"], '%Y-%m-%d')
+    print("fecha",fecha)
+    hora_inicio = datetime.now()
+    hora_inicio = hora_inicio.strftime("%H:%M")
     if not form.validate_on_submit():
         print("form errors :",form.errors)
         return Response('Error de validacion',status=400)
     if not form.centro_id == id:
         return Response('Error de validacion del centro',status=400)
+   
     date_time = datetime.strptime(data['hora_inicio'], "%H:%M") + timedelta(minutes=30)
     date_time = date_time.strftime("%H:%M")
+    print("date_time",date_time)
+    if fecha < (datetime.today()+ timedelta(days=-1)):
+        return Response('La fecha debe ser mayor o igual a la fecha actual',status=400)
+    print("form.hora_inicio:",form.hora_inicio)
+    print("hora_inicio:",hora_inicio)
     if  (data['hora_fin'] > date_time) or (data['hora_fin'] < date_time):
-        return Response('Hora fin de turno no coincide con lo esperado',status=400)
+        return Response('La hora fin de turno no coincide con lo esperado',status=400)
+    print("form.fecha",form.fecha)
+    print("date.today",date.today())
+   
+    if form.fecha == date.today():
+        print("form.fecha dentro del if",form.fecha)
+        print("entre a la fecha linea 63")
+        if(form.hora_inicio < hora_inicio):
+            print("entre a la comparacion de hora de inicio")
+            return Response('La hora del turno debe ser mayor a la hora actual',status=400)
     try:
 
         centro = Centro.with_id(id)
