@@ -72,7 +72,6 @@ def center(id):
 def center_create():
     try:
         data = request.get_json()
-
         data['hora_inicio']=data['hora_apertura']
         data['hora_fin']=data['hora_cierre']
         tipo = Tipo_centro.with_name(data['tipo'])
