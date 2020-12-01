@@ -42,3 +42,30 @@ ejemplo de Postman
  "municipio_id":"24"
 }
 ```
+
+**Get de turnos**
+```
+http://127.0.0.1:5000/api/centros/19/turnos_disponibles/2020-12-1
+Retorna los turnos disponibles para ese centro en esa fecha.
+```
+
+```
+http://127.0.0.1:5000/api/centros/19/turnos_disponibles/
+Retorna los turnos disponibles para ese centro .
+```
+
+**Post de turno**
+
+```
+http://127.0.0.1:5000/api/centros/19/reserva
+
+ejemplo de Postman
+{
+  "centro_id": "19",
+  "email": "turno@gmail.com",
+  "telefono": "2213333333",
+  "hora_inicio": "14:00",
+  "hora_fin": "14:30",
+  "fecha": "2020-12-01"
+}
+```
