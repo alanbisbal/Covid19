@@ -99,12 +99,43 @@ def center(id):
 
 
 def center_create():
+<<<<<<< HEAD
     """ 
     Devuelve un json que contiene la carga de un centro de ayuda social por medio de la API.
     Los campos para la creacion del mismo se obtienen a partir de un json
     
     """
+=======
+    form= CenterForm()
+    form.nombre= request.form['nombre']
+    form.direccion= request.form['direccion']
+    form.telefono= request.form['telefono']
+    form.hora_inicio= request.form['hora_inicio']
+    form.hora_fin= request.form['hora_fin']
+    form.municipio_id= request.form['municipio_id']
+    form.web= request.form['web']
+    form.email= request.form['email']
+    form.estado_id= 3
+    form.protocolo= request.form['protocolo']
+    form.latitud= request.form['latitud']
+    form.longitud= request.form['longitud']
+    form.tipo_centro= request.form['tipo_centro']
+
+    print("QUE DEVUELVE:", form.nombre)
+
+    if not form.validate_on_submit():
+        return Response(status=400)
+
+>>>>>>> 06c804b888e88d9c14b8fa0e2b830bc9e30d6f77
     try:
+<<<<<<< HEAD
+        centro = Centro.add(form.data)
+    except:
+        return Response(status=500)
+
+    #if not centro:
+        #return Response(status=400)
+=======
         data = request.get_json()
 
         data['hora_inicio'] = data['hora_apertura']
@@ -145,6 +176,7 @@ def center_create():
             return Response('El centro no existe', status=400)
     except:
         return Response('Error de servidor', status=500)
+>>>>>>> 8a1744640d782f78d7384172353706f91f421077
 
     centro_creado = {}
 

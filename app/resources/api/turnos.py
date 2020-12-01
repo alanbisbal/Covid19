@@ -85,6 +85,9 @@ def turno_create(id):
         turno = Turno.add_and_return(data)
 
     except:
+        return Response(status=400)
+
+
 
         return Response(status=400)
     turno_creado = {}
