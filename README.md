@@ -50,7 +50,7 @@ Retorna los turnos disponibles para ese centro en esa fecha.
 ```
 
 ```
-http://127.0.0.1:5000/api/centros/<id>/turnos_disponibles/
+http://127.0.0.1:5000/api/centros/19/turnos_disponibles/
 Retorna los turnos disponibles para ese centro .
 ```
 
