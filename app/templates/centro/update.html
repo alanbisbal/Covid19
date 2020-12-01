@@ -36,7 +36,7 @@
   {{form.protocolo.label(class="form-control-label",value=centro.protocolo)}}
   {% if centro.protocolo %}
     <a href="{{url_for('static', filename='uploads/'+centro.protocolo)}}">Protocolo</a></p>
-  {% endif %}
+  {% endif %}  
   {{form.protocolo(accept=".pdf")}}
   <!--{{"por simplificacion ahora no updateo el pdf y hay que lograr dejar predeterminados los select"}}-->
   {{wtf.form_field(form.tipo_centro)}}
