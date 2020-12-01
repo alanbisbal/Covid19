@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
+import requests
 from app.models.user import User
 
 
@@ -114,3 +115,10 @@ def form_turno(data):
         return True
     else:
         return False
+
+def validar_municipio(data):
+    municipios= requests.get("https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios").json()['data']['Town']
+    for mun in municipios:
+        if ( str(municipios[mun]["id"]) == data):
+            return True
+    return False
