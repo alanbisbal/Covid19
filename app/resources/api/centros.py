@@ -10,6 +10,7 @@ import base64
 import json
 import io
 
+
 def center_list():
     per_page = Config.getConfig().elementos
 
@@ -19,43 +20,58 @@ def center_list():
         page = 1
 
     try:
-        centros_paginados = Centro.query.filter_by(estado_id=1).paginate(page,per_page,error_out=False)
+        centros_paginados = Centro.query.filter_by(estado_id=1).paginate(
+            page, per_page, error_out=False)
     except:
         return Response(status=500)
 
     data_centro = []
 
-    total= Centro.count_approved()
+    total = Centro.count_approved()
 
     for i in centros_paginados.items:
         data_centro.append({
-            "nombre": i.nombre,
-            "direccion": i.direccion,
-            "telefono": i.telefono,
-            "hora_inicio": str(i.hora_inicio),
-            "hora_fin": str(i.hora_fin),
-            "web": i.web,
-            "email": i.email,
-            "tipo": str(Tipo_centro.with_id(i.tipo_centro).nombre)
+            "nombre":
+            i.nombre,
+            "direccion":
+            i.direccion,
+            "telefono":
+            i.telefono,
+            "hora_inicio":
+            str(i.hora_inicio),
+            "hora_fin":
+            str(i.hora_fin),
+            "web":
+            i.web,
+            "email":
+            i.email,
+            "tipo":
+            str(Tipo_centro.with_id(i.tipo_centro).nombre)
         })
 
-    final = json.dumps({"centros": data_centro, "total": total, "pagina": page}, indent=2, ensure_ascii=False)
+    final = json.dumps({
+        "centros": data_centro,
+        "total": total,
+        "pagina": page
+    },
+                       indent=2,
+                       ensure_ascii=False)
     return Response(final, mimetype='application/json')
 
 
 def center(id):
 
     try:
-        centro= Centro.with_id(id)
+        centro = Centro.with_id(id)
     except:
         return Response(status=500)
 
-    centro_data={}
+    centro_data = {}
 
     if not centro:
         return Response(status=401)
     else:
-        centro_data={
+        centro_data = {
             "nombre": centro.nombre,
             "direccion": centro.direccion,
             "telefono": centro.telefono,
@@ -66,7 +82,9 @@ def center(id):
             "tipo": Tipo_centro.with_id(centro.tipo_centro).nombre
         }
 
-    final = json.dumps({"atributos": centro_data}, indent=2, ensure_ascii=False)
+    final = json.dumps({"atributos": centro_data},
+                       indent=2,
+                       ensure_ascii=False)
     return Response(final, mimetype='application/json')
 
 
@@ -74,43 +92,39 @@ def center_create():
     try:
         data = request.get_json()
 
-        data['hora_inicio']=data['hora_apertura']
-        data['hora_fin']=data['hora_cierre']
+        data['hora_inicio'] = data['hora_apertura']
+        data['hora_fin'] = data['hora_cierre']
         tipo = Tipo_centro.with_name(data['tipo'])
         data['estado_id'] = 3
         data['tipo_centro'] = tipo.id
 
-
-
-        form= CenterForm(csrf_enabled=False)
-        form.nombre= data['nombre']
-        form.direccion= data['direccion']
-        form.telefono= data['telefono']
-        form.hora_inicio= data['hora_inicio']
-        form.hora_fin= data['hora_fin']
-        form.web= data['web']
-        form.email= data['email']
-        form.tipo_centro= data['tipo_centro']
+        form = CenterForm(csrf_enabled=False)
+        form.nombre = data['nombre']
+        form.direccion = data['direccion']
+        form.telefono = data['telefono']
+        form.hora_inicio = data['hora_inicio']
+        form.hora_fin = data['hora_fin']
+        form.web = data['web']
+        form.email = data['email']
+        form.tipo_centro = data['tipo_centro']
         form.estado_id = data['estado_id']
-        form.latitud =data['latitud']
+        form.latitud = data['latitud']
         form.longitud = data['longitud']
         form.municipio_id = data['municipio_id']
 
         if not form.validate_on_submit():
-            return Response('Error de datos de formulario',status=400)
-        if not validar_municipio( data['municipio_id']):
-            return Response('Municipio inexistente',status=400)
+            return Response('Error de datos de formulario', status=400)
+        if not validar_municipio(data['municipio_id']):
+            return Response('Municipio inexistente', status=400)
         centro = Centro.add(form.data)
         if not centro:
-            return Response('El centro no existe',status=400)
+            return Response('El centro no existe', status=400)
     except:
-        return Response('Error de servidor',status=500)
+        return Response('Error de servidor', status=500)
 
+    centro_creado = {}
 
-
-    centro_creado= {}
-
-    centro_creado={
+    centro_creado = {
         "nombre": centro.nombre,
         "direccion": centro.direccion,
         "telefono": centro.telefono,

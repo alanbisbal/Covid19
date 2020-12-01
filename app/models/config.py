@@ -8,11 +8,11 @@ from sqlalchemy import Table, Column, Integer, ForeignKey
 
 class Config(db.Model):
     __tablename__ = 'configs'
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(255), nullable=False)
     descripcion = db.Column(db.String(255))
-    email = db.Column(db.String(255),nullable=False)
-    elementos = db.Column(db.Integer,nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    elementos = db.Column(db.Integer, nullable=False)
     estado = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, data):
@@ -34,7 +34,7 @@ class Config(db.Model):
         return self.estado
 
     def cant_elements(self):
-        return self.elementos   
+        return self.elementos
 
     def activate(self):
         self.estado = True
