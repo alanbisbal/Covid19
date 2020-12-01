@@ -20,15 +20,14 @@ from app.resources.api import centros as api_centros
 from app.resources.api import turnos as api_turnos
 from flask_googlemaps import GoogleMaps
 
-
 db = SQLAlchemy()
+
 
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
 
-
-    api_key = 'AIzaSyCLV1EU7HG-O5I9HEoSXY1XuRA9iXPITGE' # change this to your api key
+    api_key = 'AIzaSyCLV1EU7HG-O5I9HEoSXY1XuRA9iXPITGE'  # change this to your api key
     GoogleMaps(app, key=api_key)
 
     Bootstrap(app)
@@ -44,14 +43,18 @@ def create_app(environment="development"):
 
     db.init_app(app)
 
-   # Funciones que se exportan al contexto de Jinja2
-    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated,has_permit=has_permit,is_admin=is_admin)
+    # Funciones que se exportan al contexto de Jinja2
+    app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated,
+                                 has_permit=has_permit,
+                                 is_admin=is_admin)
 
     # Autenticación    A DONDE ME LLEVA  NOM DE LA VISTA  LA FUNCION DEL RECURSO A EJECUTAR
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)
     app.add_url_rule("/cerrar_sesion", "auth_logout", auth.logout)
-    app.add_url_rule("/autenticacion", "auth_authenticate", auth.authenticate, methods=["POST"])
-
+    app.add_url_rule("/autenticacion",
+                     "auth_authenticate",
+                     auth.authenticate,
+                     methods=["POST"])
 
     # Rutas de Usuarios
     app.add_url_rule("/usuarios", "user_index", user.index)
@@ -59,45 +62,96 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
     app.add_url_rule("/usuarios/update/<user_id>", "user_update", user.update)
     app.add_url_rule("/usuarios/show/<user_id>", "user_show", user.show)
-    app.add_url_rule("/usuarios/update", "user_update_new", user.update_new, methods=["POST"])
-    app.add_url_rule("/usuarios/delete", "user_delete", user.delete, methods=["POST"])
+    app.add_url_rule("/usuarios/update",
+                     "user_update_new",
+                     user.update_new,
+                     methods=["POST"])
+    app.add_url_rule("/usuarios/delete",
+                     "user_delete",
+                     user.delete,
+                     methods=["POST"])
     app.add_url_rule("/usuarios/search", "user_search", user.search)
-    app.add_url_rule("/usuarios/index/<user_id>", "user_activated", user.activated, methods=["POST"])
-    app.add_url_rule("/configuracion", "user_configuracion", user.configuracion)
+    app.add_url_rule("/usuarios/index/<user_id>",
+                     "user_activated",
+                     user.activated,
+                     methods=["POST"])
+    app.add_url_rule("/configuracion", "user_configuracion",
+                     user.configuracion)
     app.add_url_rule("/perfil", "user_perfil", user.perfil)
-    app.add_url_rule("/usuarios/update/user_delete_rol", "user_rol_delete", user.rol_delete, methods=["POST"])
-    app.add_url_rule("/usuarios/update/user_add_rols", "user_add_rols", user.add_rols, methods=["POST"])
+    app.add_url_rule("/usuarios/update/user_delete_rol",
+                     "user_rol_delete",
+                     user.rol_delete,
+                     methods=["POST"])
+    app.add_url_rule("/usuarios/update/user_add_rols",
+                     "user_add_rols",
+                     user.add_rols,
+                     methods=["POST"])
 
     # Rutas de turnos un centro en particular
-    app.add_url_rule("/centros/turnos/index/<centro_id>", "turno_index", turno.index)
-    app.add_url_rule("/centros/turnos/nuevo/create", "turno_create", turno.create, methods=["POST"])
-    app.add_url_rule("/centros/turnos/index/<centro_id>/nuevo", "turno_new", turno.new)
-    app.add_url_rule("/centros/turnos/update/<turno_id>", "turno_update", turno.update)
-    app.add_url_rule("/centros/turnos/update", "turno_update_new", turno.update_new, methods=["POST"])
-    app.add_url_rule("/centros/turnos/delete", "turno_delete", turno.delete, methods=["POST"])
-    app.add_url_rule("/centros/turnos/show/<turno_id>", "turno_show", turno.show)
-    app.add_url_rule("/centros/turnos/search/<centro_id>", "turno_search", turno.search)
+    app.add_url_rule("/centros/turnos/index/<centro_id>", "turno_index",
+                     turno.index)
+    app.add_url_rule("/centros/turnos/nuevo/create",
+                     "turno_create",
+                     turno.create,
+                     methods=["POST"])
+    app.add_url_rule("/centros/turnos/index/<centro_id>/nuevo", "turno_new",
+                     turno.new)
+    app.add_url_rule("/centros/turnos/update/<turno_id>", "turno_update",
+                     turno.update)
+    app.add_url_rule("/centros/turnos/update",
+                     "turno_update_new",
+                     turno.update_new,
+                     methods=["POST"])
+    app.add_url_rule("/centros/turnos/delete",
+                     "turno_delete",
+                     turno.delete,
+                     methods=["POST"])
+    app.add_url_rule("/centros/turnos/show/<turno_id>", "turno_show",
+                     turno.show)
+    app.add_url_rule("/centros/turnos/search/<centro_id>", "turno_search",
+                     turno.search)
 
     #Rutas de todos los turnos
     app.add_url_rule("/turnos", "turno_index_all", turno.index)
     app.add_url_rule("/turnos/show/<turno_id>", "turno_show_all", turno.show)
-    app.add_url_rule("/centros/turnos/search", "turno_search_all", turno.search)
+    app.add_url_rule("/centros/turnos/search", "turno_search_all",
+                     turno.search)
     app.add_url_rule("/turnos/nuevo", "turno_new_all", turno.new)
 
     # Rutas de Centros
     app.add_url_rule("/centros", "centro_index", centro.index)
-    app.add_url_rule("/centros", "centro_create", centro.create, methods=["POST"])
+    app.add_url_rule("/centros",
+                     "centro_create",
+                     centro.create,
+                     methods=["POST"])
     app.add_url_rule("/centros/nuevo", "centro_new", centro.new)
     app.add_url_rule("/centros/show/<centro_id>", "centro_show", centro.show)
-    app.add_url_rule("/centros/delete", "centro_delete", centro.delete, methods=["POST"])
-    app.add_url_rule("/centros/update/<centro_id>", "centro_update", centro.update)
-    app.add_url_rule("/centros/update", "centro_update_new", centro.update_new, methods=["POST"])
+    app.add_url_rule("/centros/delete",
+                     "centro_delete",
+                     centro.delete,
+                     methods=["POST"])
+    app.add_url_rule("/centros/update/<centro_id>", "centro_update",
+                     centro.update)
+    app.add_url_rule("/centros/update",
+                     "centro_update_new",
+                     centro.update_new,
+                     methods=["POST"])
     app.add_url_rule("/centros/search", "centro_search", centro.search)
-    app.add_url_rule("/centros/pendientes", "centro_pendientes", centro.pendientes)
-    app.add_url_rule("/centros/publicar", "centro_publicar", centro.publicar,methods=["POST"])
-    app.add_url_rule("/centros/despublicar", "centro_despublicar", centro.despublicar,methods=["POST"])
+    app.add_url_rule("/centros/pendientes", "centro_pendientes",
+                     centro.pendientes)
+    app.add_url_rule("/centros/publicar",
+                     "centro_publicar",
+                     centro.publicar,
+                     methods=["POST"])
+    app.add_url_rule("/centros/despublicar",
+                     "centro_despublicar",
+                     centro.despublicar,
+                     methods=["POST"])
     #Rutas de configuracion
-    app.add_url_rule("/configuracion", "config_update", configuracion.update, methods=["POST"])
+    app.add_url_rule("/configuracion",
+                     "config_update",
+                     configuracion.update,
+                     methods=["POST"])
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
@@ -112,12 +166,20 @@ def create_app(environment="development"):
     app.config['JSON_AS_ASCII'] = False
     app.add_url_rule("/api/centros", "centro_list", api_centros.center_list)
     app.add_url_rule("/api/centros/<id>", "centro_info", api_centros.center)
-    app.add_url_rule("/api/centros", "centro_carga", api_centros.center_create, methods=["POST"])
+    app.add_url_rule("/api/centros",
+                     "centro_carga",
+                     api_centros.center_create,
+                     methods=["POST"])
 
     # Ruta para la api de turnos
-    app.add_url_rule("/api/centros/<id>/turnos_disponibles/<fecha>", "turno_list", api_turnos.turno_list)
-    app.add_url_rule("/api/centros/<id>/turnos_disponibles/", "turno_list", api_turnos.turno_list)
-    app.add_url_rule("/api/centros/<id>/reserva", "turno_carga", api_turnos.turno_create, methods=["POST"])
+    app.add_url_rule("/api/centros/<id>/turnos_disponibles/<fecha>",
+                     "turno_list", api_turnos.turno_list)
+    app.add_url_rule("/api/centros/<id>/turnos_disponibles/", "turno_list",
+                     api_turnos.turno_list)
+    app.add_url_rule("/api/centros/<id>/reserva",
+                     "turno_carga",
+                     api_turnos.turno_create,
+                     methods=["POST"])
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

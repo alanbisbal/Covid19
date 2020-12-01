@@ -7,8 +7,6 @@ from app.helpers.auth import authenticated
 from app.helpers.forms import ConfigForm
 
 
-
-
 def update():
     if not authenticated(session):
         abort(401)
@@ -17,5 +15,5 @@ def update():
     if not form.validate_on_submit():
         return redirect(request.referrer)
     config.update(request.form)
-    flash("actualizacion exitosa","success")
+    flash("actualizacion exitosa", "success")
     return redirect(url_for('user_configuracion'))
