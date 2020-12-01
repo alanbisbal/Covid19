@@ -112,10 +112,19 @@ def center_create():
         form.longitud = data['longitud']
         form.municipio_id = data['municipio_id']
 
+        tieneArroba = False
         if not form.validate_on_submit():
             return Response('Error de datos de formulario', status=400)
         if not validar_municipio(data['municipio_id']):
             return Response('Municipio inexistente', status=400)
+        if form.email != "":
+            for char in form.email:
+                if char == "@":
+                    tieneArroba = True
+                    break
+        if form.email != "" and tieneArroba == False:
+            return Response('Error de datos de formulario', status=400)
+
         centro = Centro.add(form.data)
         if not centro:
             return Response('El centro no existe', status=400)

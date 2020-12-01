@@ -19,7 +19,7 @@ class Centro(db.Model):
     hora_fin = db.Column(db.Time(timezone=True), nullable=False)
     municipio_id = db.Column(db.String(255), nullable=False)
     web = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=True)
 
     estado_id = db.Column(db.Integer, db.ForeignKey('estados.id'))
     estado = db.relationship("Estado")
