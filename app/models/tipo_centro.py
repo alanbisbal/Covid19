@@ -7,11 +7,12 @@ from app import db
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
 
+
 class Tipo_centro(db.Model):
     __tablename__ = 'tipo_centros'
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(255), nullable=False)
-    centros = db.relationship("Centro",backref= "centros_show")
+    centros = db.relationship("Centro", backref="centros_show")
 
     def __init__(self, data):
         self.nombre = data['nombre']
@@ -26,3 +27,6 @@ class Tipo_centro(db.Model):
 
     def with_id(data):
         return db.session.query(Tipo_centro).get(data)
+
+    def with_name(data):
+        return db.session.query(Tipo_centro).filter_by(nombre=data).first()

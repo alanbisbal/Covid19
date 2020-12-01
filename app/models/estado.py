@@ -7,11 +7,12 @@ from app import db
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
 
+
 class Estado(db.Model):
     __tablename__ = 'estados'
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(255), nullable=False)
-    centros = db.relationship("Centro",backref= "centros")
+    centros = db.relationship("Centro", backref="centros")
 
     def __init__(self, data):
         self.nombre = data['nombre']
