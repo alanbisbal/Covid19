@@ -3,6 +3,7 @@ from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.models.config import Config
 from app.helpers.forms import CenterForm
+from app.helpers.validates import validar_municipio
 from app.db import db
 from flask import jsonify, request, abort, Response
 import base64
@@ -78,6 +79,8 @@ def center_create():
         data['estado_id'] = 3
         data['tipo_centro'] = tipo.id
 
+
+
         form= CenterForm(csrf_enabled=False)
         form.nombre= data['nombre']
         form.direccion= data['direccion']
@@ -88,8 +91,14 @@ def center_create():
         form.email= data['email']
         form.tipo_centro= data['tipo_centro']
         form.estado_id = data['estado_id']
+        form.latitud =data['latitud']
+        form.longitud = data['longitud']
+        form.municipio_id = data['municipio_id']
+
         if not form.validate_on_submit():
-            return Response('Error de validacion',status=400)
+            return Response('Error de datos de formulario',status=400)
+        if not validar_municipio( data['municipio_id']):
+            return Response('Municipio inexistente',status=400)
         centro = Centro.add(form.data)
         if not centro:
             return Response('El centro no existe',status=400)

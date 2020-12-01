@@ -25,7 +25,7 @@ class Turno(db.Model):
         self.email = data['email']
         self.telefono = data ['telefono']
         self.hora_inicio = data['hora_inicio']
-        self.hora_fin = datetime.strptime(data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
+        self.hora_fin = data['hora_fin']
         self.fecha = data['fecha']
         self.centro_id = data['centro_id']
         db.session.commit()
@@ -46,7 +46,6 @@ class Turno(db.Model):
     def with_nombre_centro(data):
         return db.session.query(Turno).filter(Turno.centro.has(nombre=data))
 
-
     def with_email_centro(email,centro):
         con_mail = db.session.query(Turno).filter(Turno.email.contains(email))
         con_centro = db.session.query(Turno).filter(Turno.centro.has(nombre=centro))
@@ -60,17 +59,16 @@ class Turno(db.Model):
         ocupados = []
         turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(Turno.fecha == fecha).all()
         for t in turnos:
-            ocupados.append(str(t.hora_inicio))
-        fecha = datetime.strptime(fecha,'%Y-%m-%d')
+            ocupados.append(t.hora_inicio.strftime("%H:%M"))
         for i in range(9,16):
             for j in (00,30):
-                hora = str(fecha.year) +"-"+ str(fecha.month) +"-"+ str(fecha.day) + str(i)+":"+str(j)+":"+"00"
-                hora = datetime.strptime(hora, '%Y-%m-%d''%H:%M:%S')
-                bloques.append(str(hora.time()))
+                hora = str(i)+":"+str(j)
+                date_time = datetime.strptime(hora, "%H:%M")
+                hora = date_time.strftime("%H:%M")
+                bloques.append(str(hora))
         result = list(set(bloques) -  set(ocupados))
         result = sorted(result)
         return result
-
 
     def with_next_two_date(centro_id):
         hoy = datetime.today().replace(hour=0,minute=0,second=0,microsecond=0)
@@ -81,7 +79,6 @@ class Turno(db.Model):
         hoy = datetime.today().replace(hour=0,minute=0,second=0,microsecond=0)
         en_dos_dias = datetime.today() + timedelta(days=2)
         return db.session.query(Turno).filter(Turno.fecha.between(hoy,en_dos_dias)).order_by(Turno.fecha.asc(),Turno.hora_inicio.asc())
-
 
     #'bloque' no sabemos bien como definirlo
     def update(self,data):
@@ -96,7 +93,6 @@ class Turno(db.Model):
         if self.fecha != data['fecha']:
             self.fecha = data['fecha']
         db.session.commit()
-
 
     def add(data):
         db.session.add(Turno(data))

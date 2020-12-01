@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, \
                     TimeField, IntegerField, SelectField, BooleanField, \
                     DateField, FloatField, DecimalField
 from flask_wtf.file import FileField
-from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional,EqualTo,Regexp
+from wtforms.validators import InputRequired, NumberRange, Regexp, DataRequired, Optional,EqualTo,Regexp,Email
 from wtforms.fields.html5 import EmailField
 from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
@@ -23,8 +23,8 @@ class CenterForm(FlaskForm):
     web = StringField('Sitio Web',validators =[])
     email = EmailField('Email',validators =[])
     protocolo = FileField(label="Protocolo",validators =[Optional(strip_whitespace=True)])
-    latitud = FloatField('Latitud (coordenadas)',default="-34.9159",widget=NumberInput())
-    longitud = FloatField('Longitud (coordenadas)',default="-57.9924",widget=NumberInput())
+    latitud = FloatField('Latitud (coordenadas)',default="-57.9924",widget=NumberInput())
+    longitud = FloatField('Longitud (coordenadas)',default="-34.9159",widget=NumberInput())
     estado_id = SelectField('Estado',validate_choice=False)
     tipo_centro = SelectField('Tipo',validators =[InputRequired()])
     submit = SubmitField(label="Guardar")
@@ -48,7 +48,7 @@ class CenterForm(FlaskForm):
         self.municipio_id.choices = choices
 
 class TurnoForm(FlaskForm):
-    email = EmailField('Email',validators =[InputRequired()])
+    email = EmailField('Email',validators =[Email()])
     telefono = StringField('Telefono')
     hora_inicio = SelectField('Hora inicio',validate_choice=False)
     fecha = DateField('Fecha', format='%Y-%m-%d',validators =[InputRequired()])
