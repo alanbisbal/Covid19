@@ -13,20 +13,23 @@ def login():
 
 
 def authenticate():
-    """ Este metodo realiza la autenticacion de un usuario,
-    teniendo en cuenta si los datos ingresados en el formulario
-    son correctos, si el usuario se encuntra o no activo,
-    y si la pagina está o no habilitada
+    """ 
+    Este método realiza la autenticación de un usuario teniendo en cuenta si los datos ingresados son correctos,
+    si el usuario se encuntra o no activo y si la pagina está o no habilitada
+
     """
     user = db.session.query(User).filter(
         User.username == request.form['username']).filter(
             User.password == request.form['password']).first()
+
     if not user:
         flash("Usuario o clave incorrecto.", "danger")
         return redirect(url_for("auth_login"))
+
     if not user.is_active():
         flash("Su usuario se encuentra desactivado.", "danger")
         return redirect(url_for("auth_login"))
+
     if not Config.getConfig().is_active():
         if not is_admin(user):
             flash("El sitio se encuentra en mantenimiento", "danger")
@@ -38,6 +41,10 @@ def authenticate():
 
 
 def logout():
+    """ 
+    Este método verifica si el usuario esta logueado,de ser así lo desloguea
+
+    """
     if not authenticated(session):
         return redirect(url_for("home"))
     del session["user"]
