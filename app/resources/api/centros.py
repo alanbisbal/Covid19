@@ -12,6 +12,11 @@ import io
 
 
 def center_list():
+    """ 
+     Devuelve un json que contiene el listado completo de los centros de ayuda social aprobados para la
+     publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion
+
+    """
     per_page = Config.getConfig().elementos
 
     try:
@@ -60,6 +65,11 @@ def center_list():
 
 
 def center(id):
+    """ 
+    Devuelve un json que contiene el centro de ayuda social aprobado para publicación, 
+    que corresponde al identificador pasado por parámetro
+    
+    """
 
     try:
         centro = Centro.with_id(id)
@@ -89,26 +99,11 @@ def center(id):
 
 
 def center_create():
-    form = CenterForm()
-    form.nombre = request.form['nombre']
-    form.direccion = request.form['direccion']
-    form.telefono = request.form['telefono']
-    form.hora_inicio = request.form['hora_inicio']
-    form.hora_fin = request.form['hora_fin']
-    form.municipio_id = request.form['municipio_id']
-    form.web = request.form['web']
-    form.email = request.form['email']
-    form.estado_id = 3
-    form.protocolo = request.form['protocolo']
-    form.latitud = request.form['latitud']
-    form.longitud = request.form['longitud']
-    form.tipo_centro = request.form['tipo_centro']
-
-    print("QUE DEVUELVE:", form.nombre)
-
-    if not form.validate_on_submit():
-        return Response(status=400)
-
+    """ 
+    Devuelve un json que contiene la carga de un centro de ayuda social por medio de la API.
+    Los campos para la creacion del mismo se obtienen a partir de un json
+    
+    """
     try:
         data = request.get_json()
 
