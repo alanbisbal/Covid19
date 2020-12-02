@@ -17,9 +17,9 @@ from app.helpers.permits import has_permit, is_admin
 
 
 def index():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
-    de ser así muestra el listado de usuarios paginados de acuerdo a los elementos almacenados en la configuración 
+    de ser así muestra el listado de usuarios paginados de acuerdo a los elementos almacenados en la configuración
 
     """
     if not authenticated(session):
@@ -35,7 +35,7 @@ def index():
 
 
 def new():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así muestra el formulario para la creacion de un usuario habiendo cargado previamente al formulario
     con todos los roles
@@ -52,7 +52,7 @@ def new():
 
 
 def create():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así carga el formulario con los datos ingresados y crea al usuario
 
@@ -90,7 +90,7 @@ def create():
 
 
 def update(user_id):
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así a partir de un usuario en particular muestra la información previamente cargada en
     la creación del mismo
@@ -109,7 +109,7 @@ def update(user_id):
 
 
 def update_new():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así obtiene los nuevos datos cargados en el formulario y realiza la actualización del mismo
     realizando previamente las validaciones correspondientes a los datos ingresados.
@@ -143,7 +143,7 @@ def update_new():
 
 
 def delete():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así elimina al usuario seleccionado.
     """
@@ -162,7 +162,7 @@ def delete():
 
 
 def search():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así pagina el listado de usuarios de acuerdo a los elementos almacenados en la configuración,
     mostrando los usuarios de ayuda que coincidan con la opción de búsqueda ingresada y/o seleccionada
@@ -200,7 +200,7 @@ def search():
 
 
 def show(user_id):
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así a partir de un usuario en particular muestra los datos del mismo.
 
@@ -218,7 +218,7 @@ def show(user_id):
 
 
 def perfil():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así a partir de un usuario en particular muestra los datos del mismo.
 
@@ -235,10 +235,10 @@ def perfil():
 
 
 def activated(user_id):
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así a partir de un usuario en particular si el mismo esta desactivado lo activa y viceversa.
-    
+
     """
     if not authenticated(session):
         abort(401)
@@ -261,10 +261,10 @@ def activated(user_id):
 
 
 def configuracion():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así obtengo los datos de la configuración y configuro la web.
-    
+
     """
     if not authenticated(session):
         abort(401)
@@ -282,10 +282,10 @@ def configuracion():
 
 
 def rol_delete():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así elimino el rol seleccionado.
-    
+
     """
     if not authenticated(session):
         abort(401)
@@ -303,14 +303,13 @@ def rol_delete():
 
 
 def add_rols():
-     """ 
+    """ 
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así agrega el rol seleccionado.
-    
+
     """
     if not authenticated(session):
         abort(401)
-
     if not has_permit('user_update'):
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
@@ -321,5 +320,5 @@ def add_rols():
         Users_rols.add(user_id, rol)
 
     flash("Insercion exitosa", "success")
-    
+
     return redirect(request.referrer)

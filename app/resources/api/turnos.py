@@ -7,10 +7,10 @@ import json
 
 
 def turno_list(id, fecha=date.today()):
-    """ 
+    """
     Devuelve un json que contiene el listado de los turnos disponibles para un centro de ayuda en un día en particular.
-    En caso de no especificar una fecha, se devuelve la disponibilidad de turnos para el día consultado. 
-    
+    En caso de no especificar una fecha, se devuelve la disponibilidad de turnos para el día consultado.
+
     """
     try:
         centro = Centro.with_id(id)
@@ -35,11 +35,11 @@ def turno_list(id, fecha=date.today()):
 
 
 def turno_create(id):
-     """ 
+    """ 
     Devuelve un json con la reserva de un turno para un centro de ayuda en particular,
-    verificando que no se agreguen dos turnos para el mismo centro y con el mismo bloque de horario 
+    verificando que no se agreguen dos turnos para el mismo centro y con el mismo bloque de horario
     en un mismo día
-    
+
     """
     data = request.get_json()
     form = TurnoForm(csrf_enabled=False)
