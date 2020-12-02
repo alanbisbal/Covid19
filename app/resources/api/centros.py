@@ -4,7 +4,6 @@ from app.models.estado import Estado
 from app.models.config import Config
 from app.helpers.forms import CenterForm
 from app.helpers.validates import validar_municipio
-from app.db import db
 from flask import jsonify, request, abort, Response
 import base64
 import json
@@ -19,7 +18,7 @@ def center_list():
         page = 1
 
     try:
-        centros_paginados = Centro.query.filter_by(estado_id=1).paginate(page,per_page,error_out=False)
+        centros_paginados = Centro.publicados().paginate(page,per_page,error_out=False)
     except:
         return Response(status=500)
 
@@ -53,7 +52,7 @@ def center(id):
     centro_data={}
 
     if not centro:
-        return Response(status=401)
+        return Response(status=404)
     else:
         centro_data={
             "nombre": centro.nombre,
