@@ -58,7 +58,17 @@ title %}Centros{% endblock %} {% block content %}
           accessToken: 'your.mapbox.access.token',
         }
       ).addTo(mymap);
-      L.marker([-34.9308959, -57.9278606]).addTo(mymap);
+      var layerGroup = L.layerGroup().addTo(mymap);
+
+
+
+      mymap.on('click', function(e){
+          layerGroup.clearLayers();
+          L.marker(e.latlng,{draggable:"true"}).addTo(layerGroup);
+
+     });
+
+
     </script>
   </div>
 
