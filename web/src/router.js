@@ -12,17 +12,15 @@ export default new Router({
       name:'home',
       component: () => import('./views/Home.vue')
    },
-
    {
       path:'/about',
       name:'about',
       component: () => import('./views/About.vue')
+   },
+   {
+      path:'/centros',
+      name:'centros',
+      component: () => import('./views/Centros.vue')
    }
-
-
  ]
-
-
-
-
 })
