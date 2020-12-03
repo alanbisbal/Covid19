@@ -29,12 +29,12 @@ class CenterForm(FlaskForm):
     email = EmailField('Email', validators=[])
     protocolo = FileField(label="Protocolo",
                           validators=[Optional(strip_whitespace=True)])
-    latitud = FloatField('Latitud (coordenadas)',
-                         default="-57.9924",
-                         widget=NumberInput())
-    longitud = FloatField('Longitud (coordenadas)',
-                          default="-34.9159",
-                          widget=NumberInput())
+    latitud = FloatField('Latitud',
+                         validators=[InputRequired()]
+                        )
+    longitud = FloatField('Longitud',
+                          validators=[InputRequired()]
+                          )
     estado_id = SelectField('Estado', validate_choice=False)
     tipo_centro = SelectField('Tipo', validators=[InputRequired()])
     submit = SubmitField(label="Guardar")
