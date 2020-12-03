@@ -1,20 +1,14 @@
 <template>
-  <p>{{ greeting }} World!</p>
+  <div class="hello">
+    <h1>THIS IS HOME PAGE</h1>
+  </div>
 </template>
 
 <script>
-module.exports = {
-  data: function () {
-    return {
-      greeting: 'Hello'
-    }
+export default {
+  name: 'HELLO DESDE HOME',
+  props: {
+    msg: String
   }
 }
 </script>
-
-<style scoped="">
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
