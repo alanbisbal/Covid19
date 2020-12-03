@@ -13,9 +13,9 @@ import requests
 
 
 def index():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
-    de ser así muestra el listado de centros paginados de acuerdo a los elementos almacenados en la configuración 
+    de ser así muestra el listado de centros paginados de acuerdo a los elementos almacenados en la configuración
 
     """
     if not authenticated(session):
@@ -33,7 +33,7 @@ def index():
 
 
 def new():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así muestra el formulario para la creacion de un centro habiendo cargado previamente al formulario
     con todos los tipos de centro y estado
@@ -56,7 +56,7 @@ def new():
 
 
 def create():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así carga el formulario con los datos ingresados y crea el centro
 
@@ -78,7 +78,7 @@ def create():
 
 
 def update(centro_id):
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así a partir de un centro en particular muestra la información previamente cargada en
     la creación del mismo
@@ -110,7 +110,7 @@ def update(centro_id):
 
 
 def update_new():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así obtiene los nuevos datos cargados en el formulario y realiza la actualización del mismo
     realizando previamente las validaciones correspondientes a los datos ingresados.
@@ -135,7 +135,7 @@ def update_new():
 
 
 def delete():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así elimina el centro seleccionado siempre y cuando este no esté asignado a un turno
 
@@ -163,7 +163,7 @@ def delete():
 
 
 def search():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así pagina el listado de centros de acuerdo a los elementos almacenados en la configuración,
     mostrando los centros de ayuda que coincidan con la opción de búsqueda ingresada y/o seleccionada
@@ -217,7 +217,7 @@ def search():
 
 
 def show(centro_id):
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así a partir de un centro en particular muestra los datos del mismo.
 
@@ -236,9 +236,9 @@ def show(centro_id):
 
 
 def pendientes():
-    """ 
+    """
      Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
-     de ser así muestra el listado de centros pendientes paginados de acuerdo a los elementos almacenados 
+     de ser así muestra el listado de centros pendientes paginados de acuerdo a los elementos almacenados
      en la configuración .
 
     """
@@ -254,7 +254,7 @@ def pendientes():
 
 
 def publicar():
-    """ 
+    """
      Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
      de ser así a partir de un centro en particular,pública dicho centro .
 
@@ -273,7 +273,7 @@ def publicar():
 
 
 def despublicar():
-    """ 
+    """
      Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
      de ser así a partir de un centro en particular,despublica dicho centro .
 
