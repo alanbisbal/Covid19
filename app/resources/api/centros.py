@@ -4,7 +4,6 @@ from app.models.estado import Estado
 from app.models.config import Config
 from app.helpers.forms import CenterForm
 from app.helpers.validates import validar_municipio
-from app.db import db
 from flask import jsonify, request, abort, Response
 import base64
 import json
@@ -12,6 +11,11 @@ import io
 
 
 def center_list():
+     """
+     Devuelve un json que contiene el listado completo de los centros de ayuda social aprobados para la
+     publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion
+
+    """
     per_page = Config.getConfig().elementos
 
     try:
@@ -20,8 +24,7 @@ def center_list():
         page = 1
 
     try:
-        centros_paginados = Centro.query.filter_by(estado_id=1).paginate(
-            page, per_page, error_out=False)
+        centros_paginados = Centro.publicados().paginate(page,per_page,error_out=False)
     except:
         return Response(status=500)
 
@@ -60,8 +63,13 @@ def center_list():
 
 
 def center(id):
+    """
+    Devuelve un json que contiene el centro de ayuda social aprobado para publicación,
+    que corresponde al identificador pasado por parámetro
 
-    try:
+    """
+
+  try:
         centro = Centro.with_id(id)
     except:
         return Response(status=500)
@@ -88,8 +96,14 @@ def center(id):
     return Response(final, mimetype='application/json')
 
 
+
 def center_create():
-    try:
+    """
+    Devuelve un json que contiene la carga de un centro de ayuda social por medio de la API.
+    Los campos para la creacion del mismo se obtienen a partir de un json
+
+    """
+try:
         data = request.get_json()
 
         data['hora_inicio'] = data['hora_apertura']

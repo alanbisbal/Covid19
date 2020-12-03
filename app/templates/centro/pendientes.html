@@ -61,19 +61,27 @@
        <td>
        <form action="{{ url_for('centro_show', centro_id = centro.id ) }}"  >
          {{csrf_token}}
-         <button type="submit" class="btn btn-warning mt-2 ml-2">Ver</button>
+         <button type="submit" class="btn btn-primary mt-2">Ver</button>
        </form>
        </td>
        <td>
+       <form action="{{ url_for('centro_update', centro_id = centro.id ) }}"  >
+         {{csrf_token}}
+         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+       </form>
+     </td>
+     <td>
+       
        <form action="{{ url_for('centro_publicar', centro_id = centro.id ) }}" method ="post" >
            {{csrf_token }}
-         <button type="submit" class="btn btn-primary mt-2">Publicar</button>
+         <button type="submit" class="btn btn-info mt-2 ml-2">Publicar</button>
        </form>
        </td>
+
        <td>
        <form action="{{ url_for('centro_despublicar',centro_id = centro.id)}}" method ="post" >
            {{csrf_token }}
-         <button type="submit" class="btn btn-info mt-2 ml-2">Despublicar</button>
+         <button type="submit" class="btn btn-danger mt-2 ml-2">Despublicar</button>
        </form>
       </td>
 
