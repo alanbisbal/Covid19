@@ -1,14 +1,19 @@
 <template>
-  <div class="hello">
-    <h1>THIS IS HOME PAGE</h1>
-  </div>
+  <div class="example">{{ msg }}</div>
 </template>
 
 <script>
 export default {
-  name: 'HELLO DESDE HOME',
-  props: {
-    msg: String
+  data () {
+    return {
+      msg: 'Hola desde home!'
+    }
   }
 }
 </script>
+
+<style>
+.example {
+  color: red;
+}
+</style>

@@ -6,7 +6,7 @@
 export default {
   data () {
     return {
-      msg: 'Hola desde about!'
+      msg: 'Hola desde centros!'
     }
   }
 }
