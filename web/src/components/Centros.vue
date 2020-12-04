@@ -2,7 +2,7 @@
   <div >
     <p>---CONSULTA DE TEST DE AXIOS-----</p>
     <div class="content">
-      <p>User ID: {{ result.userId }}</p>
+      <p>User ID: {{ result.centro.nombre }}</p>
       <p>Title: {{ result.title }}</p>
     </div>
     <p>---FIN-----</p>
