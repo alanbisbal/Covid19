@@ -3,7 +3,7 @@
   <div class="container col-md-8 col-sm-12">
   <b-card-group deck >
       <b-card bg-variant="ligth" header="Crear Turno" class="text-center" 
-      header-tag="header" style="max-width: 40rem;"  align="center">
+      header-tag="header" style="max-width: 50rem;"  align="center">
 
   <b-row class="my-1">
     <b-col sm="2">
