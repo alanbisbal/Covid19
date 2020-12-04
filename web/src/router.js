@@ -27,7 +27,6 @@ export default new Router({
       name:'turno',
       component: () => import('./views/Turno.vue')
    },
-
    {
       path:'/centros',
       name:'centros',

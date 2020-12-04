@@ -1,6 +1,5 @@
 <template>
   <div >
-    
     <p>ACA VA EL MAPA CON LOS CENTROS; cuando selecciona reservar turno deberia primero elegir la fecha</p>
     <div class="form-inline"> 
     <div class="col-auto my-1">
