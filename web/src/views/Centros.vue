@@ -7,6 +7,7 @@
 
 
   <script>
+  
   import Centros from '@/components/Centros.vue'
 
   export default {

@@ -2,8 +2,8 @@
   <div >
     <p>---CONSULTA DE TEST DE AXIOS-----</p>
     <div class="content">
-      <p>User ID: {{ result.userId }}</p>
-      <p>Title: {{ result.title }}</p>
+      <p >Nombre: {{ result.centros }}</p>
+
     </div>
     <p>---FIN-----</p>
 
@@ -32,7 +32,7 @@ export default {
     result: null
   }),
   created() {
-    axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
+    axios.get("https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros").then((result) => {
       this.result = result.data;
     })
   }
