@@ -13,9 +13,14 @@ export default new Router({
       component: () => import('./views/Home.vue')
    },
    {
-      path:'/about',
-      name:'about',
-      component: () => import('./views/About.vue')
+      path:'/centro',
+      name:'centro',
+      component: () => import('./views/Centro.vue')
+   },
+   {
+      path:'/estadisticas',
+      name:'estadisticas',
+      component: () => import('./views/Estadisticas.vue')
    },
    {
       path:'/centros',
