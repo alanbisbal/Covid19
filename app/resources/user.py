@@ -310,7 +310,6 @@ def add_rols():
     """
     if not authenticated(session):
         abort(401)
-
     if not has_permit('user_update'):
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
