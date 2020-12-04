@@ -5,6 +5,7 @@
       <b-card bg-variant="ligth" header="Crear Turno" class="text-center" 
       header-tag="header" style="max-width: 50rem;"  align="center">
 
+
   <b-row class="my-1">
     <b-col sm="2">
       <label for="input-small">Email:</label>
