@@ -1,14 +1,19 @@
 <template>
-  <div class="centros">
-    <h1> Aca Los Centros</h1>
-  </div>
+  <div class="example">{{ msg }}</div>
 </template>
 
 <script>
 export default {
-  name: 'HELLO DESDE HOME',
-  props: {
-    msg: String
+  data () {
+    return {
+      msg: 'Hola desde centros!'
+    }
   }
 }
 </script>
+
+<style>
+.example {
+  color: red;
+}
+</style>
