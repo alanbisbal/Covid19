@@ -1,19 +1,23 @@
 <template>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <Centros/>
+  <div class="content">
+    <p>User ID: {{ result.userId }}</p>
+    <p>Title: {{ result.title }}</p>
   </div>
-
-
 </template>
 
-
-  <script>
-  import Centros from '@/components/Centros.vue'
-
-  export default {
-    name: 'App',
-    components: {
-      Centros
-    }
+<script>
+import axios from "axios";
+export default {
+  data: () => ({
+    result: null
+  }),
+  created() {
+    axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
+      this.result = result.data;
+    })
   }
-  </script>
+};
+</script>
+
+<style scoped lang="scss">
+</style>
