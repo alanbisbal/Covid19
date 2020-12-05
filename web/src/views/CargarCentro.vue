@@ -1,6 +1,6 @@
 <template>
 
-  <index/>
+  <cargarCentro/>
 
 
 
@@ -8,12 +8,12 @@
 
 
   <script>
-  import index from '@/components/Centros/index.vue'
+  import cargarCentro from '@/components/Centros/cargarCentro.vue'
 
   export default {
     name: 'App',
     components: {
-      index
+      cargarCentro
     }
   }
   </script>
