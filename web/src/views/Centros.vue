@@ -1,19 +1,19 @@
 <template>
-  <div class="example">{{ msg }}</div>
+    <Centros/>
+
+
+
 </template>
 
-<script>
-export default {
-  data () {
-    return {
-      msg: 'Hola desde centros!'
+
+  <script>
+  
+  import Centros from '@/components/Centros.vue'
+
+  export default {
+    name: 'App',
+    components: {
+      Centros
     }
   }
-}
-</script>
-
-<style>
-.example {
-  color: red;
-}
-</style>
+  </script>
