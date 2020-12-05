@@ -1,5 +1,6 @@
 <template>
-    <Centros/>
+
+  <Centros/>
 
 
 
@@ -7,7 +8,6 @@
 
 
   <script>
-  
   import Centros from '@/components/Centros.vue'
 
   export default {
