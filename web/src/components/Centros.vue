@@ -2,9 +2,12 @@
   <div >
     <p>---CONSULTA DE TEST DE AXIOS-----</p>
     <div class="content">
-      <p>User ID: {{ result.centro.nombre }}</p>
-      <p>Title: {{ result.title }}</p>
+      <p >Nombre: {{ result.centros }}</p>
+
     </div>
+
+  
+
     <p>---FIN-----</p>
 
 
@@ -15,6 +18,7 @@
      </div>
      <div>
       <b-button variant="primary" :to="{name:'turno'}">Reservar Turno</b-button>
+
       </div>
     </div>
   </div>
@@ -32,7 +36,7 @@ export default {
     result: null
   }),
   created() {
-    axios.get("https://jsonplaceholder.typicode.com/todos/1").then((result) => {
+    axios.get("https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros").then((result) => {
       this.result = result.data;
     })
   }
