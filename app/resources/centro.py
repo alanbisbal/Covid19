@@ -7,9 +7,10 @@ from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.helpers.forms import CenterForm
 
-from app.helpers.validates import form_config_update
+from app.helpers.validates import form_config_update, sanitizar_input
 from app.helpers.permits import has_permit, is_admin
 import requests
+import bleach
 
 
 def index():
@@ -68,9 +69,10 @@ def create():
         return redirect(url_for("home"))
 
     form = CenterForm()
+    print("CONTENIDO DEL FORM PA: ", form)
     if not form.validate_on_submit():
         return redirect(request.referrer)
-
+    sanitizar_input(form)
     Centro.add(form.data)
     flash("Insercion exitosa", "success")
 
@@ -122,6 +124,7 @@ def update_new():
         flash("No posee permisos.", "danger")
         return redirect(url_for("home"))
 
+    sanitizar_input(form)
     form = CenterForm()
     centro = Centro.with_id(request.form['centro_id'])
 
