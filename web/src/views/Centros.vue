@@ -1,19 +1,19 @@
 <template>
   <div>
     <myMap/>
-    <index/>
+    <centros/>
   </div>
 </template>
 
 
   <script>
-  import index from '@/components/Centros/index.vue'
+  import centros from '@/components/Centros/centros.vue'
   import myMap from '@/components/Maps/myMap.vue'
 
   export default {
     name: 'App',
     components: {
-      index,
+      centros,
       myMap
     }
   }
