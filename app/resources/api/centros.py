@@ -11,7 +11,7 @@ import io
 
 
 def center_list():
-    """
+     """
      Devuelve un json que contiene el listado completo de los centros de ayuda social aprobados para la
      publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion
 
@@ -73,7 +73,7 @@ def center(id):
 
     """
 
-    try:
+  try:
         centro = Centro.with_id(id)
     except:
         return Response(status=500)
@@ -81,7 +81,7 @@ def center(id):
     centro_data = {}
 
     if not centro:
-        return Response(status=404)
+        return Response(status=401)
     else:
         centro_data = {
             "nombre": centro.nombre,
@@ -100,13 +100,14 @@ def center(id):
     return Response(final, mimetype='application/json')
 
 
+
 def center_create():
     """
     Devuelve un json que contiene la carga de un centro de ayuda social por medio de la API.
     Los campos para la creacion del mismo se obtienen a partir de un json
 
     """
-    try:
+try:
         data = request.get_json()
 
         data['hora_inicio'] = data['hora_apertura']
