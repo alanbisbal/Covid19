@@ -342,3 +342,4 @@ def add_rols():
     flash("Insercion exitosa", "success")
 
     return redirect(request.referrer)
+

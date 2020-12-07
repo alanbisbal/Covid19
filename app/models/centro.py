@@ -139,9 +139,6 @@ class Centro(db.Model):
         self.estado_id = 2
         db.session.commit()
 
-    def publicados():
-        return db.session.query(Centro).filter_by(estado_id=1)
-
     @classmethod
     def count_approved(cls):
         """Retorna la cantidad total de centros aprobados"""

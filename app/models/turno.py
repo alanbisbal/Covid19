@@ -63,13 +63,10 @@ class Turno(db.Model):
         """
         bloques = []
         ocupados = []
-
         turnos = db.session.query(Turno).filter(Turno.centro_id == id).filter(
             Turno.fecha == fecha).all()
-
         for t in turnos:
             ocupados.append(t.hora_inicio.strftime("%H:%M"))
-
         for i in range(9, 16):
             for j in (00, 30):
                 hora = str(i) + ":" + str(j)
@@ -78,7 +75,6 @@ class Turno(db.Model):
                 bloques.append(str(hora))
         result = list(set(bloques) - set(ocupados))
         result = sorted(result)
-
         return result
 
     def with_next_two_date(centro_id):
@@ -91,7 +87,6 @@ class Turno(db.Model):
                                        second=0,
                                        microsecond=0)
         en_dos_dias = datetime.today() + timedelta(days=2)
-
         return db.session.query(Turno).filter(
             Turno.centro_id == centro_id).filter(
                 Turno.fecha.between(hoy, en_dos_dias)).order_by(
@@ -106,12 +101,12 @@ class Turno(db.Model):
                                        second=0,
                                        microsecond=0)
         en_dos_dias = datetime.today() + timedelta(days=2)
-
         return db.session.query(Turno).filter(
             Turno.fecha.between(hoy,
                                 en_dos_dias)).order_by(Turno.fecha.asc(),
                                                        Turno.hora_inicio.asc())
 
+    #'bloque' no sabemos bien como definirlo
     def update(self, data):
         if self.email != data['email']:
             self.email = data['email']
