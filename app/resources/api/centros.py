@@ -48,6 +48,10 @@ def center_list():
             i.web,
             "email":
             i.email,
+            "latitud":
+            i.latitud,
+            "longitud":
+            i.longitud,
             "tipo":
             str(Tipo_centro.with_id(i.tipo_centro).nombre)
         })
