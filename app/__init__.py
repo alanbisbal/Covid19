@@ -171,6 +171,9 @@ def create_app(environment="development"):
                      api_centros.center_create,
                      methods=["POST"])
 
+    app.add_url_rule("/api/centros/tipos", "centro_tipos",
+                    api_centros.center_types)
+
     # Ruta para la api de turnos
     app.add_url_rule("/api/centros/<id>/turnos_disponibles/<fecha>",
                      "turno_list", api_turnos.turno_list)
