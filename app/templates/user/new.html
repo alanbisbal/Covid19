@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block title %}Usuarios{% endblock %}
+
+{% block content %}
+<div class="container col-md-8 col-sm-12 " style="max-width: 40rem;">
+  <div class="card">
+
+  <form action="{{ url_for('user_create') }}" method="POST">
+    <div class="card-header bg-primary text-white" >
+      <h5>Crear usuario:</h5>
+    </div>
+    <div class="card-body">
+
+    <div class="form-group">
+      <label for="formGroupExampleInput"><strong>Nombre</strong></label>
+      <input type="text" class="form-control" name="first_name" placeholder="Nombre"  required/>
+    </div>
+
+    <div class="form-group">
+      <label for="formGroupExampleInput" ><strong>Apellido</strong></label>
+      <input type="text" class="form-control" name="last_name" placeholder="Apellido"  required/>
+    </div>
+
+    <div class="form-group">
+      <label for="formGroupExampleInput" ><strong>Nombre de Usuario</strong></label>
+      <input type="text" class="form-control" name="username" placeholder="Nombre de usuario"  required/>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1"><strong>Email</strong></label>
+      <input type="email" class="form-control" name="email" placeholder="Correo" required>
+    </div>
+
+    <div class="form-group">
+      <label ><strong>Clave</strong></label>
+      <input type="password" name="password" placeholder="Clave" class="form-control"  required/>
+    </div>
+
+    <div class="form-group">
+      <label ><strong>Estado</strong></label>
+      <input type="radio" name="activo" value=True required>
+      <button type="submit" class="btn btn-success btn disabled" href="#">habilitado</button>
+      <input type="radio" name="activo" value=False >
+      <button type="submit" class="btn btn-danger btn disabled" href="#">deshabilitado</button>
+    </div>
+
+    <!--check box-->
+    <div class="form-group">
+    <label for="formGroupExampleInput" ><strong>Roles </strong></label>
+      {% for rol in rols %}
+          <input type="checkbox" value="{{rol.id}}" name=roles[]> {{rol.name}}
+      {% endfor %}
+    </div>
+
+
+
+  <!--fin del check box-->
+  <div class="form-inline">
+        <a href="{{ url_for('user_index') }}" class="btn btn-primary my-1" >Volver</a>
+        <div class="card-body d-flex justify-content-between align-items-center"></div>
+        <div  class="col-auto my-1">
+          <input type="submit" value="Crear" class="btn btn-success">
+        </div>
+        <div>
+          <button type="reset" class="btn btn-danger">Limpiar</button>
+        </div>
+
+   </div>
+  </div>
+  </form>
+</div>
+</div>
+{% endblock %}
