@@ -12,8 +12,9 @@ from app.models.config import Config
 
 from app.helpers.forms import ConfigForm
 
-from app.helpers.validates import form_user_new, exist_email, exist_username, form_user_update, exist_email_update, exist_username_update
+from app.helpers.validates import form_user_new, exist_email, exist_username, form_user_update, exist_email_update, exist_username_update, sanitizar_input
 from app.helpers.permits import has_permit, is_admin
+import bleach
 
 
 def index():
@@ -78,7 +79,17 @@ def create():
     if data['activo'] == 'False':
         estado = 0
 
-    User.add(data, estado)
+    dictUser = {}
+
+    dictUser = {
+        "username": bleach.clean(data['username']),
+        "first_name": bleach.clean(data['first_name']),
+        "last_name": bleach.clean(data['last_name']),
+        "email": bleach.clean(data['email']),
+        "password": bleach.clean(data['password'])
+    }
+
+    User.add(dictUser, estado)
 
     user = User.with_email(data['email'])
     roles = request.form.getlist('roles[]')
@@ -136,7 +147,16 @@ def update_new():
     if exist_username_update(data['username'], user.username):
         return redirect(request.referrer)
 
-    user.update(data)
+    dictUser = {}
+
+    dictUser = {
+        "username": bleach.clean(data['username']),
+        "first_name": bleach.clean(data['first_name']),
+        "last_name": bleach.clean(data['last_name']),
+        "email": bleach.clean(data['email'])
+    }
+
+    user.update(dictUser)
     flash("Actualización exitosa.", "success")
 
     return redirect(url_for('user_index'))
@@ -303,7 +323,7 @@ def rol_delete():
 
 
 def add_rols():
-    """ 
+    """
     Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
     de ser así agrega el rol seleccionado.
 
