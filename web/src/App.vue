@@ -13,7 +13,7 @@
                <b-navbar-nav>
                   <b-nav-item :to="{name:'home'}" exact>Inicio</b-nav-item>
                   <b-nav-item :to="{name:'centros'} "> Centros </b-nav-item>
-                  <b-nav-item :to="{name:'centro'} " >Cargar Centro</b-nav-item>
+                  <b-nav-item :to="{name:'cargarCentro'} " >Solicitar Centro</b-nav-item>
                   <b-nav-item :to="{name:'estadisticas'} " >Estadisticas</b-nav-item>
               </b-navbar-nav>
             </b-collapse>

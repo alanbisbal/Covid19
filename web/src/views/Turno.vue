@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <Turno/>
+    <crearTurno/>
   </div>
 
 
@@ -8,13 +8,12 @@
 
 
   <script>
-  import Turno from '@/components/Turno.vue'
+  import crearTurno from '@/components/Turnos/crearTurno.vue'
 
   export default {
     name: 'App',
     components: {
-      Turno
+      crearTurno
     }
   }
   </script>
-
