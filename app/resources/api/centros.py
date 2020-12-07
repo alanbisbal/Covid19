@@ -3,7 +3,7 @@ from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.models.config import Config
 from app.helpers.forms import CenterForm
-from app.helpers.validates import validar_municipio
+from app.helpers.validates import validar_municipio, sanitizar_input
 from app.db import db
 from flask import jsonify, request, abort, Response
 import base64
@@ -45,6 +45,10 @@ def center_list():
             i.web,
             "email":
             i.email,
+            "latitud":
+            i.latitud,
+            "longitud":
+            i.longitud,
             "tipo":
             str(Tipo_centro.with_id(i.tipo_centro).nombre)
         })
@@ -125,6 +129,7 @@ def center_create():
         if form.email != "" and tieneArroba == False:
             return Response('Error de datos de formulario', status=400)
 
+        sanitizar_input(form)
         centro = Centro.add(form.data)
         if not centro:
             return Response('El centro no existe', status=400)
@@ -146,3 +151,15 @@ def center_create():
 
     final = json.dumps({"atributos": centro_creado}, indent=2)
     return Response(final, status=201)
+
+def center_types():
+    data = []
+    tipos = Tipo_centro.all()
+    for i in tipos:
+        data.append({
+            "id": i.id,
+            "nombre": i.nombre
+        })
+
+    final = json.dumps({"tipos": data}, indent=2, ensure_ascii=False)
+    return Response(final, mimetype='application/json')

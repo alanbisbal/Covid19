@@ -7,6 +7,7 @@ from sqlalchemy import Table, Column, Integer, ForeignKey, Float, LargeBinary
 from app.models import tipo_centro, turno, estado
 from app.models.estado import Estado
 from app.helpers.upload import upload_pdf
+import bleach
 
 
 class Centro(db.Model):
@@ -55,8 +56,8 @@ class Centro(db.Model):
 
     def add(data):
         centro = Centro(data)
-        if data["protocolo"]:
-            centro.protocolo = upload_pdf(data['protocolo'])
+        if data["protocolo"] is not None:
+            centro.protocolo = bleach.clean(upload_pdf(data['protocolo']))
         db.session.add(centro)
         db.session.commit()
         return centro

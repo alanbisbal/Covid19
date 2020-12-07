@@ -1,7 +1,9 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash
 import requests
+import bleach
 from app.models.user import User
-
+from app.helpers.upload import upload_pdf
+import datetime
 
 def form_user_new(data):
     ok = True
@@ -130,3 +132,12 @@ def validar_municipio(data):
         if (str(municipios[mun]["id"]) == data):
             return True
     return False
+
+def sanitizar_input(form):
+    for i in form.data:
+        if not isinstance(form[i].data, (int, str, float, datetime.time)):
+            continue
+        else:
+            if form[i].data is None:
+                continue
+        form[i].data= bleach.clean(str(form[i].data))
