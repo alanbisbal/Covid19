@@ -16,7 +16,15 @@
       Allí deberá seleccionar un centro y un dia en particular al cual desea asistir.
       Se le solicitará un mail, un teléfono y que seleccione el horario que desea concurrir en caso de estar disponible
       evitando asi la aglomeración de personas.
+      <br>
 
+      <br>
+      Para agregar un centro, deberá dirigirse a "Solicitar centro" y completar el formulario correspondiente.
+      Su solicitud quedará pendiente hasta que un administrador del sitio certifique y valide que los datos sean correctos.
+      <br>
+
+      <br>
+      Tambien contamos con una sección de estadisticas en el cual se podrá visualizar los datos recolectados hasta el momento.
 
     </template>
 
