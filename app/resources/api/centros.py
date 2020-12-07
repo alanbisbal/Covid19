@@ -3,7 +3,7 @@ from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.models.config import Config
 from app.helpers.forms import CenterForm
-from app.helpers.validates import validar_municipio
+from app.helpers.validates import validar_municipio, sanitizar_input
 from flask import jsonify, request, abort, Response
 import base64
 import json
@@ -142,6 +142,7 @@ def center_create():
         if form.email != "" and tieneArroba == False:
             return Response('Error de datos de formulario', status=400)
 
+        sanitizar_input(form)
         centro = Centro.add(form.data)
         if not centro:
             return Response('El centro no existe', status=400)

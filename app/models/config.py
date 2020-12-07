@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
+import bleach
 
 
 class Config(db.Model):
@@ -45,9 +46,9 @@ class Config(db.Model):
         db.session.commit()
 
     def update(self, data):
-        self.titulo = data['titulo']
-        self.descripcion = data['descripcion']
-        self.email = data['email']
+        self.titulo = bleach.clean(data['titulo'])
+        self.descripcion = bleach.clean(data['descripcion'])
+        self.email = bleach.clean(data['email'])
         self.elementos = data['elementos']
         if data['estado'] == "habilitado":
             self.estado = True
