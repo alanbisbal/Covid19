@@ -7,6 +7,7 @@ from app.db import db
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
 from datetime import datetime, time, timedelta, date
+import bleach
 
 
 class Turno(db.Model):
@@ -21,8 +22,8 @@ class Turno(db.Model):
     centro = relationship("Centro", backref="centro")
 
     def __init__(self, data):
-        self.email = data['email']
-        self.telefono = data['telefono']
+        self.email = bleach.clean(data['email'])
+        self.telefono = bleach.clean(data['telefono'])
         self.hora_inicio = data['hora_inicio']
         self.hora_fin = data['hora_fin']
         self.fecha = data['fecha']
@@ -56,8 +57,8 @@ class Turno(db.Model):
             Turno.fecha == fecha)
 
     def bloques_disponibles(id, fecha):
-        """ 
-        Retorna todos los turnos disponibles en bloques de 30 minutos para un id y fecha en particular  
+        """
+        Retorna todos los turnos disponibles en bloques de 30 minutos para un id y fecha en particular
         ordenados por hora y minutos de manera ascendente.
         """
         bloques = []
@@ -81,7 +82,7 @@ class Turno(db.Model):
         return result
 
     def with_next_two_date(centro_id):
-        """ 
+        """
          Retorna los turnos para hoy y los siguientes 2 dias a partir de un centro en particular,
          ordenados por fecha y hora de manera ascendente.
         """
@@ -97,7 +98,7 @@ class Turno(db.Model):
                     Turno.fecha.asc(), Turno.hora_inicio.asc())
 
     def with_next_two():
-        """ 
+        """
          Retorna los turnos para hoy y los siguientes 2 dias,ordenados por fecha y hora de manera ascendente.
         """
         hoy = datetime.today().replace(hour=0,
