@@ -1,20 +1,28 @@
 <template>
   <div>
-    <myMap/>
-    <centros/>
+    <myMap :centros="centros" />
   </div>
 </template>
 
 
   <script>
-  import centros from '@/components/Centros/centros.vue'
+  import axios from "axios";
   import myMap from '@/components/Maps/myMap.vue'
 
   export default {
     name: 'App',
     components: {
-      centros,
       myMap
+    },
+    data: function () {
+      return {
+        centros: []
+      }
+    },
+    mounted: function () {
+      axios.get("https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros").then((result) => {
+        this.centros = result.data;
+      })
     }
   }
   </script>
