@@ -24,7 +24,10 @@ export default {
   mounted: function() {
     axios
       .get(
-        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/19/turnos_disponibles/'
+        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/' +
+          this.$route.params.id +
+          '/turnos_disponibles/' +
+          this.$route.params.fecha
       )
       .then((result) => {
         this.turnos = result.data.turnos;
