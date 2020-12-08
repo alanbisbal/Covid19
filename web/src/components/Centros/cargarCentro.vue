@@ -151,7 +151,7 @@
         },
         tipo: [{ text: 'Selecione una opción', value: null }, 'Merendero', 'Colegio'],
         show: true,
-        
+
       }
     },
     methods: {
