@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div >
     <div>
       Marker icon are retrieved from custom path
 
@@ -18,14 +18,15 @@
       <l-marker
         :key="index"
         v-for="(centro,index) in centros"
-        :lat-lng="(centro.latitud,centros.longitud)" />
+        :lat-lng="latLng(centro.latitud,centro.longitud)"
+      />
 
     </l-map>
   </div>
 </template>
 
 <script>
-import { latLng } from "leaflet";
+import L from 'leaflet';
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 
 export default {
@@ -40,7 +41,7 @@ export default {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
       '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: latLng(-34.9159, -57.9924)
+      marker: L.latLng(-34.9159, -57.9924)
     };
   },
   components: {
@@ -49,8 +50,8 @@ export default {
     LMarker,
   },
   methods: {
-    latLng: function(lat,lng) {
-      return latLng(lat,lng);
+    latLng: function (lat,lng) {
+      return L.latLng(lat,lng);
     },
   }
 };
