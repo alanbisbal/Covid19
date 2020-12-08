@@ -1,5 +1,9 @@
 <template>
   <b-container fluid>
+    <div v-for="turno in turnos" :key="turno.id">
+      {{ turno.hora_inicio }}
+    </div>
+
     <div class="container col-md-8 col-sm-12">
       <b-card-group deck>
         <b-card
@@ -65,6 +69,10 @@
 
 <script>
 export default {
+  name: 'crearTurno',
+  props: {
+    turnos: Array,
+  },
   data() {
     return {
       form: {
