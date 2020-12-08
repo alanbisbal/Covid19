@@ -3,6 +3,8 @@
   <div>
     <div>
       Marker icon are retrieved from custom path
+
+      {{ centros }}
     </div>
     <l-map
       :zoom="zoom"
@@ -13,7 +15,10 @@
         :url="url"
         :attribution="attribution"
       />
-      <l-marker :lat-lng="marker" />
+      <l-marker
+        :key="index"
+        v-for="(centro,index) in centros"
+        :lat-lng="(centro.latitud,centros.longitud)" />
 
     </l-map>
   </div>
@@ -25,10 +30,8 @@ import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 
 export default {
   name: "myMap",
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker,
+  props: {
+    centros: Array
   },
   data() {
     return {
@@ -36,9 +39,19 @@ export default {
       center: [-34.9159, -57.9924],
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       marker: latLng(-34.9159, -57.9924)
     };
+  },
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker,
+  },
+  methods: {
+    latLng: function(lat,lng) {
+      return latLng(lat,lng);
+    },
   }
 };
 </script>
