@@ -23,7 +23,7 @@ export default new Router({
       component: () => import('./views/Estadisticas.vue')
    },
    {
-      path:'/turno',
+      path:'/turno/:id/:fecha',
       name:'turno',
       component: () => import('./views/Turno.vue')
    },
