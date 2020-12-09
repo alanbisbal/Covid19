@@ -18,14 +18,14 @@
               Telefono: {{centro.telefono}}<br>
               Direccion: {{centro.direccion}}<br>
               Horarios: {{centro.hora_inicio}}-{{centro.hora_fin}}
-              <b-form @submit.stop.prevent="onSubmit" >
+              <b-form @submit.stop.prevent="onSubmit(centro.id)" >
 
                 <b-form-group  >
                   <b-form-input
-                    v-model= "centro.id"
+                    v-model.number= "centro.id"
                     type="text"
                     required
-                    hidden
+
                     value = centro.id
                   ></b-form-input>
                 </b-form-group>
@@ -70,8 +70,8 @@ export default {
    LPopup
  },
  methods: {
-   onSubmit() {
-      this.$router.push({   name:'turno', params: {id: '19' , fecha:this.fecha} })
+   onSubmit(centro_id) {
+      this.$router.push({   name:'turno', params: { id:centro_id, fecha:this.fecha } })
    },
    latLng: function (lat,lng) {
      return L.latLng(lat,lng);
