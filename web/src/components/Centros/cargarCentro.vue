@@ -1,5 +1,9 @@
 <template>
 <b-container fluid>
+
+  <div v-for="tipo in tipos" :key="tipo.id">
+    {{ tipo.nombre }}
+  </div>
   <div class="container col-md-8 col-sm-12">
     <b-card-group deck >
       <b-card
@@ -44,19 +48,17 @@
 
 
             <b-form-group label="Hora de apertura:" >
-              <b-form-timepicker
+              <b-form-input
                 v-model="form.hora_apertura"
-                :options="hora_apertura"
                 required
-              ></b-form-timepicker>
+              ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:" >
-              <b-form-timepicker
-                v-model="form.hora_inicio"
-                :options="hora_cierre"
+              <b-form-input
+                v-model="form.hora_cierre"
                 required
-              ></b-form-timepicker>
+              ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Sitio web:" >
@@ -68,13 +70,12 @@
               ></b-form-input>
             </b-form-group>
 
-            <p>----------------------------------------------------------------------------</p>
-            <b-form-group label="Tipo:" >
-              <b-form-select
-                v-model="form.tipo"
-                :options="tipo"
-                required
-                ></b-form-select>
+              <b-form-group label="Tipo:"  >
+              <select v-model="form.tipo" class="form-control">
+                  <option v-for="tipo in tipos" :key="tipo.id" required>
+                    {{ tipo.nombre }}
+                  </option>
+                </select>
               </b-form-group>
 
             <b-form-group label="latitud:" >
@@ -121,35 +122,52 @@
 
 <script>
   import recaptcha from '@/components/Centros/recaptcha.vue'
+
+  import axios from 'axios';
   export default {
+    name: 'crearCentro',
+    props: {
+      tipos: Array,
+    },
     components: {
       recaptcha
     },
     data() {
       return {
         form: {
-          nombre:'',
-          direccion:'',
-          telefono: '',
+          nombre:'centroTestApi',
+          direccion:'centroTestApi',
+          telefono: '123123',
           hora_apertura:'00:00:00',
           hora_cierre:'00:00:00',
-          email: '',
-          web: '',
-          tipo: null,
-          longitud: '',
-          latitud: ''
+          email: 'centroTestApi@centroTestApi',
+          web: 'centroTestApi',
+          tipo: '',
+          longitud: '-34.4654',
+          latitud: '-57.4654'
 
 
         },
-        tipo: [{ text: 'Selecione una opción', value: null }, 'Merendero', 'Colegio'],
         show: true,
 
       }
     },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+      onSubmit() {
+        
+        var formData = JSON.stringify(this.form);
+        axios
+        .post(
+          'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/',formData
+        ).then(function () {
+          alert('SUCCESS!!');
+          alert(JSON.stringify(this.form));
+        })
+        .catch(function () {
+          alert('FAILURE!!');
+          alert(JSON.stringify(this.form));
+        });
+
       },
       onReset(evt) {
         evt.preventDefault()

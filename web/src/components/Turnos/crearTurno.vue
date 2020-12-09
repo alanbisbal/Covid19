@@ -1,5 +1,6 @@
 <template>
   <b-container fluid>
+
     <div v-for="turno in turnos" :key="turno.id">
       {{ turno.hora_inicio }}
     </div>
