@@ -1,33 +1,41 @@
 <template>
   <div>
   <b-jumbotron >
-    
-    
+
+
     <template #header >Donaciones Covid19</template>
 
     <template #lead>
       <br>
-      En el contexto de pandemia por el cual atravesamos los más vulnerables son los mas perjudicados.
-      Solicita tu turno para donar ropa ,plasma y sangre en tu centro más cercano.
+      En el contexto de pandemia por el cual atravesamos, los más vulnerables son los más perjudicados.<br>
+      Solicitá tu turno para donar o recibir ropa, plasma o sangre en tu centro más cercano.
       <br>
-      También podes recibir donaciones en caso de necesitarlo
+
+      <br>
+      Para solicitar un turno, dirigase "Centros" para visualizar los centros mas cercanos.<br>
+      Allí deberá seleccionar un centro y un dia en particular al cual desea asistir.
+      Se le solicitará un mail, un teléfono y que seleccione el horario que desea concurrir en caso de estar disponible
+      evitando asi la aglomeración de personas.
+      <br>
+
+      <br>
+      Para agregar un centro, deberá dirigirse a "Solicitar centro" y completar el formulario correspondiente.
+      Su solicitud quedará pendiente hasta que un administrador del sitio certifique y valide que los datos sean correctos.
+      <br>
+
+      <br>
+      Tambien contamos con una sección de estadisticas en el cual se podrá visualizar los datos recolectados hasta el momento.
+
     </template>
 
-    
+
 
     <p>Contacto: Covid19@donaciones.com</p>
-     <div class="form-inline">
-    <div class="col-auto my-1">
-      <b-button variant="primary" :to="{name:'centros'}">Reservar Turno</b-button>
-    </div>
-    <b-button variant="success" :to="{name:'cargarCentro'} ">Solicitar Centro</b-button>
-     </div>
 
-    
+
+
   </b-jumbotron>
 </div>
 
- 
+
 </template>
-
-

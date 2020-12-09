@@ -1,20 +1,20 @@
 <template>
   <div>
-    <myMap/>
-    <index/>
+    <p>seleccion un etc... </P>
+    <myMap />
   </div>
 </template>
 
 
   <script>
-  import index from '@/components/Centros/index.vue'
+
   import myMap from '@/components/Maps/myMap.vue'
 
   export default {
     name: 'App',
     components: {
-      index,
       myMap
     }
+
   }
   </script>
