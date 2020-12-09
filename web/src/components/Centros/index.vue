@@ -2,7 +2,7 @@
   <div >
     <p>---CONSULTA DE TEST DE AXIOS-----</p>
     <div class="content">
-      <p>Nombre: {{ result.centros }}</p>
+      <p v-if="result">Nombre: {{ result.centros }}</p>
 
     </div>
     <p>---FIN-----</p>
