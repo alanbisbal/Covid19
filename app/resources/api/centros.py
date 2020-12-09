@@ -34,6 +34,8 @@ def center_list():
 
     for i in centros_paginados.items:
         data_centro.append({
+            "id":
+            i.id,
             "nombre":
             i.nombre,
             "direccion":
@@ -84,6 +86,7 @@ def center(id):
         return Response(status=404)
     else:
         centro_data = {
+            "id": centro.id,
             "nombre": centro.nombre,
             "direccion": centro.direccion,
             "telefono": centro.telefono,
