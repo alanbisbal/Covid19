@@ -1,9 +1,6 @@
 <template>
 
   <div>
-    <div>
-      QUE ONDA EL recaptcha PA?
-    </div>
     <!-- recaptcha -->
     <vue-recaptcha sitekey="6LeWSfwZAAAAAKK3wJ9QBRpE4ZxnxskEZZMTZz43"
       :loadRecaptchaScript="true" v-on:verify="onCaptchaCheck">
