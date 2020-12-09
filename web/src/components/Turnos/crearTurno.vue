@@ -38,21 +38,22 @@
 
             <b-form-group
               label="Hora de inicio:"
-              description="Los turnos son en bloques de 30 minutos"
+              description="Nota:Los turnos se realizan en bloques de 30 minutos"
             >
-              <b-form-select
+              <select
                 v-model="form.hora_inicio"
-                :options="hora_inicio"
+                class="form-control"
+                id="turno.id"
                 required
-              ></b-form-select>
+              >
+                <option v-for="turno in turnos" :key="turno.id">
+                  {{ turno.hora_inicio }}
+                </option>
+              </select>
             </b-form-group>
 
             <b-form-group label="Fecha:">
-              <b-form-input
-                v-model="form.Fecha"
-                type="date"
-                readonly="true"
-              ></b-form-input>
+              <b-form-input v-model="form.fecha" type="date"></b-form-input>
             </b-form-group>
 
             <b-button type="submit" variant="primary">Crear</b-button>
@@ -77,18 +78,13 @@ export default {
   data() {
     return {
       form: {
+        centro_id: '',
         email: '',
         telefono: '',
         hora_inicio: null,
-        fecha: ' ',
+        hora_fin: '',
+        fecha: '',
       },
-      hora_inicio: [
-        { text: 'Selecione una opción', value: null },
-        'Carrots',
-        'Beans',
-        'Tomatoes',
-        'Corn',
-      ],
       show: true,
     };
   },
