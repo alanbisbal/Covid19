@@ -18,7 +18,7 @@
               Telefono: {{centro.telefono}}<br>
               Direccion: {{centro.direccion}}<br>
               Horarios: {{centro.hora_inicio}}-{{centro.hora_fin}}
-              <b-form @submit="onSubmit" >
+              <b-form @submit.stop.prevent="onSubmit" >
 
                 <b-form-group  >
                   <b-form-input
@@ -70,19 +70,20 @@ export default {
    LPopup
  },
  methods: {
+   onSubmit() {
+      this.$router.push({   name:'turno', params: {id:'19', fecha:'2020-12-12'} })
+   },
    latLng: function (lat,lng) {
      return L.latLng(lat,lng);
-   },
- },
+      },
+    },
 
   mounted: function () {
       axios.get("https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros").then((result) => {
         this.centros = result.data.centros;
       })
     },
-    onSubmit() {
-      this.$router.push({ path:"/turno" });
-    }
+
 };
 
 </script>
