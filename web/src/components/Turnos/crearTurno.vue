@@ -1,6 +1,5 @@
 <template>
   <b-container fluid>
-
     <div v-for="turno in turnos" :key="turno.id">
       {{ turno.hora_inicio }}
     </div>
@@ -17,7 +16,7 @@
           style="max-width: 50rem;"
           align="center"
         >
-          <b-form @submit="postAppointment" @reset="onReset" v-if="show">
+          <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group label="Email:">
               <b-form-input
                 v-model="form.email"
@@ -69,8 +68,8 @@
 </template>
 
 <script>
-import axios from 'axios';
 import recaptcha from '@/components/Centros/recaptcha.vue';
+import axios from 'axios';
 export default {
   components: {
     recaptcha,
@@ -81,27 +80,19 @@ export default {
   data() {
     return {
       form: {
-        centro_id: '',
+        centro_id: '19',
         email: '',
         telefono: '',
         hora_inicio: null,
-        hora_fin: '',
+        hora_fin: '09:30',
         fecha: '',
       },
       show: true,
     };
   },
   methods: {
-    postAppointment(evt) {
+    onSubmit(evt) {
       evt.preventDefault();
-      const newAppointment = {
-        email: this.email,
-        fecha: this.fecha,
-        hora_inicio: this.hora_inicio,
-      };
-      this.addAppointment(newAppointment);
-    },
-    addAppointment(payload) {
       const url =
         'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/19/reserva';
       axios({
@@ -110,7 +101,7 @@ export default {
         headers: {
           'Content-Type': 'application/json',
         },
-        data: JSON.stringify(payload),
+        data: JSON.stringify(this.form),
       })
         .then((response) => {
           console.log(response);
@@ -123,13 +114,14 @@ export default {
                 console.log(key, ':', element);
               });
             }
+          } else if (error.request) {
+            console.log('Error! request:', error.response);
           } else {
             // eslint-disable-next-line
             console.log(error);
           }
         });
     },
-
     onReset(evt) {
       evt.preventDefault();
       // Reset our form values
