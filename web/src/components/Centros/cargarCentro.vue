@@ -143,8 +143,8 @@
           email: 'centroTestApi@centroTestApi',
           web: 'centroTestApi',
           tipo: '',
-          longitud: '-34.4654',
-          latitud: '-57.4654'
+          longitud: '0',
+          latitud: '0'
 
 
         },
@@ -154,18 +154,14 @@
     },
     methods: {
       onSubmit() {
-        
-        var formData = JSON.stringify(this.form);
         axios
         .post(
-          'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/',formData
-        ).then(function () {
-          alert('SUCCESS!!');
-          alert(JSON.stringify(this.form));
+          'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/centros',this.form
+        ).then(response => {
+          alert(response);
         })
-        .catch(function () {
-          alert('FAILURE!!');
-          alert(JSON.stringify(this.form));
+        .catch(error=> {
+          alert(error);
         });
 
       },
