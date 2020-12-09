@@ -55,8 +55,7 @@
               <b-form-input v-model="form.fecha" type="date"></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Crear</b-button>
-            <b-button type="reset" variant="danger">Limpiar</b-button>
+            <recaptcha />
           </b-form>
 
           <b-card class="mt-3" header="Form Data Result">
@@ -69,8 +68,11 @@
 </template>
 
 <script>
+import recaptcha from '@/components/Centros/recaptcha.vue';
 export default {
-  name: 'crearTurno',
+  components: {
+    recaptcha,
+  },
   props: {
     turnos: Array,
   },
