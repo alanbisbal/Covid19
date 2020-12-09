@@ -19,9 +19,23 @@
               Direccion: {{centro.direccion}}<br>
               Horarios: {{centro.hora_inicio}}-{{centro.hora_fin}}
               <b-form @submit="onSubmit" >
-                  {{centro.id}}
+
+                <b-form-group  >
+                  <b-form-input
+                    v-model= "centro.id"
+                    type="text"
+                    required
+                    hidden
+                    value = centro.id
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group >
                   <b-calendar v-model="value" ></b-calendar>
-                  <b-button type="submit" variant="primary">Reservar Turno</b-button>
+                </b-form-group>
+
+
+                <b-button type="submit" variant="primary">Reservar Turno</b-button>
               </b-form>
             </l-popup>
       </l-marker>
@@ -66,6 +80,9 @@ export default {
         this.centros = result.data.centros;
       })
     },
+    onSubmit() {
+      this.$router.push({ path:"/turno" });
+    }
 };
 
 </script>
