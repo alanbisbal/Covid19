@@ -1,11 +1,15 @@
 <template>
 
+<<<<<<< HEAD
   <div >
     <div>
       Marker icon are retrieved from custom path
 
       {{ centros }}
     </div>
+=======
+  <div>
+>>>>>>> 1804dc190e05c2d89cee51a6154dfb47861ab950
     <l-map
       :zoom="zoom"
       :center="center"
@@ -18,15 +22,15 @@
       <l-marker
         :key="index"
         v-for="(centro,index) in centros"
-        :lat-lng="latLng(centro.latitud,centro.longitud)"
-      />
+        :lat-lng="latLng(centro.latitud,centro.longitud)" />
 
     </l-map>
   </div>
 </template>
 
 <script>
-import L from 'leaflet';
+import axios from "axios";
+import L from "leaflet";
 import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 
 export default {
@@ -35,24 +39,31 @@ export default {
     centros: Array
   },
   data() {
-    return {
-      zoom: 11,
-      center: [-34.9159, -57.9924],
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attribution:
-      '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: L.latLng(-34.9159, -57.9924)
-    };
-  },
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker,
-  },
-  methods: {
-    latLng: function (lat,lng) {
-      return L.latLng(lat,lng);
+   return {
+     zoom: 11,
+     center: [-34.9159, -57.9924],
+     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+     attribution:
+     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+     marker: L.latLng(-34.9159, -57.9924)
+   };
+ },
+ components: {
+   LMap,
+   LTileLayer,
+   LMarker,
+ },
+ methods: {
+   latLng: function (lat,lng) {
+     return L.latLng(lat,lng);
+   },
+ },
+
+  mounted: function () {
+      axios.get("https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros").then((result) => {
+        this.centros = result.data.centros;
+      })
     },
-  }
 };
+
 </script>

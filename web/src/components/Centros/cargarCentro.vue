@@ -44,19 +44,19 @@
 
 
             <b-form-group label="Hora de apertura:" >
-              <b-form-select
+              <b-form-timepicker
                 v-model="form.hora_apertura"
                 :options="hora_apertura"
                 required
-              ></b-form-select>
+              ></b-form-timepicker>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:" >
-              <b-form-select
+              <b-form-timepicker
                 v-model="form.hora_inicio"
                 :options="hora_cierre"
                 required
-              ></b-form-select>
+              ></b-form-timepicker>
             </b-form-group>
 
             <b-form-group label="Sitio web:" >
@@ -137,8 +137,8 @@
           nombre:'',
           direccion:'',
           telefono: '',
-          hora_apertura:'',
-          hora_cierre:'',
+          hora_apertura:'00:00:00',
+          hora_cierre:'00:00:00',
           email: '',
           web: '',
           tipo: null,
@@ -168,10 +168,10 @@
         this.form.nombre = ''
         this.form.direccion = ''
         this.form.telefono = ''
-        this.form.hora_apertura = null
-        this.form.hora_cierre = null
+        this.form.hora_apertura = ''
+        this.form.hora_cierre = ''
         this.form.web= ''
-        this.form.tipo= null
+        this.form.tipo= ''
         this.form.longitud= ''
         this.form.latitud= ''
         // Trick to reset/clear native browser form validation state
