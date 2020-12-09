@@ -70,6 +70,9 @@ export default {
    LPopup
  },
  methods: {
+   onSubmit() {
+     this.$router.push({ name: 'home', params: { userId } });
+   },
    latLng: function (lat,lng) {
      return L.latLng(lat,lng);
    },
@@ -80,9 +83,6 @@ export default {
         this.centros = result.data.centros;
       })
     },
-    onSubmit() {
-      this.$router.push({ path:"/turno" });
-    }
 };
 
 </script>
