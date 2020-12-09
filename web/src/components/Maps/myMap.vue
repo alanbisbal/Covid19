@@ -31,7 +31,7 @@
                 </b-form-group>
 
                 <b-form-group >
-                  <b-calendar v-model="value" ></b-calendar>
+                  <b-calendar v-model="fecha" ></b-calendar>
                 </b-form-group>
 
 
@@ -71,7 +71,7 @@ export default {
  },
  methods: {
    onSubmit() {
-      this.$router.push({   name:'turno', params: {id:'19', fecha:'2020-12-12'} })
+      this.$router.push({   name:'turno', params: {id: '19' , fecha:this.fecha} })
    },
    latLng: function (lat,lng) {
      return L.latLng(lat,lng);
