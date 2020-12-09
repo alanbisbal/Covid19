@@ -16,7 +16,7 @@
           style="max-width: 50rem;"
           align="center"
         >
-          <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+          <b-form @submit="postAppointment" @reset="onReset" v-if="show">
             <b-form-group label="Email:">
               <b-form-input
                 v-model="form.email"
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import recaptcha from '@/components/Centros/recaptcha.vue';
 export default {
   components: {
@@ -90,10 +91,44 @@ export default {
     };
   },
   methods: {
-    onSubmit(evt) {
+    postAppointment(evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.form));
+      const newAppointment = {
+        email: this.email,
+        fecha: this.fecha,
+        hora_inicio: this.hora_inicio,
+      };
+      this.addAppointment(newAppointment);
     },
+    addAppointment(payload) {
+      const url =
+        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/19/reserva';
+      axios({
+        method: 'POST',
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(payload),
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log('Error! response:', error.response.data);
+            for (let key in error.response.data) {
+              error.response.data[key].forEach((element) => {
+                console.log(key, ':', element);
+              });
+            }
+          } else {
+            // eslint-disable-next-line
+            console.log(error);
+          }
+        });
+    },
+
     onReset(evt) {
       evt.preventDefault();
       // Reset our form values
