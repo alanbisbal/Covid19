@@ -153,18 +153,37 @@
       }
     },
     methods: {
-      onSubmit() {
-        axios
-        .post(
-          'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/centros',this.form
-        ).then(response => {
-          alert(response);
-        })
-        .catch(error=> {
-          alert(error);
-        });
-
-      },
+          onSubmit(evt) {
+            evt.preventDefault();
+            const url =
+                'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/centros';
+            axios({
+              method: 'POST',
+              url,
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              data: JSON.stringify(this.form),
+            })
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                if (error.response) {
+                  console.log('Error! response:', error.response.data);
+                  for (let key in error.response.data) {
+                    error.response.data[key].forEach((element) => {
+                      console.log(key, ':', element);
+                    });
+                  }
+                } else if (error.request) {
+                  console.log('Error! request:', error.response);
+                } else {
+                  // eslint-disable-next-line
+                  console.log(error);
+                }
+              });
+          },
       onReset(evt) {
         evt.preventDefault()
         // Reset our form values
