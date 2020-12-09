@@ -12,8 +12,19 @@
       <l-marker
         :key="index"
         v-for="(centro,index) in centros"
-        :lat-lng="latLng(centro.latitud,centro.longitud)" />
-
+        :lat-lng="latLng(centro.latitud,centro.longitud)" >
+            <l-popup>
+              Nombre: {{centro.nombre}}<br>
+              Telefono: {{centro.telefono}}<br>
+              Direccion: {{centro.direccion}}<br>
+              Horarios: {{centro.hora_inicio}}-{{centro.hora_fin}}
+              <b-form @submit="onSubmit" >
+                  {{centro.id}}
+                  <b-calendar v-model="value" ></b-calendar>
+                  <b-button type="submit" variant="primary">Reservar Turno</b-button>
+              </b-form>
+            </l-popup>
+      </l-marker>
     </l-map>
   </div>
 </template>
@@ -21,7 +32,7 @@
 <script>
 import axios from "axios";
 import L from "leaflet";
-import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup} from "vue2-leaflet";
 
 export default {
   name: "myMap",
@@ -42,6 +53,7 @@ export default {
    LMap,
    LTileLayer,
    LMarker,
+   LPopup
  },
  methods: {
    latLng: function (lat,lng) {
