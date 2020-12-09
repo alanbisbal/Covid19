@@ -1,15 +1,5 @@
 <template>
-
-<<<<<<< HEAD
-  <div >
-    <div>
-      Marker icon are retrieved from custom path
-
-      {{ centros }}
-    </div>
-=======
   <div>
->>>>>>> 1804dc190e05c2d89cee51a6154dfb47861ab950
     <l-map
       :zoom="zoom"
       :center="center"
