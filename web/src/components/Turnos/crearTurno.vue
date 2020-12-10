@@ -84,7 +84,7 @@ export default {
         email: '',
         telefono: '',
         hora_inicio: null,
-        hora_fin: '09:30',
+        hora_fin: '10:00',
         fecha: '',
       },
       show: true,

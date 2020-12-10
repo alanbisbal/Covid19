@@ -122,8 +122,8 @@ def center_create():
         form.nombre = data['nombre']
         form.direccion = data['direccion']
         form.telefono = data['telefono']
-        form.hora_inicio = data['hora_inicio']
-        form.hora_fin = data['hora_fin']
+        form.hora_inicio = datetime.strptime(data['hora_inicio'])
+        form.hora_fin = datetime.strptime(data['hora_fin'])
         form.web = data['web']
         form.email = data['email']
         form.tipo_centro = data['tipo_centro']
@@ -149,8 +149,17 @@ def center_create():
         centro = Centro.add(form.data)
         if not centro:
             return Response('El centro no existe', status=400)
-    except:
-        return Response('Error de servidor', status=500)
+
+    except Exception as e:
+        data = request.get_json()
+        data['hora_inicio'] = data['hora_apertura']
+        print("Veamos que onda pa: ", str(e))
+        print("DATAAA: ", data)
+        form = CenterForm(csrf_enabled=False)
+        form.hora_inicio = data['hora_inicio']
+        print("LA HORA INICIOOO! ", form.hora_inicio)
+        #print("LA HORA INICIO: ", form.hora_inicio)
+        return Response('Error de servidorASD', status=500)
 
     centro_creado = {}
 
