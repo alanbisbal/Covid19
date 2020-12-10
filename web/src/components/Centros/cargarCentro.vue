@@ -44,19 +44,11 @@
             </b-form-group>
 
             <b-form-group label="Hora de apertura:">
-              <b-form-input
-                v-model="form.hora_inicio"
-                type="time"
-                required
-              ></b-form-input>
+              <b-form-input v-model="form.hora_inicio" required></b-form-input>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:">
-              <b-form-input
-                v-model="form.hora_fin"
-                type="time"
-                required
-              ></b-form-input>
+              <b-form-input v-model="form.hora_fin" required></b-form-input>
             </b-form-group>
 
             <b-form-group label="Sitio web:">
@@ -132,12 +124,11 @@ export default {
         nombre: '',
         direccion: '',
         telefono: '',
-        hora_inicio: '',
-        hora_fin: '',
+        hora_inicio: '10:00',
+        hora_fin: '10:30',
         email: '',
         web: '',
         tipo: '',
-        estado_id: '1',
         latitud: '-34.9759',
         longitud: '-57.9324',
         municipio_id: '19',

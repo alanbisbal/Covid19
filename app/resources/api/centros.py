@@ -24,7 +24,9 @@ def center_list():
         page = 1
 
     try:
-        centros_paginados = Centro.publicados().paginate(page,per_page,error_out=False)
+        centros_paginados = Centro.publicados().paginate(page,
+                                                         per_page,
+                                                         error_out=False)
     except:
         return Response(status=500)
 
@@ -168,14 +170,12 @@ def center_create():
     final = json.dumps({"atributos": centro_creado}, indent=2)
     return Response(final, status=201)
 
+
 def center_types():
     data = []
     tipos = Tipo_centro.all()
     for i in tipos:
-        data.append({
-            "id": i.id,
-            "nombre": i.nombre
-        })
+        data.append({"id": i.id, "nombre": i.nombre})
 
     final = json.dumps({"tipos": data}, indent=2, ensure_ascii=False)
     return Response(final, mimetype='application/json')
