@@ -1,7 +1,7 @@
 from flask import request
 from sqlalchemy.orm import relationship
 from collections import defaultdict
-
+ 
 from app import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey

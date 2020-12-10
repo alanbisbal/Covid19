@@ -18,20 +18,20 @@
               Telefono: {{centro.telefono}}<br>
               Direccion: {{centro.direccion}}<br>
               Horarios: {{centro.hora_inicio}}-{{centro.hora_fin}}
-              <b-form @submit="onSubmit" >
+              <b-form @submit.stop.prevent="onSubmit(centro.id)" >
 
                 <b-form-group  >
                   <b-form-input
-                    v-model= "centro.id"
+                    v-model.number= "centro.id"
                     type="text"
                     required
-                    hidden
+
                     value = centro.id
                   ></b-form-input>
                 </b-form-group>
 
                 <b-form-group >
-                  <b-calendar v-model="value" ></b-calendar>
+                  <b-calendar v-model="fecha" ></b-calendar>
                 </b-form-group>
 
 
@@ -70,19 +70,20 @@ export default {
    LPopup
  },
  methods: {
+   onSubmit(centro_id) {
+      this.$router.push({   name:'turno', params: { id:centro_id, fecha:this.fecha } })
+   },
    latLng: function (lat,lng) {
      return L.latLng(lat,lng);
-   },
- },
+      },
+    },
 
   mounted: function () {
       axios.get("https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros").then((result) => {
         this.centros = result.data.centros;
       })
     },
-    onSubmit() {
-      this.$router.push({ path:"/turno" });
-    }
+
 };
 
 </script>

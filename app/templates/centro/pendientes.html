@@ -65,6 +65,13 @@
        </form>
        </td>
        <td>
+       <form action="{{ url_for('centro_update', centro_id = centro.id ) }}"  >
+         {{csrf_token}}
+         <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+       </form>
+     </td>
+     <td>
+
        <form action="{{ url_for('centro_publicar', centro_id = centro.id ) }}" method ="post" >
            {{csrf_token }}
          <button type="submit" class="btn btn-primary mt-2">Publicar</button>

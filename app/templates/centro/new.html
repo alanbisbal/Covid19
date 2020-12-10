@@ -55,9 +55,23 @@ title %}Centros{% endblock %} {% block content %}
           id: 'mapbox.streets',
         }
       ).addTo(mymap);
-      L.marker([-34.9308959, -57.9278606]).addTo(mymap);
+      var layerGroup = L.layerGroup().addTo(mymap);
+
+
+
+      mymap.on('click', function(e){
+          layerGroup.clearLayers();
+          lat = e.latlng.lat;
+          lng = e.latlng.lng;
+          L.marker(e.latlng,{draggable:"true"}).addTo(layerGroup);
+          document.getElementById("latitud").value = lat.toString();
+          document.getElementById("longitud").value = lng.toString();
+
+     });
+
+
     </script>
-    
+
   </div>
    <!-- let latLng = mymap.mouseEventToLatLng(e.originalEvent)-->
    <!--L.marker.setLatLng([latLng.lat, latLng.lng]) -->

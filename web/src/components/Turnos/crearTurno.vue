@@ -1,6 +1,5 @@
 <template>
   <b-container fluid>
-
     <div v-for="turno in turnos" :key="turno.id">
       {{ turno.hora_inicio }}
     </div>
@@ -56,8 +55,7 @@
               <b-form-input v-model="form.fecha" type="date"></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary">Crear</b-button>
-            <b-button type="reset" variant="danger">Limpiar</b-button>
+            <recaptcha />
           </b-form>
 
           <b-card class="mt-3" header="Form Data Result">
@@ -70,19 +68,23 @@
 </template>
 
 <script>
+import recaptcha from '@/components/Centros/recaptcha.vue';
+import axios from 'axios';
 export default {
-  name: 'crearTurno',
+  components: {
+    recaptcha,
+  },
   props: {
     turnos: Array,
   },
   data() {
     return {
       form: {
-        centro_id: '',
+        centro_id: '19',
         email: '',
         telefono: '',
         hora_inicio: null,
-        hora_fin: '',
+        hora_fin: '10:00',
         fecha: '',
       },
       show: true,
@@ -91,7 +93,34 @@ export default {
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.form));
+      const url =
+        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/19/reserva';
+      axios({
+        method: 'POST',
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(this.form),
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log('Error! response:', error.response.data);
+            for (let key in error.response.data) {
+              error.response.data[key].forEach((element) => {
+                console.log(key, ':', element);
+              });
+            }
+          } else if (error.request) {
+            console.log('Error! request:', error.response);
+          } else {
+            // eslint-disable-next-line
+            console.log(error);
+          }
+        });
     },
     onReset(evt) {
       evt.preventDefault();

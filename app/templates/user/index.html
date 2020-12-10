@@ -12,7 +12,7 @@
 
 <form class="form-inline md-form mr-auto mb-4" action="{{ url_for('user_search') }}">
   <h1 class="my-0 mr-md-auto font-weight-normal">Usuarios</h1>
-
+ 
   <input class="form-control mr-sm-2" type="text" name="filtro" placeholder="Buscar.." aria-label="Search">
     <select class='form-control mr-sm-2' name='estado'>
       <option value='---'{% if estado=="---" %} selected="selected" {% endif %} selected>---</option>
