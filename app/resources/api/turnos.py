@@ -5,7 +5,7 @@ from flask import jsonify, request, abort, Response
 from datetime import date, datetime, time, timedelta
 import json
 
- 
+
 def turno_list(id, fecha=date.today()):
     """
     Devuelve un json que contiene el listado de los turnos disponibles para un centro de ayuda en un día en particular.

@@ -3,7 +3,7 @@ from flask import request
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import permiso, user, users_rols, rols_permisos
- 
+
 
 class Rol(db.Model):
     __tablename__ = 'rols'
