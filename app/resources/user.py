@@ -10,7 +10,7 @@ from app.helpers.auth import authenticated
 from app import db
 from app.models.config import Config
 
-from app.helpers.forms import ConfigForm
+from app.helpers.forms import ConfigForm 
 
 from app.helpers.validates import form_user_new, exist_email, exist_username, form_user_update, exist_email_update, exist_username_update, sanitizar_input
 from app.helpers.permits import has_permit, is_admin

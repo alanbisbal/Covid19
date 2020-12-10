@@ -1,6 +1,6 @@
 from app import db
 from flask import request
-
+ 
 from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
 

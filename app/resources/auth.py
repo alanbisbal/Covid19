@@ -7,13 +7,13 @@ from app.helpers.permits import is_admin
 from app.helpers.auth import authenticated
 from app import db
 
-
+ 
 def login():
     return render_template("auth/login.html")
 
 
 def authenticate():
-    """ 
+    """
     Este método realiza la autenticación de un usuario teniendo en cuenta si los datos ingresados son correctos,
     si el usuario se encuntra o no activo y si la pagina está o no habilitada
 
@@ -41,7 +41,7 @@ def authenticate():
 
 
 def logout():
-    """ 
+    """
     Este método verifica si el usuario esta logueado,de ser así lo desloguea
 
     """

@@ -6,7 +6,7 @@ from app import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
-
+ 
 
 class Tipo_centro(db.Model):
     __tablename__ = 'tipo_centros'

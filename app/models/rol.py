@@ -3,7 +3,7 @@ from flask import request
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import permiso, user, users_rols, rols_permisos
-
+ 
 
 class Rol(db.Model):
     __tablename__ = 'rols'
@@ -29,14 +29,14 @@ class Rol(db.Model):
         return [permiso.name for permiso in self.permisos]
 
     def has_permit(self, permit_name):
-        """ 
-        Obtiene los permisos y devuelve un boolean respecto al nombre del permisos que se paso por parametro 
+        """
+        Obtiene los permisos y devuelve un boolean respecto al nombre del permisos que se paso por parametro
         """
         permits = map(lambda p: p.name == permit_name, self.permisos)
         return any(permits)
 
     def except_rols(roles):
-        """ 
+        """
         Retorna todos los roles menos aquellos que coincidan por el rol pasado por parametro
         """
         allrols = db.session.query(Rol).all()

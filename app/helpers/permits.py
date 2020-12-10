@@ -1,6 +1,6 @@
 from flask import redirect, url_for, flash, session
 from app.models.user import User
-
+ 
 from app.models.rol import Rol
 from app.models.permiso import Permiso
 

@@ -4,7 +4,7 @@ import bleach
 from app.models.user import User
 from app.helpers.upload import upload_pdf
 import datetime
-
+ 
 def form_user_new(data):
     ok = True
     if not data['username']:

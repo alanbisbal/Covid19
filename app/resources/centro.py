@@ -6,7 +6,7 @@ from app.models.centro import Centro
 from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.helpers.forms import CenterForm
-
+ 
 from app.helpers.validates import form_config_update, sanitizar_input
 from app.helpers.permits import has_permit, is_admin
 import requests
