@@ -3,6 +3,17 @@
     <div v-for="turno in turnos" :key="turno.id">
       {{ turno.hora_inicio }}
     </div>
+    <!---cartel verde de exitoso  el v-if turnoCreado=true en el .then-->
+    <div>
+      <b-alert show dismissible fade variant="success" v-if="turnoCreado"
+        >Turno creado exitosamente</b-alert
+      >
+    </div>
+    <div>
+      <b-alert show dismissible fade variant="danger" v-if="turnoError"
+        >{{ msg }}
+      </b-alert>
+    </div>
 
     <div class="container col-md-8 col-sm-12">
       <b-card-group deck>
@@ -20,7 +31,6 @@
             <b-form-group label="Email:">
               <b-form-input
                 v-model="form.email"
-                type="email"
                 required
                 placeholder="Ingrese email"
               ></b-form-input>
@@ -87,6 +97,8 @@ export default {
         hora_fin: '10:00',
         fecha: '',
       },
+      turnoCreado: false,
+      turnoError: false,
       show: true,
     };
   },
@@ -104,20 +116,26 @@ export default {
         data: JSON.stringify(this.form),
       })
         .then((response) => {
+          this.turnoCreado = true;
           console.log(response);
         })
         .catch((error) => {
+          this.turnoError = true;
           if (error.response) {
             console.log('Error! response:', error.response.data);
+            this.msg = ('Error!:', error.response.data);
             for (let key in error.response.data) {
               error.response.data[key].forEach((element) => {
+                this.msg = (key, ':', element);
                 console.log(key, ':', element);
               });
             }
           } else if (error.request) {
+            this.msg = ('Error!:', error.response);
             console.log('Error! request:', error.response);
           } else {
             // eslint-disable-next-line
+            this.msg = ('Error!:', error);
             console.log(error);
           }
         });
