@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>seleccion un etc... </P>
     <myMap />
   </div>
 </template>
