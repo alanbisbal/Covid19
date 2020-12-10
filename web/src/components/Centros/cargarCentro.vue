@@ -156,7 +156,19 @@ export default {
         headers: {
           'Content-Type': 'application/json',
         },
-        data: JSON.stringify(this.form),
+        data: {
+         "nombre": "Iglesia Sagrado Corazón de Jesús",
+         "direccion": "Diagonal 73 nro 1032",
+         "telefono": "221 - 5139019",
+         "hora_apertura": "09:30",
+         "hora_cierre": "18:00",
+         "tipo": "Institución religiosa",
+         "web": "",
+         "email": "asdasd@asdasd.com",
+         "latitud":"-34.9159",
+         "longitud":"-57.9924",
+         "municipio_id":"24"
+        },
       })
         .then((response) => {
           console.log(response);
