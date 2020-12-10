@@ -1,8 +1,5 @@
 <template>
   <b-container fluid>
-    <div v-for="turno in turnos" :key="turno.id">
-      {{ turno.hora_inicio }}
-    </div>
     <!---cartel verde de exitoso  el v-if turnoCreado=true en el .then-->
     <div>
       <b-alert show dismissible fade variant="success" v-if="turnoCreado"
@@ -62,15 +59,15 @@
             </b-form-group>
 
             <b-form-group label="Fecha:">
-              <b-form-input v-model="form.fecha" type="date"></b-form-input>
+              <b-form-input
+                readonly
+                v-model="form.fecha"
+                type="date"
+              ></b-form-input>
             </b-form-group>
 
             <recaptcha />
           </b-form>
-
-          <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
-          </b-card>
         </b-card>
       </b-card-group>
     </div>
@@ -90,12 +87,12 @@ export default {
   data() {
     return {
       form: {
-        centro_id: '19',
+        centro_id: '',
         email: '',
         telefono: '',
         hora_inicio: null,
         hora_fin: '10:00',
-        fecha: '',
+        fecha: this.$route.params.fecha,
       },
       turnoCreado: false,
       turnoError: false,
@@ -106,7 +103,9 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       const url =
-        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/19/reserva';
+        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/' +
+        this.$route.params.id +
+        '/reserva';
       axios({
         method: 'POST',
         url,

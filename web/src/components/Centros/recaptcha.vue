@@ -8,12 +8,8 @@
     >
     </vue-recaptcha>
 
-    <p v-if="!captchacheck" variant="danger">
-      ----------------------VERIFICAR CAPTCHA----------------------
-    </p>
-    <p v-else variant="success">
-      ----------------------VERIFICADO----------------------
-    </p>
+    <p v-if="!captchacheck" variant="danger"></p>
+    <p v-else variant="success"></p>
 
     <b-button type="submit" variant="primary" :disabled="!captchacheck"
       >Crear</b-button
