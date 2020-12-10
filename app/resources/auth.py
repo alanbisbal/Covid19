@@ -13,10 +13,10 @@ def login():
 
 
 def authenticate():
-    """ Este metodo realiza la autenticacion de un usuario,
-    teniendo en cuenta si los datos ingresados en el formulario
-    son correctos, si el usuario se encuntra o no activo,
-    y si la pagina está o no habilitada
+    """
+    Este método realiza la autenticación de un usuario teniendo en cuenta si los datos ingresados son correctos,
+    si el usuario se encuntra o no activo y si la pagina está o no habilitada
+
     """
     user = db.session.query(User).filter(
         User.username == request.form['username']).filter(
@@ -38,6 +38,13 @@ def authenticate():
 
 
 def logout():
+<<<<<<< HEAD
+=======
+    """
+    Este método verifica si el usuario esta logueado,de ser así lo desloguea
+
+    """
+>>>>>>> e8e4e48d97e48ff228be64d7687192c3dc8560d8
     if not authenticated(session):
         return redirect(url_for("home"))
     del session["user"]

@@ -30,6 +30,12 @@ def turno_list(id, fecha=date.today()):
 
 
 def turno_create(id):
+    """
+    Devuelve un json con la reserva de un turno para un centro de ayuda en particular,
+    verificando que no se agreguen dos turnos para el mismo centro y con el mismo bloque de horario
+    en un mismo día
+
+    """
     data = request.get_json()
     form = TurnoForm(csrf_enabled=False)
     form.email = data['email']

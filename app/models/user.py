@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
 
 from app.models import rol, users_rols
-
+ 
 
 class User(db.Model):
     __tablename__ = 'users'

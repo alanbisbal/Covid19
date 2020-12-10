@@ -1,7 +1,7 @@
 import os
 import uuid
 from flask import current_app
-
+ 
 
 def get_real_path():
     return os.path.join(os.path.realpath('.'),

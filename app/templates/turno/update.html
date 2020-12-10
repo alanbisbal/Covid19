@@ -18,7 +18,7 @@
     {% if form.csrf_token.errors %}
       <div class="warning">You have submitted an invalid CSRF token</div>
     {% endif %}
-
+ 
     <input type="hidden" class="form-control"  id="turno_id" name="turno_id" value="{{turno.id}}">
 
     {{wtf.form_field(form.email,value=turno.email)}}

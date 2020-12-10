@@ -9,7 +9,7 @@ from app.helpers.auth import authenticated
 
 from app.helpers.forms import TurnoForm, NewTurnoForm, SearchForm
 
-#from app.helpers.validates import
+#from app.helpers.validates import 
 from app.helpers.permits import has_permit, is_admin
 from datetime import datetime, time, timedelta, date
 

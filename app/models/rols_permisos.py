@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Table, Column, Integer, ForeignKey
 
 from app.models import rol, permiso
-
+ 
 
 class Rols_permisos(db.Model):
     ____tablename__ = 'rols_permisos'

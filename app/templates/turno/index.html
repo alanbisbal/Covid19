@@ -9,7 +9,7 @@ block content %} {% if centro_id is defined %}
   </div>
 </form>
 {% else %}
-
+ 
 <form action="{{ url_for('turno_new_all') }}">
   {{csrf_token}}
   <div class="form-inline">
