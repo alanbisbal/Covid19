@@ -38,13 +38,10 @@ def authenticate():
 
 
 def logout():
-<<<<<<< HEAD
-=======
     """
     Este método verifica si el usuario esta logueado,de ser así lo desloguea
 
     """
->>>>>>> e8e4e48d97e48ff228be64d7687192c3dc8560d8
     if not authenticated(session):
         return redirect(url_for("home"))
     del session["user"]
