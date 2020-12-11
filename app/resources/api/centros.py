@@ -137,10 +137,16 @@ def center_create():
 
         sanitizar_input(form)
         centro = Centro.add(form.data)
+        print("try centro: ", form)
         if not centro:
             return Response('El centro no existe', status=400)
-    except:
-        return Response('Error de servidor', status=500)
+
+    except Exception as e:
+        data = request.get_json()
+        data['hora_inicio'] = data['hora_apertura']
+        form = CenterForm(csrf_enabled=False)
+        form.hora_inicio = data['hora_inicio']
+        return Response('Error de servidorASD', status=500)
 
     centro_creado = {}
 
