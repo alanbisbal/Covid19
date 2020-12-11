@@ -43,7 +43,7 @@ def create_app(environment="development"):
 
     # Cors
     CORS(app)
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}}, support_credentials=True)
     # Configure db
 
     db.init_app(app)
