@@ -104,6 +104,7 @@ def center_create():
         tipo = Tipo_centro.with_name(data['tipo'])
         data['estado_id'] = 3
         data['tipo_centro'] = tipo.id
+        data['municipio_id'] = ''
 
         form = CenterForm(csrf_enabled=False)
         form.nombre = data['nombre']
