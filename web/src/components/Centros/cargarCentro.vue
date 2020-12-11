@@ -136,7 +136,7 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       const url =
-        'http://127.0.0.1:5000/api/centros';
+        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros';
       axios({
         method: 'POST',
         url,
