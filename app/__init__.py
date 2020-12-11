@@ -20,7 +20,7 @@ from app.resources.api import centros as api_centros
 from app.resources.api import turnos as api_turnos
 from flask_googlemaps import GoogleMaps
 from flask_cors import CORS
-
+ 
 db = SQLAlchemy()
 
 
@@ -43,7 +43,7 @@ def create_app(environment="development"):
 
     # Cors
     CORS(app)
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}}, support_credentials=True)
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
     # Configure db
 
     db.init_app(app)
