@@ -16,7 +16,7 @@ def center_list():
      publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion
 
     """
-    per_page = Config.getConfig().elementos
+    per_page = Config.getConfig().cant_elements()
 
     try:
         page = int(request.args["page"])
