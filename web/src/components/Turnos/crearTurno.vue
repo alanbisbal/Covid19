@@ -1,7 +1,15 @@
 <template>
   <b-container fluid>
-    <div v-for="turno in turnos" :key="turno.id">
-      {{ turno.hora_inicio }}
+    <!---cartel verde de exitoso  el v-if turnoCreado=true en el .then-->
+    <div>
+      <b-alert show dismissible fade variant="success" v-if="turnoCreado"
+        >Turno creado exitosamente</b-alert
+      >
+    </div>
+    <div>
+      <b-alert show dismissible fade variant="danger" v-if="turnoError"
+        >{{ msg }}
+      </b-alert>
     </div>
 
     <div class="container col-md-8 col-sm-12">
@@ -20,7 +28,6 @@
             <b-form-group label="Email:">
               <b-form-input
                 v-model="form.email"
-                type="email"
                 required
                 placeholder="Ingrese email"
               ></b-form-input>
@@ -52,15 +59,15 @@
             </b-form-group>
 
             <b-form-group label="Fecha:">
-              <b-form-input v-model="form.fecha" type="date"></b-form-input>
+              <b-form-input
+                readonly
+                v-model="form.fecha"
+                type="date"
+              ></b-form-input>
             </b-form-group>
 
             <recaptcha />
           </b-form>
-
-          <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
-          </b-card>
         </b-card>
       </b-card-group>
     </div>
@@ -80,13 +87,15 @@ export default {
   data() {
     return {
       form: {
-        centro_id: '19',
+        centro_id: '',
         email: '',
         telefono: '',
         hora_inicio: null,
         hora_fin: '10:00',
-        fecha: '',
+        fecha: this.$route.params.fecha,
       },
+      turnoCreado: false,
+      turnoError: false,
       show: true,
     };
   },
@@ -94,7 +103,9 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       const url =
-        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/19/reserva';
+        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/' +
+        this.$route.params.id +
+        '/reserva';
       axios({
         method: 'POST',
         url,
@@ -104,20 +115,26 @@ export default {
         data: JSON.stringify(this.form),
       })
         .then((response) => {
+          this.turnoCreado = true;
           console.log(response);
         })
         .catch((error) => {
+          this.turnoError = true;
           if (error.response) {
             console.log('Error! response:', error.response.data);
+            this.msg = ('Error!:', error.response.data);
             for (let key in error.response.data) {
               error.response.data[key].forEach((element) => {
+                this.msg = (key, ':', element);
                 console.log(key, ':', element);
               });
             }
           } else if (error.request) {
+            this.msg = ('Error!:', error.response);
             console.log('Error! request:', error.response);
           } else {
             // eslint-disable-next-line
+            this.msg = ('Error!:', error);
             console.log(error);
           }
         });

@@ -1,8 +1,5 @@
 <template>
   <b-container fluid>
-    <div v-for="tipo in tipos" :key="tipo.id">
-      {{ tipo.nombre }}
-    </div>
     <div class="container col-md-8 col-sm-12">
       <b-card-group deck>
         <b-card
@@ -44,19 +41,11 @@
             </b-form-group>
 
             <b-form-group label="Hora de apertura:">
-              <b-form-input
-                v-model="form.hora_inicio"
-                type="time"
-                required
-              ></b-form-input>
+              <b-form-input v-model="form.hora_apertura" required></b-form-input>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:">
-              <b-form-input
-                v-model="form.hora_fin"
-                type="time"
-                required
-              ></b-form-input>
+              <b-form-input v-model="form.hora_cierre" required></b-form-input>
             </b-form-group>
 
             <b-form-group label="Sitio web:">
@@ -106,7 +95,7 @@
           </b-form>
 
           <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
+            <pre class="m-0">{{ JSON.stringify(this.form) }}</pre>
           </b-card>
         </b-card>
       </b-card-group>
@@ -129,18 +118,16 @@ export default {
   data() {
     return {
       form: {
-        nombre: '',
-        direccion: '',
-        telefono: '',
-        hora_inicio: '',
-        hora_fin: '',
-        email: '',
-        web: '',
+        nombre: 'TestApi',
+        direccion: 'TestApi',
+        telefono: 'TestApi',
+        hora_apertura: '10:00',
+        hora_cierre: '10:30',
+        email: 'TestApi@TestApi',
+        web: 'TestApi@TestApi',
         tipo: '',
-        estado_id: '1',
         latitud: '-34.9759',
         longitud: '-57.9324',
-        municipio_id: '19',
       },
       show: true,
     };
@@ -149,26 +136,14 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       const url =
-        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros';
+        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/';
       axios({
         method: 'POST',
         url,
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
-        data: {
-         "nombre": "Iglesia Sagrado Corazón de Jesús",
-         "direccion": "Diagonal 73 nro 1032",
-         "telefono": "221 - 5139019",
-         "hora_apertura": "09:30",
-         "hora_cierre": "18:00",
-         "tipo": "Institución religiosa",
-         "web": "",
-         "email": "asdasd@asdasd.com",
-         "latitud":"-34.9159",
-         "longitud":"-57.9924",
-         "municipio_id":"24"
-        },
+        data: JSON.stringify(this.form),
       })
         .then((response) => {
           console.log(response);
