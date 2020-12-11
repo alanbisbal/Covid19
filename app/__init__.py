@@ -42,6 +42,8 @@ def create_app(environment="development"):
     Session(app)
 
     # Cors
+    CORS(app)
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}}, support_credentials=True)
    
     # Configure db
 
