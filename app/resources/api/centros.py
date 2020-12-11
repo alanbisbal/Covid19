@@ -117,13 +117,14 @@ def center_create():
         tipo = Tipo_centro.with_name(data['tipo'])
         data['estado_id'] = 3
         data['tipo_centro'] = tipo.id
+        data['municipio_id'] = ""
 
         form = CenterForm(csrf_enabled=False)
         form.nombre = data['nombre']
         form.direccion = data['direccion']
         form.telefono = data['telefono']
-        form.hora_inicio = datetime.strptime(data['hora_inicio'])
-        form.hora_fin = datetime.strptime(data['hora_fin'])
+        form.hora_inicio = data['hora_inicio']
+        form.hora_fin = data['hora_fin']
         form.web = data['web']
         form.email = data['email']
         form.tipo_centro = data['tipo_centro']
@@ -147,6 +148,7 @@ def center_create():
 
         sanitizar_input(form)
         centro = Centro.add(form.data)
+        print("try centro: ", form)
         if not centro:
             return Response('El centro no existe', status=400)
 

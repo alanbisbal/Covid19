@@ -68,7 +68,7 @@
             </b-form-group>
 
             <b-form-group label="Tipo:">
-              <select v-model="form.tipo" class="form-control">
+              <select v-model="selected" class="form-control">
                 <option v-for="tipo in tipos" :key="tipo.id" required>
                   {{ tipo.nombre }}
                 </option>
@@ -137,10 +137,8 @@ export default {
         email: '',
         web: '',
         tipo: '',
-        estado_id: '1',
         latitud: '-34.9759',
         longitud: '-57.9324',
-        municipio_id: '19',
       },
       show: true,
     };
@@ -149,14 +147,26 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       const url =
-        'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros';
+        'http://127.0.0.1:5000/api/centros';
       axios({
         method: 'POST',
         url,
         headers: {
           'Content-Type': 'application/json',
         },
-        data: JSON.stringify(this.form),
+        data: {
+         "nombre": this.form.nombre,
+         "direccion": this.form.direccion,
+         "telefono": this.form.telefono,
+         "hora_apertura": this.form.hora_inicio,
+         "hora_cierre": this.form.hora_fin,
+         "tipo": this.selected,
+         "web": this.form.web,
+         "email": this.form.email,
+         "latitud": this.form.latitud,
+         "longitud": this.form.longitud
+        },
+
       })
         .then((response) => {
           console.log(response);
