@@ -24,9 +24,7 @@ def center_list():
         page = 1
 
     try:
-        centros_paginados = Centro.publicados().paginate(page,
-                                                         per_page,
-                                                         error_out=False)
+        centros_paginados = Centro.publicados().paginate(page,per_page,error_out=False)
     except:
         return Response(status=500)
 
@@ -68,6 +66,7 @@ def center_list():
                        indent=2,
                        ensure_ascii=False)
     return Response(final, mimetype='application/json')
+
 
 
 def center(id):
