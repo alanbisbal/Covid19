@@ -38,7 +38,6 @@ def authenticate():
 
 
 def logout():
-
     """
     Este método verifica si el usuario esta logueado,de ser así lo desloguea
 
