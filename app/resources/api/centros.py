@@ -8,7 +8,7 @@ from flask import jsonify, request, abort, Response
 import base64
 import json
 import io
- 
+
 
 def center_list():
     """
@@ -119,6 +119,7 @@ def center_create():
         tipo = Tipo_centro.with_name(data['tipo'])
         data['estado_id'] = 3
         data['tipo_centro'] = tipo.id
+        data['municipio_id'] = ''
 
         form = CenterForm(csrf_enabled=False)
         form.nombre = data['nombre']
@@ -137,8 +138,6 @@ def center_create():
         tieneArroba = False
         if not form.validate_on_submit():
             return Response('Error de datos de formulario', status=400)
-        if not validar_municipio(data['municipio_id']):
-            return Response('Municipio inexistente', status=400)
         if form.email != "":
             for char in form.email:
                 if char == "@":
