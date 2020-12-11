@@ -1,8 +1,5 @@
 <template>
   <b-container fluid>
-    <div v-for="tipo in tipos" :key="tipo.id">
-      {{ tipo.nombre }}
-    </div>
     <div class="container col-md-8 col-sm-12">
       <b-card-group deck>
         <b-card
@@ -44,19 +41,11 @@
             </b-form-group>
 
             <b-form-group label="Hora de apertura:">
-              <b-form-input
-                v-model="form.hora_inicio"
-                type="time"
-                required
-              ></b-form-input>
+              <b-form-input v-model="form.hora_apertura" required></b-form-input>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:">
-              <b-form-input
-                v-model="form.hora_fin"
-                type="time"
-                required
-              ></b-form-input>
+              <b-form-input v-model="form.hora_cierre" required></b-form-input>
             </b-form-group>
 
             <b-form-group label="Sitio web:">
@@ -68,7 +57,7 @@
             </b-form-group>
 
             <b-form-group label="Tipo:">
-              <select v-model="selected" class="form-control">
+              <select v-model="form.tipo" class="form-control">
                 <option v-for="tipo in tipos" :key="tipo.id" required>
                   {{ tipo.nombre }}
                 </option>
@@ -106,7 +95,7 @@
           </b-form>
 
           <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
+            <pre class="m-0">{{ JSON.stringify(this.form) }}</pre>
           </b-card>
         </b-card>
       </b-card-group>
@@ -129,13 +118,13 @@ export default {
   data() {
     return {
       form: {
-        nombre: '',
-        direccion: '',
-        telefono: '',
-        hora_inicio: '',
-        hora_fin: '',
-        email: '',
-        web: '',
+        nombre: 'TestApi',
+        direccion: 'TestApi',
+        telefono: 'TestApi',
+        hora_apertura: '10:00',
+        hora_cierre: '10:30',
+        email: 'TestApi@TestApi',
+        web: 'TestApi@TestApi',
         tipo: '',
         latitud: '-34.9759',
         longitud: '-57.9324',
@@ -152,21 +141,9 @@ export default {
         method: 'POST',
         url,
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
-        data: {
-         "nombre": this.form.nombre,
-         "direccion": this.form.direccion,
-         "telefono": this.form.telefono,
-         "hora_apertura": this.form.hora_inicio,
-         "hora_cierre": this.form.hora_fin,
-         "tipo": this.selected,
-         "web": this.form.web,
-         "email": this.form.email,
-         "latitud": this.form.latitud,
-         "longitud": this.form.longitud
-        },
-
+        data: JSON.stringify(this.form),
       })
         .then((response) => {
           console.log(response);
