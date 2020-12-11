@@ -23,6 +23,7 @@ def center_list():
     except:
         page = 1
 
+
     try:
         centros_paginados = Centro.publicados().paginate(page,
                                                          per_page,
