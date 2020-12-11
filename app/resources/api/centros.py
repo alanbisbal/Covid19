@@ -9,7 +9,7 @@ from flask import jsonify, request, abort, Response
 import base64
 import json
 import io
- 
+
 
 def center_list():
     per_page = Config.getConfig().elementos
@@ -22,6 +22,10 @@ def center_list():
     try:
         centros_paginados = Centro.query.filter_by(estado_id=1).paginate(
             page, per_page, error_out=False)
+        centros_paginados = Centro.publicados().paginate(page,
+                                                         per_page,
+                                                         error_out=False)
+
     except:
         return Response(status=500)
 
@@ -104,6 +108,7 @@ def center_create():
         tipo = Tipo_centro.with_name(data['tipo'])
         data['estado_id'] = 3
         data['tipo_centro'] = tipo.id
+        data['municipio_id'] = ''
 
         form = CenterForm(csrf_enabled=False)
         form.nombre = data['nombre']
@@ -122,8 +127,6 @@ def center_create():
         tieneArroba = False
         if not form.validate_on_submit():
             return Response('Error de datos de formulario', status=400)
-        if not validar_municipio(data['municipio_id']):
-            return Response('Municipio inexistente', status=400)
         if form.email != "":
             for char in form.email:
                 if char == "@":
@@ -155,14 +158,12 @@ def center_create():
     final = json.dumps({"atributos": centro_creado}, indent=2)
     return Response(final, status=201)
 
+
 def center_types():
     data = []
     tipos = Tipo_centro.all()
     for i in tipos:
-        data.append({
-            "id": i.id,
-            "nombre": i.nombre
-        })
+        data.append({"id": i.id, "nombre": i.nombre})
 
     final = json.dumps({"tipos": data}, indent=2, ensure_ascii=False)
     return Response(final, mimetype='application/json')

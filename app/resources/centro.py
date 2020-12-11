@@ -65,7 +65,6 @@ def create():
         return redirect(url_for("home"))
     # validaciones de acceso administrador
     form = CenterForm()
-    print("CONTENIDO DEL FORM PA: ", form)
     if not form.validate_on_submit():
         return redirect(request.referrer)
     sanitizar_input(form)
