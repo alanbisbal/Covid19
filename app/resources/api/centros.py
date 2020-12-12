@@ -147,7 +147,6 @@ def center_create():
 
         sanitizar_input(form)
         centro = Centro.add(form.data)
-        print("try centro: ", form)
         if not centro:
             return Response('El centro no existe', status=400)
 
