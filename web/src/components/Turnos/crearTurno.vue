@@ -88,12 +88,12 @@ export default {
   data() {
     return {
       form: {
-        centro_id: '19',
+        centro_id: this.$route.params.id.toString(),
         email: '',
         telefono: '',
         hora_inicio: null,
         hora_fin: '',
-        fecha: '2020-12-13',
+        fecha: this.$route.params.fecha,
       },
       show: true,
     };
