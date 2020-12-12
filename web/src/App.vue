@@ -29,6 +29,19 @@
       class="myCustomClass"
     ></flash-message>
     <router-view />
+
+    <footer class="footer-copyright text-center py-3">
+      <p class="p-1">
+        Grupo37 &copy; Proyecto de Software, 2020 |
+        <a
+          href="https://www.info.unlp.edu.ar/"
+          alt="Facultad de informatica unlp"
+          target="_blank"
+          >Facultad de Informática |
+        </a>
+        <a href=" https://unlp.edu.ar/" alt="UNLP" target="_blank">UNLP</a>
+      </p>
+    </footer>
   </div>
 </template>
 
