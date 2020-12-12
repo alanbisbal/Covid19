@@ -57,7 +57,7 @@
       }
     ).addTo(mymap);
     var layerGroup = L.layerGroup().addTo(mymap);
-    L.marker([{{centro.longitud }},{{centro.latitud }}]).addTo(layerGroup);
+    L.marker([{{centro.latitud }},{{centro.longitud }}]).addTo(layerGroup);
 
 
     mymap.on('click', function(e){
