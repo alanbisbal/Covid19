@@ -41,7 +41,10 @@
             </b-form-group>
 
             <b-form-group label="Hora de apertura:">
-              <b-form-input v-model="form.hora_apertura" required></b-form-input>
+              <b-form-input
+                v-model="form.hora_apertura"
+                required
+              ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:">
@@ -141,26 +144,19 @@ export default {
         method: 'POST',
         url,
         headers: {
-            'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
         data: JSON.stringify(this.form),
       })
         .then((response) => {
           console.log(response);
+          this.flash('El centro se creo de manera exitosa!', 'success');
+          this.$router.push({ name: 'home' });
         })
         .catch((error) => {
           if (error.response) {
             console.log('Error! response:', error.response.data);
-            for (let key in error.response.data) {
-              error.response.data[key].forEach((element) => {
-                console.log(key, ':', element);
-              });
-            }
-          } else if (error.request) {
-            console.log('Error! request:', error.response);
-          } else {
-            // eslint-disable-next-line
-            console.log(error);
+            this.flash(error.response.data, 'error');
           }
         });
     },
