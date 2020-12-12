@@ -16,7 +16,7 @@ def center_list():
      publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion
 
     """
-    per_page = Config.getConfig().elementos
+    per_page = Config.getConfig().cant_elements()
 
     try:
         page = int(request.args["page"])
@@ -147,7 +147,6 @@ def center_create():
 
         sanitizar_input(form)
         centro = Centro.add(form.data)
-        print("try centro: ", form)
         if not centro:
             return Response('El centro no existe', status=400)
 
