@@ -64,7 +64,7 @@
         layerGroup.clearLayers();
         lat = e.latlng.lat.toFixed(3);
         lng = e.latlng.lng.toFixed(3);
-        L.marker(e.latlng,{draggable:"true"}).addTo(layerGroup);
+        L.marker(e.latlng).addTo(layerGroup);
         document.getElementById("latitud").value = lat.toString();
         document.getElementById("longitud").value = lng.toString();
 
