@@ -150,7 +150,7 @@ export default {
       })
         .then((response) => {
           console.log(response);
-          this.flash('El centro se creo de manera exitosa!', 'success');
+          this.flash('La solicitud de centro de manera exitosa!', 'success');
           this.$router.push({ name: 'home' });
         })
         .catch((error) => {
