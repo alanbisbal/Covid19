@@ -25,7 +25,7 @@
                     v-model.number= "centro.id"
                     type="text"
                     required
-
+                    hidden
                     value = centro.id
                   ></b-form-input>
                 </b-form-group>
