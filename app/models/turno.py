@@ -8,7 +8,7 @@ from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
 from datetime import datetime, time, timedelta, date
 import bleach
- 
+
 
 class Turno(db.Model):
     __tablename__ = 'turnos'
@@ -22,8 +22,8 @@ class Turno(db.Model):
     centro = relationship("Centro", backref="centro")
 
     def __init__(self, data):
-        self.email = bleach.clean(data['email'])
-        self.telefono = bleach.clean(data['telefono'])
+        self.email = data['email']
+        self.telefono = data['telefono']
         self.hora_inicio = data['hora_inicio']
         self.hora_fin = data['hora_fin']
         self.fecha = data['fecha']
