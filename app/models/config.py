@@ -1,6 +1,6 @@
 from flask import request
 from sqlalchemy.orm import relationship
- 
+
 from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey
@@ -49,7 +49,7 @@ class Config(db.Model):
         self.titulo = bleach.clean(data['titulo'])
         self.descripcion = bleach.clean(data['descripcion'])
         self.email = bleach.clean(data['email'])
-        self.elementos = data['elementos']
+        self.elementos = bleach.clean(data['elementos'])
         if data['estado'] == "habilitado":
             self.estado = True
         else:
