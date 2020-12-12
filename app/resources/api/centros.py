@@ -16,7 +16,7 @@ def center_list():
      publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion
 
     """
-    per_page = Config.getConfig().elementos
+    per_page = Config.getConfig().cant_elements()
 
     try:
         page = int(request.args["page"])
@@ -69,6 +69,41 @@ def center_list():
 
 
 
+def center(id):
+    """
+    Devuelve un json que contiene el centro de ayuda social aprobado para publicación,
+    que corresponde al identificador pasado por parámetro
+
+    """
+
+    try:
+        centro = Centro.with_id(id)
+    except:
+        return Response(status=500)
+
+    centro_data = {}
+
+    if not centro:
+        return Response(status=404)
+    else:
+        centro_data = {
+            "id": centro.id,
+            "nombre": centro.nombre,
+            "direccion": centro.direccion,
+            "telefono": centro.telefono,
+            "hora_inicio": str(centro.hora_inicio),
+            "hora_fin": str(centro.hora_fin),
+            "web": centro.web,
+            "email": centro.email,
+            "tipo": Tipo_centro.with_id(centro.tipo_centro).nombre
+        }
+
+    final = json.dumps({"atributos": centro_data},
+                       indent=2,
+                       ensure_ascii=False)
+    return Response(final, mimetype='application/json')
+
+
 def center_create():
     try:
         data = request.get_json()
@@ -107,7 +142,6 @@ def center_create():
 
         sanitizar_input(form)
         centro = Centro.add(form.data)
-        print("try centro: ", form)
         if not centro:
             return Response('El centro no existe', status=400)
 
