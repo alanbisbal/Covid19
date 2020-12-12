@@ -1,6 +1,6 @@
 from flask import request
 from sqlalchemy.orm import relationship
- 
+
 from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, Float, LargeBinary
@@ -138,6 +138,11 @@ class Centro(db.Model):
     def despublicar(self):
         self.estado_id = 2
         db.session.commit()
+
+
+    def publicados():
+        return db.session.query(Centro).filter_by(estado_id=1)
+
 
     @classmethod
     def count_approved(cls):
