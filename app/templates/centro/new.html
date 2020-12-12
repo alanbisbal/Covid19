@@ -23,9 +23,12 @@ title %}Centros{% endblock %} {% block content %}
           {{wtf.form_field(form.email)}}
           {{form.protocolo.label(class="form-control-label")}}
           {{form.protocolo(accept=".pdf")}} {{wtf.form_field(form.tipo_centro)}}
-          {{wtf.form_field(form.estado_id)}} {{wtf.form_field(form.longitud)}}
-          {{wtf.form_field(form.latitud)}}
+          {{wtf.form_field(form.estado_id)}}
         </div>
+        <p>Seleccione la ubicación del centro</p>
+        <div id="mapid" style="height: 300px"></div>
+        {{wtf.form_field(form.longitud,hidden="true")}}
+        {{wtf.form_field(form.latitud,hidden= "true")}}
 
         <div class="form-inline">
           <a href="{{ url_for('centro_index') }}" class="btn btn-primary my-1"
@@ -44,7 +47,6 @@ title %}Centros{% endblock %} {% block content %}
       </div>
     </form>
 
-    <div id="mapid" style="height: 300px"></div>
 
     <script type="text/javascript">
       var mymap = L.map('mapid').locate({ setView: true, maxZoom: 14 });
@@ -61,9 +63,9 @@ title %}Centros{% endblock %} {% block content %}
 
       mymap.on('click', function(e){
           layerGroup.clearLayers();
-          lat = e.latlng.lat;
-          lng = e.latlng.lng;
-          L.marker(e.latlng,{draggable:"true"}).addTo(layerGroup);
+          lat = e.latlng.lat.toFixed(3);
+          lng = e.latlng.lng.toFixed(3);
+          L.marker(e.latlng).addTo(layerGroup);
           document.getElementById("latitud").value = lat.toString();
           document.getElementById("longitud").value = lng.toString();
 
