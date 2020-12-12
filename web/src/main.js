@@ -7,12 +7,14 @@ import { Icon } from 'leaflet';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import VueFlashMessage from 'vue-flash-message';
 
 Vue.component('l-map', LMap);
 Vue.component('l-tile-layer', LTileLayer);
 Vue.component('l-marker', LMarker);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(VueFlashMessage);
 
 
 delete Icon.Default.prototype._getIconUrl;
