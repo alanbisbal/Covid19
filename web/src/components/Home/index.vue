@@ -1,41 +1,35 @@
 <template>
   <div>
-  <b-jumbotron >
+    <b-jumbotron>
+      <template #header>Donaciones Covid19</template>
 
+      <template #lead>
+        <br />
+        En el contexto de pandemia por el cual atravesamos, los más vulnerables
+        son los más perjudicados. <br />Solicitá tu turno para donar o recibir
+        ropa, plasma y/o sangre en tu centro más cercano.
+        <br />
 
-    <template #header >Donaciones Covid19</template>
+        <br />
+        Para solicitar un turno, dirigase "Centros" en el cual visualizará los
+        centros mas cercanos. Allí deberá seleccionar un centro y un día en
+        particular al cual desea asistir.
 
-    <template #lead>
-      <br>
-      En el contexto de pandemia por el cual atravesamos, los más vulnerables son los más perjudicados.<br>
-      Solicitá tu turno para donar o recibir ropa, plasma o sangre en tu centro más cercano.
-      <br>
+        <br />
 
-      <br>
-      Para solicitar un turno, dirigase "Centros" para visualizar los centros mas cercanos.<br>
-      Allí deberá seleccionar un centro y un dia en particular al cual desea asistir.
-      Se le solicitará un mail, un teléfono y que seleccione el horario que desea concurrir en caso de estar disponible
-      evitando asi la aglomeración de personas.
-      <br>
+        <br />
+        Para agregar un centro, deberá dirigirse a "Solicitar centro" y
+        completar el formulario correspondiente. <br />
+        Su solicitud quedará pendiente hasta que un administrador del sitio
+        certifique y valide que los datos sean correctos.
+        <br />
 
-      <br>
-      Para agregar un centro, deberá dirigirse a "Solicitar centro" y completar el formulario correspondiente.
-      Su solicitud quedará pendiente hasta que un administrador del sitio certifique y valide que los datos sean correctos.
-      <br>
-
-      <br>
-      Tambien contamos con una sección de estadisticas en el cual se podrá visualizar los datos recolectados hasta el momento.
-
-    </template>
-
-
-
-    <p>Contacto: Covid19@donaciones.com</p>
-
-
-
-  </b-jumbotron>
-</div>
-
-
+        <br />
+        También contamos con una sección de estadisticas en el cual se podrá
+        visualizar los datos recolectados hasta el momento.
+      </template>
+      <br />
+      <h5>Contacto: Covid19@donaciones.com</h5>
+    </b-jumbotron>
+  </div>
 </template>
