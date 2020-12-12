@@ -1,17 +1,5 @@
 <template>
   <b-container fluid>
-    <!---cartel verde de exitoso  el v-if turnoCreado=true en el .then-->
-    <div>
-      <b-alert show dismissible fade variant="success" v-if="turnoCreado"
-        >Turno creado exitosamente</b-alert
-      >
-    </div>
-    <div>
-      <b-alert show dismissible fade variant="danger" v-if="turnoError"
-        >{{ msg }}
-      </b-alert>
-    </div>
-
     <div class="container col-md-8 col-sm-12">
       <b-card-group deck>
         <b-card
@@ -27,6 +15,7 @@
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group label="Email:">
               <b-form-input
+                type="email"
                 v-model="form.email"
                 required
                 placeholder="Ingrese email"
@@ -58,16 +47,28 @@
               </select>
             </b-form-group>
 
+            <b-form-group label="Hora fin:">
+              <b-form-input
+                v-model="form.hora_fin"
+                type="text"
+                required
+              ></b-form-input>
+            </b-form-group>
+
             <b-form-group label="Fecha:">
               <b-form-input
                 readonly
                 v-model="form.fecha"
                 type="date"
+                required
               ></b-form-input>
             </b-form-group>
 
             <recaptcha />
           </b-form>
+          <b-card class="mt-3" header="Form Data Result">
+            <pre class="m-0">{{ form }}</pre>
+          </b-card>
         </b-card>
       </b-card-group>
     </div>
@@ -87,15 +88,13 @@ export default {
   data() {
     return {
       form: {
-        centro_id: '',
+        centro_id: this.$route.params.id.toString(),
         email: '',
         telefono: '',
         hora_inicio: null,
-        hora_fin: '10:00',
+        hora_fin: '',
         fecha: this.$route.params.fecha,
       },
-      turnoCreado: false,
-      turnoError: false,
       show: true,
     };
   },
@@ -115,27 +114,14 @@ export default {
         data: JSON.stringify(this.form),
       })
         .then((response) => {
-          this.turnoCreado = true;
           console.log(response);
+          this.flash('El turno se creo de manera exitosa!', 'success');
+          this.$router.push({ name: 'home' });
         })
         .catch((error) => {
-          this.turnoError = true;
           if (error.response) {
             console.log('Error! response:', error.response.data);
-            this.msg = ('Error!:', error.response.data);
-            for (let key in error.response.data) {
-              error.response.data[key].forEach((element) => {
-                this.msg = (key, ':', element);
-                console.log(key, ':', element);
-              });
-            }
-          } else if (error.request) {
-            this.msg = ('Error!:', error.response);
-            console.log('Error! request:', error.response);
-          } else {
-            // eslint-disable-next-line
-            this.msg = ('Error!:', error);
-            console.log(error);
+            this.flash(error.response.data, 'error');
           }
         });
     },

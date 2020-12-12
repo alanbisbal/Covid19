@@ -9,7 +9,7 @@ from app.helpers.auth import authenticated
 
 from app.helpers.forms import TurnoForm, NewTurnoForm, SearchForm
 
-#from app.helpers.validates import 
+from app.helpers.validates import sanitizar_input
 from app.helpers.permits import has_permit, is_admin
 from datetime import datetime, time, timedelta, date
 
@@ -77,6 +77,7 @@ def create():
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
     form = TurnoForm()
+    sanitizar_input(form)
     hora = datetime.strptime(form.data['hora_inicio'], '%H:%M')
     if not form.validate_on_submit():
         flash("El tipo de dato ingresado es incorrecto", "danger")
