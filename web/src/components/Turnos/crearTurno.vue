@@ -51,6 +51,7 @@
               <b-form-input
                 v-model="form.hora_fin"
                 type="text"
+                placeholder="Ingrese la hora fin xx:xx"
                 required
               ></b-form-input>
             </b-form-group>
@@ -66,9 +67,6 @@
 
             <recaptcha />
           </b-form>
-          <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
-          </b-card>
         </b-card>
       </b-card-group>
     </div>
