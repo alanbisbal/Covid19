@@ -3,7 +3,8 @@
     <div class="container mt-4 text-center">
       <h1>Centros de Ayuda Social</h1>
       <p>
-        Para reservar un turno debe seleccionar un centro disponible
+        Para reservar un turno debe seleccionar un centro disponible y una fecha
+        para la reserva del mismo
       </p>
     </div>
     <myMap />
