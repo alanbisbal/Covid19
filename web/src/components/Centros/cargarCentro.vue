@@ -31,6 +31,14 @@
               ></b-form-input>
             </b-form-group>
 
+            <b-form-group label="Email:">
+              <b-form-input
+                v-model="form.email"
+                type="email"
+                placeholder="Ingrese email"
+              ></b-form-input>
+            </b-form-group>
+
             <b-form-group label="Telefono:">
               <b-form-input
                 v-model="form.telefono"
@@ -72,14 +80,23 @@
               </select>
             </b-form-group>
 
-            <b-form-group label="Email:">
-              <b-form-input
-                v-model="form.email"
-                type="email"
-                placeholder="Ingrese email"
-              ></b-form-input>
-            </b-form-group>
+            <b-form-input
+              v-model="form.latitud"
+              type="text"
+              required
+              hidden
+              placeholder="latitud"
+            ></b-form-input>
 
+            <b-form-input
+              v-model="form.longitud"
+              type="text"
+              required
+              hidden
+              placeholder="longitud"
+            ></b-form-input>
+
+            <mapCarga v-on:update:latlng="actualizarLatlng($event)" />
             <!-- recaptcha -->
             <recaptcha />
           </b-form>
@@ -91,6 +108,7 @@
 
 <script>
 import recaptcha from '@/components/Centros/recaptcha.vue';
+import mapCarga from '@/components/Maps/mapCarga.vue';
 
 import axios from 'axios';
 export default {
@@ -100,6 +118,7 @@ export default {
   },
   components: {
     recaptcha,
+    mapCarga,
   },
   data() {
     return {
@@ -112,8 +131,8 @@ export default {
         email: '',
         web: '',
         tipo: '',
-        latitud: '-34.9759',
-        longitud: '-57.9324',
+        latitud: '-34.9035',
+        longitud: '-57.9376',
       },
       show: true,
     };
@@ -134,7 +153,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.flash(
-            'Se creo la solicitud del centro de manera exitosa!',
+            'La solicitud de centro se creó de manera exitosa!',
             'success'
           );
           this.$router.push({ name: 'home' });
@@ -163,6 +182,11 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    actualizarLatlng(value) {
+      console.log('centro', value);
+      this.form.latitud = value.lat.toFixed(3);
+      this.form.longitud = value.lng.toFixed(3);
     },
   },
 };
