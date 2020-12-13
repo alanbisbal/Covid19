@@ -4,7 +4,7 @@
     <l-map
     :zoom="zoom"
     :center="center"
-    style="height: 200px; width: 50%"
+    style="height: 500px; width: 100%"
     @click="changeMarker"
     >
       <l-tile-layer
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      zoom: 5,
+      zoom: 6,
       center: L.latLng(-36.5635, -60.1076),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     changeMarker(event){
-      console.log(event.latlng);
       this.marker = L.latLng(event.latlng.lat, event.latlng.lng)
 
     },

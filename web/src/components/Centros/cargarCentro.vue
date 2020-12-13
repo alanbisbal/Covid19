@@ -31,6 +31,14 @@
               ></b-form-input>
             </b-form-group>
 
+            <b-form-group label="Email:">
+              <b-form-input
+              v-model="form.email"
+              type="email"
+              placeholder="Ingrese email"
+              ></b-form-input>
+            </b-form-group>
+            
             <b-form-group label="Telefono:">
               <b-form-input
                 v-model="form.telefono"
@@ -85,14 +93,7 @@
               ></b-form-input>
             </b-form-group>
 
-            <b-form-group label="Email:">
-              <b-form-input
-                v-model="form.email"
-                type="email"
-                placeholder="Ingrese email"
-              ></b-form-input>
-            </b-form-group>
-
+            <mapCarga/>
             <!-- recaptcha -->
             <recaptcha />
           </b-form>
@@ -108,6 +109,8 @@
 
 <script>
 import recaptcha from '@/components/Centros/recaptcha.vue';
+import mapCarga from '@/components/Maps/mapCarga.vue'
+
 
 import axios from 'axios';
 export default {
@@ -117,6 +120,7 @@ export default {
   },
   components: {
     recaptcha,
+    mapCarga
   },
   data() {
     return {
