@@ -110,7 +110,7 @@ def update(turno_id):
     form = TurnoForm()
     form.fecha.data = turno.fecha
     turnos = Turno.bloques_disponibles(turno.centro_id, str(form.fecha.data))
-    turnos.append(turno.hora_inicio)
+    turnos.append(turno.hora_inicio.strftime("%H:%M"))
     form.hora_inicio.choices = turnos
     form.hora_inicio.default = turno.hora_inicio
     form.process()
@@ -128,7 +128,7 @@ def update_new():
     if not form.validate_on_submit() or not turno:
         flash("El tipo de dato ingresado es incorrecto", "danger")
         return redirect(request.referrer)
-    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
+    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M')
     if not (hora.minute == 00 or hora.minute == 30):
         flash("El horario debe finalizar con los minutos xx:00 o xx:30",
               "danger")
