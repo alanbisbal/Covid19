@@ -5,12 +5,13 @@
     :zoom="zoom"
     :center="center"
     style="height: 200px; width: 50%"
+    @click="changeMarker"
     >
       <l-tile-layer
         :url="url"
         :attribution="attribution"
       />
-      <l-marker :lat-lng="marker"/>
+      <l-marker  v-bind="marker" :lat-lng="marker"/>
 
     </l-map>
   </div>
@@ -30,13 +31,22 @@ export default {
   data() {
     return {
       zoom: 13,
-      center: L.latLng(-34.9159, -57.9924),
+      center: L.latLng(-34.9035, -57.9376),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       currentZoom: 11.5,
-      marker: L.latLng(-34.9159, -57.9924)
+      marker: L.latLng(-34.9035, -57.9376)
     };
+  },
+  methods: {
+    changeMarker(event){
+      console.log(event.latlng);
+      this.marker = L.latLng(event.latlng.lat, event.latlng.lng)
+
+    },
+
+
   },
   };
 </script>
