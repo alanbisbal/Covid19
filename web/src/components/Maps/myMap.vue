@@ -6,7 +6,6 @@
         :key="index"
         v-for="(centro, index) in centros"
         :lat-lng="latLng(centro.latitud, centro.longitud)"
-
       >
         <l-popup>
           Nombre: {{ centro.nombre }}<br />
@@ -25,10 +24,12 @@
             </b-form-group>
 
             <b-form-group>
-              <b-calendar  v-model="fecha" :min="today_min"></b-calendar>
+              <b-calendar v-model="fecha" :min="today_min"></b-calendar>
             </b-form-group>
 
-            <b-button type="submit" variant="primary" :disabled="!fecha" >Reservar Turno</b-button>
+            <b-button type="submit" variant="primary" :disabled="!fecha"
+              >Reservar Turno</b-button
+            >
           </b-form>
         </l-popup>
       </l-marker>
@@ -58,7 +59,7 @@ export default {
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       marker: L.latLng(-34.9159, -57.9924),
-      fecha: ''
+      fecha: '',
     };
   },
   components: {
@@ -76,7 +77,7 @@ export default {
     },
     latLng: function(lat, lng) {
       return L.latLng(lat, lng);
-    }
+    },
   },
 
   mounted: function() {

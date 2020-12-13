@@ -4,14 +4,14 @@
       <b-navbar toggleable="md" type="dark" variant="dark">
         <b-container>
           <b-navbar-brand>
-            <div :to="{ name: 'home' }">
+            <router-link to="/">
               <img
                 alt="Vue logo"
                 src="./assets/logo.png"
                 width="40"
                 height="40"
               />
-            </div>
+            </router-link>
           </b-navbar-brand>
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
