@@ -43,12 +43,17 @@
             <b-form-group label="Hora de apertura:">
               <b-form-input
                 v-model="form.hora_apertura"
+                type="time"
                 required
               ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:">
-              <b-form-input v-model="form.hora_cierre" required></b-form-input>
+              <b-form-input
+                v-model="form.hora_cierre"
+                type="time"
+                required
+              ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Sitio web:">
@@ -67,24 +72,6 @@
               </select>
             </b-form-group>
 
-            <b-form-group label="latitud:">
-              <b-form-input
-                v-model="form.latitud"
-                type="text"
-                required
-                placeholder="latitud"
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group label="longitud:">
-              <b-form-input
-                v-model="form.longitud"
-                type="text"
-                required
-                placeholder="longitud"
-              ></b-form-input>
-            </b-form-group>
-
             <b-form-group label="Email:">
               <b-form-input
                 v-model="form.email"
@@ -96,10 +83,6 @@
             <!-- recaptcha -->
             <recaptcha />
           </b-form>
-
-          <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ JSON.stringify(this.form) }}</pre>
-          </b-card>
         </b-card>
       </b-card-group>
     </div>
@@ -121,13 +104,13 @@ export default {
   data() {
     return {
       form: {
-        nombre: 'TestApi',
-        direccion: 'TestApi',
-        telefono: 'TestApi',
-        hora_apertura: '10:00',
-        hora_cierre: '10:30',
-        email: 'TestApi@TestApi',
-        web: 'TestApi@TestApi',
+        nombre: '',
+        direccion: '',
+        telefono: '',
+        hora_apertura: '',
+        hora_cierre: '',
+        email: '',
+        web: '',
         tipo: '',
         latitud: '-34.9759',
         longitud: '-57.9324',
@@ -150,7 +133,10 @@ export default {
       })
         .then((response) => {
           console.log(response);
-          this.flash('La solicitud de centro de manera exitosa!', 'success');
+          this.flash(
+            'Se creo la solicitud del centro de manera exitosa!',
+            'success'
+          );
           this.$router.push({ name: 'home' });
         })
         .catch((error) => {
