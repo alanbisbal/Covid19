@@ -31,10 +31,7 @@
               ></b-form-input>
             </b-form-group>
 
-            <b-form-group
-              label="Hora de inicio:"
-              description="Nota:Los turnos se realizan en bloques de 30 minutos"
-            >
+            <b-form-group label="Hora de inicio:">
               <select
                 v-model="form.hora_inicio"
                 class="form-control"
@@ -47,11 +44,13 @@
               </select>
             </b-form-group>
 
-            <b-form-group label="Hora fin:">
+            <b-form-group
+              label="Hora fin:"
+              description="Nota:La hora fin debe ser 30 min mayor a la hora de inicio"
+            >
               <b-form-input
                 v-model="form.hora_fin"
-                type="text"
-                placeholder="Ingrese la hora fin xx:xx"
+                type="time"
                 required
               ></b-form-input>
             </b-form-group>

@@ -31,6 +31,14 @@
               ></b-form-input>
             </b-form-group>
 
+            <b-form-group label="Email:">
+              <b-form-input
+                v-model="form.email"
+                type="email"
+                placeholder="Ingrese email"
+              ></b-form-input>
+            </b-form-group>
+
             <b-form-group label="Telefono:">
               <b-form-input
                 v-model="form.telefono"
@@ -43,12 +51,17 @@
             <b-form-group label="Hora de apertura:">
               <b-form-input
                 v-model="form.hora_apertura"
+                type="time"
                 required
               ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Hora de cierre:">
-              <b-form-input v-model="form.hora_cierre" required></b-form-input>
+              <b-form-input
+                v-model="form.hora_cierre"
+                type="time"
+                required
+              ></b-form-input>
             </b-form-group>
 
             <b-form-group label="Sitio web:">
@@ -60,46 +73,33 @@
             </b-form-group>
 
             <b-form-group label="Tipo:">
-              <select v-model="form.tipo" class="form-control">
-                <option v-for="tipo in tipos" :key="tipo.id" required>
+              <select v-model="form.tipo" class="form-control" required>
+                <option v-for="tipo in tipos" :key="tipo.id">
                   {{ tipo.nombre }}
                 </option>
               </select>
             </b-form-group>
 
-            <b-form-group label="latitud:">
-              <b-form-input
-                v-model="form.latitud"
-                type="text"
-                required
-                placeholder="latitud"
-              ></b-form-input>
-            </b-form-group>
+            <b-form-input
+              v-model="form.latitud"
+              type="text"
+              required
+              hidden
+              placeholder="latitud"
+            ></b-form-input>
 
-            <b-form-group label="longitud:">
-              <b-form-input
-                v-model="form.longitud"
-                type="text"
-                required
-                placeholder="longitud"
-              ></b-form-input>
-            </b-form-group>
+            <b-form-input
+              v-model="form.longitud"
+              type="text"
+              required
+              hidden
+              placeholder="longitud"
+            ></b-form-input>
 
-            <b-form-group label="Email:">
-              <b-form-input
-                v-model="form.email"
-                type="email"
-                placeholder="Ingrese email"
-              ></b-form-input>
-            </b-form-group>
-
+            <mapCarga v-on:update:latlng="actualizarLatlng($event)" />
             <!-- recaptcha -->
             <recaptcha />
           </b-form>
-
-          <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ JSON.stringify(this.form) }}</pre>
-          </b-card>
         </b-card>
       </b-card-group>
     </div>
@@ -108,6 +108,7 @@
 
 <script>
 import recaptcha from '@/components/Centros/recaptcha.vue';
+import mapCarga from '@/components/Maps/mapCarga.vue';
 
 import axios from 'axios';
 export default {
@@ -117,20 +118,21 @@ export default {
   },
   components: {
     recaptcha,
+    mapCarga,
   },
   data() {
     return {
       form: {
-        nombre: 'TestApi',
-        direccion: 'TestApi',
-        telefono: 'TestApi',
-        hora_apertura: '10:00',
-        hora_cierre: '10:30',
-        email: 'TestApi@TestApi',
-        web: 'TestApi@TestApi',
+        nombre: '',
+        direccion: '',
+        telefono: '',
+        hora_apertura: '',
+        hora_cierre: '',
+        email: '',
+        web: '',
         tipo: '',
-        latitud: '-34.9759',
-        longitud: '-57.9324',
+        latitud: '-34.9035',
+        longitud: '-57.9376',
       },
       show: true,
     };
@@ -150,7 +152,10 @@ export default {
       })
         .then((response) => {
           console.log(response);
-          this.flash('La solicitud de centro de manera exitosa!', 'success');
+          this.flash(
+            'La solicitud de centro se creó de manera exitosa!',
+            'success'
+          );
           this.$router.push({ name: 'home' });
         })
         .catch((error) => {
@@ -177,6 +182,11 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    actualizarLatlng(value) {
+      console.log('centro', value);
+      this.form.latitud = value.lat.toFixed(3);
+      this.form.longitud = value.lng.toFixed(3);
     },
   },
 };
