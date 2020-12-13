@@ -11,7 +11,7 @@
         :url="url"
         :attribution="attribution"
       />
-      <l-marker  v-bind="marker" :lat-lng="marker"/>
+      <l-marker  v-bind="marker" :lat-lng="marker" @update:latLng="updateAddress"/>
 
     </l-map>
   </div>
@@ -22,7 +22,7 @@ import L from "leaflet";
 import { LMap, LTileLayer, LMarker} from "vue2-leaflet";
 
 export default {
-  name: "Example",
+  name: "MapCarga",
   components: {
     LMap,
     LTileLayer,
@@ -44,6 +44,11 @@ export default {
       this.marker = L.latLng(event.latlng.lat, event.latlng.lng)
 
     },
+    updateAddress (value) {
+
+        console.log('mapa',value);
+            this.$emit('update:latlng', value)
+       }
 
 
   },

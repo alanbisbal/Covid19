@@ -6,6 +6,7 @@
         :key="index"
         v-for="(centro, index) in centros"
         :lat-lng="latLng(centro.latitud, centro.longitud)"
+
       >
         <l-popup>
           Nombre: {{ centro.nombre }}<br />
@@ -74,7 +75,7 @@ export default {
     },
     latLng: function(lat, lng) {
       return L.latLng(lat, lng);
-    },
+    }
   },
 
   mounted: function() {
