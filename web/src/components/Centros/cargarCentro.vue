@@ -65,8 +65,8 @@
             </b-form-group>
 
             <b-form-group label="Tipo:">
-              <select v-model="form.tipo" class="form-control">
-                <option v-for="tipo in tipos" :key="tipo.id" required>
+              <select v-model="form.tipo" class="form-control" required>
+                <option v-for="tipo in tipos" :key="tipo.id">
                   {{ tipo.nombre }}
                 </option>
               </select>

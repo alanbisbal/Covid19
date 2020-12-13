@@ -3,9 +3,16 @@
     <div id="nav">
       <b-navbar toggleable="md" type="dark" variant="dark">
         <b-container>
-          <b-navbar-brand
-            ><img alt="Vue logo" src="./assets/logo.png" width="40" height="40"
-          /></b-navbar-brand>
+          <b-navbar-brand>
+            <router-link to="/">
+              <img
+                alt="Vue logo"
+                src="./assets/logo.png"
+                width="40"
+                height="40"
+              />
+            </router-link>
+          </b-navbar-brand>
           <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
           <b-collapse id="nav-collapse" is-nav>
