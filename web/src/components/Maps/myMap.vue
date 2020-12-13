@@ -51,8 +51,8 @@ export default {
 
     return {
       today_min: today,
-      zoom: 11,
-      center: [-34.9159, -57.9924],
+      zoom: 6,
+      center: [-36.5635, -60.1076],
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',

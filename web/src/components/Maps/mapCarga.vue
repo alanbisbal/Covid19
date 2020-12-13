@@ -30,8 +30,8 @@ export default {
   },
   data() {
     return {
-      zoom: 13,
-      center: L.latLng(-34.9035, -57.9376),
+      zoom: 5,
+      center: L.latLng(-36.5635, -60.1076),
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
