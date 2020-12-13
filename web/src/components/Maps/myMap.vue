@@ -19,6 +19,7 @@
                 type="text"
                 required
                 value="centro.id"
+                hidden
               ></b-form-input>
             </b-form-group>
 
