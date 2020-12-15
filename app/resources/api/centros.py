@@ -1,4 +1,5 @@
 from app.models.centro import Centro
+from app.models.turno import Turno
 from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.models.config import Config
@@ -181,4 +182,41 @@ def center_types():
         data.append({"id": i.id, "nombre": i.nombre})
 
     final = json.dumps({"tipos": data}, indent=2, ensure_ascii=False)
+    return Response(final, mimetype='application/json')
+
+def turnos_mes(id, fecha):
+    """
+    Devuelve un json que recibe un id de un centro y un año en particular
+    retornando por cada mes la cantidad de turnos que posee.
+    """
+
+    try:
+        centro = Centro.with_id(id)
+
+    except:
+        return Response(status=500)
+
+    meses = [0] * 12
+
+    turnos= Turno.with_centro_id(id).all()
+    for i in turnos:
+        meses[int(i.fecha.strftime("%m"))-1]=meses[int(i.fecha.strftime("%m"))-1]+1
+    data = {"enero":meses[0],
+            "febrero":meses[1],
+            "marzo":meses[2],
+            "abril":meses[3],
+            "mayo":meses[4],
+            "junio":meses[5],
+            "julio":meses[6],
+            "agosto":meses[7],
+            "septiembre":meses[8],
+            "octubre":meses[9],
+            "noviembre":meses[10],
+            "diciembre":meses[11],
+            }
+    final = json.dumps({
+    "cantidad_por_mes": data,
+        },
+               indent=2,
+               ensure_ascii=False)
     return Response(final, mimetype='application/json')
