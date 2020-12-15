@@ -1,14 +1,10 @@
 <template>
-  <ve-bar :data="chartData" :settings="chartSettings"></ve-bar>
+  <ve-ring :data="chartData">----------------------------------------</ve-ring>
 </template>
 
 <script>
 export default {
   data() {
-    this.chartSettings = {
-      dimension: ['cost'],
-      metrics: ['profit'],
-    };
     return {
       chartData: {
         columns: ['date', 'cost', 'profit'],
