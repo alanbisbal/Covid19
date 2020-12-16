@@ -1,29 +1,33 @@
 <template>
   <div style="height: 500px; width: 100%" >
-    <ve-bar :data="chartData" :settings="chartSettings"></ve-bar>
+    <ve-bar :data="chartData" :settings="chartSettings">
+    </ve-bar>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
   export default {
     data () {
       this.chartSettings = {
-        dimension: ['cost'],
-        metrics: ['profit']
+        dimension: ['mes'],
+        metrics: ['cantidad']
       }
       return {
         chartData: {
-          columns: ['date', 'cost', 'profit'],
-          rows: [
-            { 'date': '01/01', 'cost': 123, 'profit': 3 },
-            { 'date': '01/02', 'cost': 1223, 'profit': 6 },
-            { 'date': '01/03', 'cost': 2123, 'profit': 90 },
-            { 'date': '01/04', 'cost': 4123, 'profit': 12 },
-            { 'date': '01/05', 'cost': 3123, 'profit': 15 },
-            { 'date': '01/06', 'cost': 7123, 'profit': 20 }
-          ]
-        }
+          columns: [ 'mes', 'cantidad'],
+          rows: [],
+        },
+        result:null
       }
-    }
+    },
+    created() {
+      axios
+        .get('http://127.0.0.1:5000/api/centros/turnos_mes/19/2020-12-12')
+        .then((result) => {
+          this.result = result.data;
+          this.chartData.rows = this.result.data;
+        });
+    },
   }
 </script>
