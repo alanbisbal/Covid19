@@ -31,7 +31,7 @@ def turno_list(id, fecha=date.today()):
             "fecha": str(fecha)
         })
 
-    final = json.dumps({"turnos": data_turno}, indent=2, ensure_ascii=False)
+    final = json.dumps({"turnos": data_turno, "cant": len(data_turno)}, indent=2, ensure_ascii=False)
     return Response(final, mimetype='application/json')
 
 
