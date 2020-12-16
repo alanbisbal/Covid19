@@ -1,5 +1,5 @@
 <template>
-  <ve-ring :data="chartData">----------------------------------------</ve-ring>
+  <ve-ring :data="chartData"></ve-ring>
 </template>
 
 <script>

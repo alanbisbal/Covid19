@@ -1,11 +1,11 @@
 <template>
   <div class="container col-md-8 col-sm-12">
     <div v-for="municipio in municipios" :key="municipio.id">
-      <p>municipio id : {{ municipio.id }}</p>
+      <p>municipio: {{ municipio.name }} id : {{ municipio.id }}</p>
     </div>
 
     <div v-for="centro in centros" :key="centro.id">
-      <p>centros id: {{ centro.id }}</p>
+      <p>centros id: {{ centro.id }} municip: {{ centro.municipio_id }}</p>
     </div>
 
     <b-form inline @submit="onSubmit" @reset="onReset" v-if="show">
@@ -37,6 +37,7 @@ export default {
       show: true,
       municipios: [],
       centros: [],
+      cantCentros: [],
       chartData: {
         columns: ['date', 'cost', 'profit'],
         rows: [
@@ -56,17 +57,26 @@ export default {
       .then((result) => {
         this.municipios = result.data.data.Town;
       });
-    axios
-      .get('https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros')
-      .then((result) => {
-        this.centros = result.data.centros;
-        console.log('entreeeeeeee');
-      });
+    axios.get('http://127.0.0.1:5000/api/centros').then((result) => {
+      this.centros = result.data.centros;
+    });
   },
 
   methods: {
     onSubmit(evt) {
       evt.preventDefault();
+      console.log('entreeeeee', this.centros);
+
+      this.centros.forEach((c) => {
+        console.log('id de municipio', c.municipio_id);
+        if (!this.cantCentros[c.municipio_id]) {
+          this.cantCentros[c.municipio_id] = 1;
+          console.log('cant', this.cantCentros[c.municipio_id]);
+        } else {
+          this.cantCentros[c.municipio_id] += 1;
+        }
+      });
+      console.log('result', this.cantCentros);
     },
     onReset(evt) {
       evt.preventDefault();
