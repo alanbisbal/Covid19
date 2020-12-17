@@ -5,10 +5,12 @@
     </div>
 
     <div v-for="centro in centros" :key="centro.id">
-      <p>centros id: {{ centro.id }} municip: {{ centro.municipio_id }}</p>
+      <p>
+        centrossssssss id: {{ centro.id }} municip: {{ centro.municipio_id }}
+      </p>
     </div>
 
-    <b-form inline @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form inline @submit="onSubmit" v-if="show">
       <label class="mr-sm-2" for="inline-form-custom-select-pref"
         >Municipio:</label
       >
@@ -21,7 +23,9 @@
       <b-button type="submit" variant="primary">Crear</b-button>
       <b-button type="reset" variant="danger">Limpiar</b-button>
     </b-form>
-
+    <div class="container mt-4 text-center">
+      <p><strong> Canitidad de centros por municipio</strong></p>
+    </div>
     <ve-pie :data="chartData"></ve-pie>
   </div>
 </template>
@@ -38,16 +42,10 @@ export default {
       municipios: [],
       centros: [],
       cantCentros: [],
+      infoChartData: [],
       chartData: {
-        columns: ['date', 'cost', 'profit'],
-        rows: [
-          { date: 'avellaneda', cost: 123, profit: 3 },
-          { date: '01/02', cost: 1223, profit: 6 },
-          { date: '01/03', cost: 2123, profit: 90 },
-          { date: '01/04', cost: 4123, profit: 12 },
-          { date: '01/05', cost: 3123, profit: 15 },
-          { date: '01/06', cost: 7123, profit: 20 },
-        ],
+        columns: ['municipio', 'cantidadCentros'],
+        rows: [],
       },
     };
   },
@@ -74,19 +72,25 @@ export default {
           console.log('cant', this.cantCentros[c.municipio_id]);
         } else {
           this.cantCentros[c.municipio_id] += 1;
+          console.log('cant', this.cantCentros[c.municipio_id]);
         }
       });
       console.log('result', this.cantCentros);
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.form.municipio_id = '';
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
+
+      this.cantCentros.forEach(function(valor, indice) {
+        console.log('entreeeee al for');
+        console.log('indice', indice);
+        console.log('valor', valor);
+        console.log('tmunicipio', this.municipios[indice].name);
+        console.log('this.cantCentros[indice]', this.cantCentros[indice]);
+        this.infoChartData.push({
+          municipio: this.municipios[indice].name,
+          cantidadCentros: this.cantCentros[indice],
+        });
       });
+      this.chartData.rows = this.infoChartData;
+      console.log('chartData.rows', this.chartData.rows);
+      console.log('infochartData.rows', this.infoChartData);
     },
   },
 };
