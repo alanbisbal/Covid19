@@ -1,29 +1,34 @@
 <template>
-  <div class="container col-md-8 col-sm-12">
+    <div class="row d-flex justify-content-between">
 
-    <b-form  @submit="onSubmit" @reset="onReset" v-if="show"> Centros:
-      <select v-model="form.centro" class="form-control" required>
-        <option v-for="centro in centrosPublicados" :key="centro.id" v-bind:value='centro'>
-          {{ centro.nombre }}
-        </option>
-      </select>
-      <label class="mr-sm-2" for="inline-form-custom-select-pref"> Fecha:</label>
-        <b-calendar
-          :min="today_min"
-          v-model="form.fecha"
-          type="date"
-          required
-        ></b-calendar>
+      <div class="col-md-4 col-sm-6">
+        <b-form @reset="onReset" v-if="show"> Centros:
+          <select v-model="form.centro" class="form-control" v-on:change='onInput'>
+            <option v-for="centro in centrosPublicados" :key="centro.id" v-bind:value='centro'>
+              {{ centro.nombre }}
+            </option>
+          </select>
+          <label class="mr-sm-2" for="inline-form-custom-select-pref"> Fecha:</label>
+            <b-calendar v-on:selected='onInput'
+              :min="today_min"
+              v-model="form.fecha"
+              type="date"
+              required
+            ></b-calendar>
 
-      <b-button type="submit" variant="primary"
-          >Crear</b-button
-      >
-      <b-button type="reset" variant="danger">Limpiar</b-button>
-    </b-form>
+          <b-button type="reset" variant="danger">Limpiar</b-button>
+        </b-form>
+      </div>
 
-    <ve-ring :data="chartData"></ve-ring>
+      <div class="col-md-8 col-sm-6">
+        <ve-ring
+          :data="chartData"
+          :loading="loading">
+          <div v-if="dataEmpty" class="data-empty">Seleccione un centro y una fecha para ver el gráfico</div>
+        </ve-ring>
+      </div>
 
-  </div>
+    </div>
 </template>
 
 <script>
@@ -39,11 +44,12 @@
         today_min: today,
 
         form: {
-            centro: {},
+            centro: null,
             fecha: '',
         },
+        dataEmpty: true,
+        loading: true,
         chartData: {},
-        centerAndDate: false,
         show: true,
       };
     },
@@ -56,30 +62,29 @@
     },
 
     methods: {
-      onSubmit(evt){
-        evt.preventDefault();
-        const url= 'http://127.0.0.1:5000/api/centros/'+this.form.centro.id+'/turnos_disponibles/'+this.form.fecha;
-        axios
-        .get(url).then((result) => {
-          this.turnosDisponibles = result.data.cant;
-          console.log('GET RESULTADO: ', result.data.cant);
-          console.log('EL THIS: ', this.turnosDisponibles);
-        });
-        const d= {'d': this.turnosDisponibles, 'o': 14-this.turnosDisponibles}
-        this.setearGrafico(d);
-      },
-      setearGrafico(d){
-        this.chartData= {
-          columns: ['tipo', 'cant'],
-          rows: [ { 'tipo': 'Disponible', 'cant': d.d },
-                  { 'tipo': 'Ocupado', 'cant': d.o } ]
+      async onInput(){
+        console.log(this.form.centro && this.form.fecha);
+        if (this.form.centro && this.form.fecha) {
+          this.loading= true;
+          const url= 'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/'+this.form.centro.id+'/turnos_disponibles/'+this.form.fecha;
+          const resultado= await axios.get(url)
+
+          this.chartData= {
+            columns: ['tipo', 'cant'],
+            rows: [ { 'tipo': 'Disponible', 'cant': resultado.data.cant },
+                    { 'tipo': 'Ocupado', 'cant': 14-resultado.data.cant } ]
+          };
+          setTimeout(() => { this.loading= false; }, 3000);
+          this.dataEmpty= false;
         }
       },
+
       onReset(evt) {
         evt.preventDefault();
         // Reset our form values
-        this.form.centro = {};
+        this.form.centro = null;
         this.form.fecha = '';
+        this.dataEmpty= true;
         // Trick to reset/clear native browser form validation state
         this.show = false;
         this.$nextTick(() => {
@@ -91,3 +96,20 @@
 
   };
 </script>
+
+<style>
+  .data-empty {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .3);
+    color: #000;
+    padding: 20px;
+    font-size: 28px;
+  }
+</style>
