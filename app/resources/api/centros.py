@@ -200,7 +200,8 @@ def turnos_mes(id, fecha):
 
     turnos= Turno.with_centro_id(id).all()
     for i in turnos:
-        meses[int(i.fecha.strftime("%m"))-1]=meses[int(i.fecha.strftime("%m"))-1]+1
+        if (i.fecha.strftime("%Y") == fecha):
+            meses[int(i.fecha.strftime("%m"))-1]=meses[int(i.fecha.strftime("%m"))-1]+1
     data = [{"mes":"enero",
             "cantidad":meses[0]},
             {"mes":"febrero",
