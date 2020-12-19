@@ -11,7 +11,7 @@ import json
 import io
 
 
-def center_list():
+def center_list(): 
     """
      Devuelve un json que contiene el listado completo de los centros de ayuda social aprobados para la
      publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion

@@ -32,9 +32,11 @@ export default {
       .then((result) => {
         this.municipios = result.data.data.Town;
       });
-    await axios.get('https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros').then((result) => {
-      this.centros = result.data.centros;
-    });
+    await axios
+      .get('https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros')
+      .then((result) => {
+        this.centros = result.data.centros;
+      });
 
     this.centros.forEach((c) => {
       if (!this.cantCentros[c.municipio_id]) {

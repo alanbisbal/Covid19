@@ -11,7 +11,7 @@ def turno_list(id, fecha=date.today()):
     """
     Devuelve un json que contiene el listado de los turnos disponibles para un centro de ayuda en un día en particular.
     En caso de no especificar una fecha, se devuelve la disponibilidad de turnos para el día consultado.
-    """
+    """ 
     try:
         centro = Centro.with_id(id)
         if not centro:
