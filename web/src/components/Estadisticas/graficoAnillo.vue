@@ -1,6 +1,8 @@
 <template>
     <div class="row d-flex justify-content-between">
-
+      <div class="container mt-4 text-center">
+        <p><strong> Cantidad de turnos disponibles para un centro</strong></p>
+      </div>
       <div class="col-md-4 col-sm-6">
         <b-form @reset="onReset" v-if="show"> Centros:
           <select v-model="form.centro" class="form-control" v-on:change='onInput'>
@@ -89,6 +91,7 @@
         this.form.centro = null;
         this.form.fecha = '';
         this.dataEmpty= true;
+        this.chartData.rows= [],
         // Trick to reset/clear native browser form validation state
         this.show = false;
         this.$nextTick(() => {

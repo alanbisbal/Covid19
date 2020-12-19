@@ -195,9 +195,11 @@ def turnos_mes(id, fecha):
 
     try:
         centro = Centro.with_id(id)
-
+        isinstance(int(fecha),int)
     except:
-        return Response(status=500)
+        return Response('Error peticion de año',status=400)
+    if not centro:
+        return Response('Error peticion de centro',status=400)
 
     meses = [0] * 12
 

@@ -1,5 +1,8 @@
 <template>
-  <div style="height: 500px; width: 100%" >
+    <div class="row d-flex justify-content-between">
+      <div class="container mt-4 text-center">
+        <p><strong> Cantidad de turnos por año para un centro</strong></p>
+      </div>
     <div class="col-md-4 col-sm-6">
         <b-form @reset="onReset" v-if="show"> Centros:
         <select v-model="form.centro" class="form-control" v-on:change='onInput'>
@@ -16,11 +19,11 @@
 
 
 
-        <label class="mr-sm-2" for="inline-form-custom-select-pref"> Fecha:</label>
+        <label class="mr-sm-2" for="inline-form-custom-select-pref"></label>
         <b-button type="reset" variant="danger">Limpiar</b-button>
         </b-form>
     </div>
-    <div class="col-md-8 col-sm-6">
+    <div class="col-md-7 col-sm-6">
       <ve-bar :data="chartData" :settings="chartSettings">
       <div v-if="dataEmpty" class="data-empty">Seleccione un centro y una fecha para ver el gráfico</div>
       </ve-bar>
