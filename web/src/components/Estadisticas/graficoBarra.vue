@@ -58,7 +58,7 @@ import axios from 'axios';
 
     mounted: function() {
     axios
-      .get('http://127.0.0.1:5000/api/centros').
+      .get('https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros').
       then((result) => {
         this.centrosPublicados= result.data.centros;
       });
@@ -70,7 +70,7 @@ import axios from 'axios';
         if (this.form.centro && this.form.year) {
          this.loading= true;
          axios
-        .get('http://127.0.0.1:5000/api/centros/turnos_mes/'+this.form.centro.id +'/'+this.form.year)
+        .get('https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/turnos_mes/'+this.form.centro.id +'/'+this.form.year)
         .then((result) => {
           this.result = result.data;
           this.chartData.rows = this.result.data;
