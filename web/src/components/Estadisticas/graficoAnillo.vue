@@ -20,7 +20,7 @@
         </b-form>
       </div>
 
-      <div class="col-md-8 col-sm-6">
+      <div class="col-md-7 col-sm-6">
         <ve-ring
           :data="chartData"
           :loading="loading">
