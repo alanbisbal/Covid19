@@ -8,13 +8,20 @@
                  </option>
              </select>
 
+    <select v-model="form.year" class="form-control" v-on:change='onInput'>
+       <option>Year:</option>
+       <option v-for="year in getCurrentYear()" :key="year.id" v-bind:value="year">{{ year }}</option>
+     </select>
+
+
+
         <label class="mr-sm-2" for="inline-form-custom-select-pref"> Fecha:</label>
         <b-button type="reset" variant="danger">Limpiar</b-button>
         </b-form>
     </div>
-
     <div class="col-md-8 col-sm-6">
       <ve-bar :data="chartData" :settings="chartSettings">
+      <div v-if="dataEmpty" class="data-empty">Seleccione un centro y una fecha para ver el gráfico</div>
       </ve-bar>
     </div>
 
@@ -56,21 +63,13 @@ import axios from 'axios';
       });
     },
 
-    created() {
-      axios
-        .get('http://127.0.0.1:5000/api/centros/turnos_mes/19/2020')
-        .then((result) => {
-          this.result = result.data;
-          this.chartData.rows = this.result.data;
-        });
-    },
     methods: {
 
       async onInput(){
         if (this.form.centro && this.form.year) {
          this.loading= true;
          axios
-        .get('http://127.0.0.1:5000/api/centros/turnos_mes/'+this.form.centro.id +'/2020')
+        .get('http://127.0.0.1:5000/api/centros/turnos_mes/'+this.form.centro.id +'/'+this.form.year)
         .then((result) => {
           this.result = result.data;
           this.chartData.rows = this.result.data;
@@ -79,18 +78,20 @@ import axios from 'axios';
          this.dataEmpty= false;
        }
      },
+        getCurrentYear() {
+          return new Date().getFullYear()+200;
+      },
 
     onReset(evt) {
            evt.preventDefault();
            // Reset our form values
-          console.log('form full',this.form);
            this.form.centro = null;
            this.form.year = 2000;
            this.dataEmpty= true;
+           this.chartData.rows= [],
            // Trick to reset/clear native browser form validation state
            this.show = false;
            this.$nextTick(() => {
-             console.log('form vacio',this.form);
              this.show = true;
            });
          },
@@ -102,3 +103,20 @@ import axios from 'axios';
 
 
 </script>
+
+<style>
+  .data-empty {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .3);
+    color: #000;
+    padding: 20px;
+    font-size: 28px;
+  }
+</style>
