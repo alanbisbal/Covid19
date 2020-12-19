@@ -8,9 +8,10 @@
                  </option>
              </select>
 
-    <select v-model="form.year" class="form-control" v-on:change='onInput'>
+    <select v-model="form.year" class="form-control" v-on:change='onInput' >
        <option>Year:</option>
-       <option v-for="year in getCurrentYear()" :key="year.id" v-bind:value="year">{{ year }}</option>
+       <option v-for="year in getCurrentYear()" :key="year.id" v-bind:value="year">
+         {{ year }}</option>
      </select>
 
 
@@ -79,14 +80,15 @@ import axios from 'axios';
        }
      },
         getCurrentYear() {
-          return new Date().getFullYear()+200;
+           const year = new Date().getFullYear()+200;
+           return Array.from({length: year - 1999}, (value, index) => 2000 + index)
       },
 
     onReset(evt) {
            evt.preventDefault();
            // Reset our form values
            this.form.centro = null;
-           this.form.year = 2000;
+           this.form.year = 2020;
            this.dataEmpty= true;
            this.chartData.rows= [],
            // Trick to reset/clear native browser form validation state
