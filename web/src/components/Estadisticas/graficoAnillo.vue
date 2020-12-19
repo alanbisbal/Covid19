@@ -63,10 +63,10 @@
 
     methods: {
       async onInput(){
-        console.log(this.form.centro && this.form.fecha);
+
         if (this.form.centro && this.form.fecha) {
           this.loading= true;
-          const url= 'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/'+this.form.centro.id+'/turnos_disponibles/'+this.form.fecha;
+          const url= 'http://127.0.0.1:5000/api/centros/'+this.form.centro.id+'/turnos_disponibles/'+this.form.fecha;
           const resultado= await axios.get(url)
 
           this.chartData= {
@@ -74,6 +74,7 @@
             rows: [ { 'tipo': 'Disponible', 'cant': resultado.data.cant },
                     { 'tipo': 'Ocupado', 'cant': 14-resultado.data.cant } ]
           };
+           console.log('data:',this.chartData.rows)
           setTimeout(() => { this.loading= false; }, 3000);
           this.dataEmpty= false;
         }
@@ -88,7 +89,6 @@
         // Trick to reset/clear native browser form validation state
         this.show = false;
         this.$nextTick(() => {
-          console.log('entre');
           this.show = true;
         });
       },

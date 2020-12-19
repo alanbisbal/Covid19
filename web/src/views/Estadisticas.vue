@@ -2,9 +2,11 @@
   <div
     class="container"
   >
-    <barra />
-    <torta />
-    <anillo />
+    <barra /><br>
+
+    <torta /><br>
+
+    <anillo /><br>
   </div>
 </template>
 
