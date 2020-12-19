@@ -57,7 +57,7 @@
     },
     mounted: function() {
     axios
-      .get('http://127.0.0.1:5000/api/centros').
+      .get('https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros').
       then((result) => {
         this.centrosPublicados= result.data.centros;
       });
@@ -71,7 +71,7 @@
           console.log(this.form.fecha);
 
           this.loading= true;
-          let url= 'http://127.0.0.1:5000/api/centros/'+this.form.centro.id+'/turnos_disponibles/'+this.form.fecha;
+          let url= 'https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros/'+this.form.centro.id+'/turnos_disponibles/'+this.form.fecha;
           const resultado= await axios.get(url)
 
           this.chartData= {
