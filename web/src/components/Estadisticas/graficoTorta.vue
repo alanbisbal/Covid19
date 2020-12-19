@@ -1,27 +1,58 @@
 <template>
-  <ve-bar :data="chartData" :settings="chartSettings"> </ve-bar>
+  <div class="container col-md-8 col-sm-12">
+    <div class="container mt-4 text-center">
+      <p><strong> Cantidad de centros por municipio</strong></p>
+    </div>
+    <ve-pie :data="chartData"></ve-pie>
+  </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
-    this.chartSettings = {
-      dimension: ['cost'],
-      metrics: ['profit'],
-    };
     return {
+      form: {
+        municipio: '',
+      },
+      show: true,
+      municipios: [],
+      centros: [],
+      cantCentros: [],
+
       chartData: {
-        columns: ['date', 'cost', 'profit'],
-        rows: [
-          { date: '01/01', cost: 123, profit: 3 },
-          { date: '01/02', cost: 1223, profit: 6 },
-          { date: '01/03', cost: 2123, profit: 90 },
-          { date: '01/04', cost: 4123, profit: 12 },
-          { date: '01/05', cost: 3123, profit: 15 },
-          { date: '01/06', cost: 7123, profit: 20 },
-        ],
+        columns: ['municipio', 'cantidadCentros'],
+        rows: [],
       },
     };
+  },
+  async mounted() {
+    await axios
+      .get('https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios')
+      .then((result) => {
+        this.municipios = result.data.data.Town;
+      });
+    await axios.get('https://admin-grupo37.proyecto2020.linti.unlp.edu.ar/api/centros').then((result) => {
+      this.centros = result.data.centros;
+    });
+
+    this.centros.forEach((c) => {
+      if (!this.cantCentros[c.municipio_id]) {
+        this.cantCentros[c.municipio_id] = 1;
+      } else {
+        this.cantCentros[c.municipio_id] += 1;
+      }
+    });
+
+    const mun = this.municipios;
+    const infoChart = [];
+    this.cantCentros.forEach(function(valor, indice) {
+      infoChart.push({
+        municipio: mun[indice].name,
+        cantidadCentros: valor,
+      });
+    });
+    this.chartData.rows = infoChart;
   },
 };
 </script>
