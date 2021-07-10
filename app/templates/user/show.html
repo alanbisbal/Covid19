@@ -1,21 +1,51 @@
 {% extends "layout.html" %}
-{% block title %}Usuarios{% endblock %}
+{% block title %}Perfil{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
-
+ 
 {% block content %}
-
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4"> Perfil</h1>
     <hr class="my-4">
-    <p class="lead">Nombre de usuario:   {{user.username}}</p>
-    <p class="lead">Email:   {{user.email }}</p>
-    <p class="lead">Nombre: {{user.first_name }}</p>
-    <p class="lead">Apellido: {{user.last_name }}</p>
+    <p ><strong >Nombre de usuario: </strong>  {{user.username}}</p>
+    <p ><strong >Email:</strong> {{user.email }}</p>
+    <p><strong>Nombre:</strong> {{user.first_name }}</p>
+    <p><strong>Apellido: </strong>{{user.last_name }}</p>
+    <p><strong>Estado: </strong>
+      {% if user.activo %}
+          <button type="submit" class="btn btn-success btn disabled" href="#">habilitado</button>
+        {% else %}
+          <button type="submit" class="btn btn-danger btn disabled" href="#">deshabilitado</button>
+      {% endif %}
+      </p>
+    <p ><strong>Roles:</strong>
+    {% for rol in user.roles() %}
+      <span class="badge badge-info">{{rol.name}}</span>
+    {% endfor %}
+    </p>
+    <script type="text/javascript">
+  function ConfirmDelete() {
+      return confirm('Esta seguro que desea eliminar este usuario?')
+    }
+  </script>
+    <div class="card-body d-flex flex-wrap justify-content-end">
+      <a href="/usuarios" class="btn btn-secondary  mt-2 ">Volver</a>
+
+      <form action="{{ url_for('user_update', user_id = user.id ) }}"  >
+        <button type="submit" class="btn btn-warning mt-2 ml-2">Editar</button>
+      </form>
+
+      <form action="{{ url_for('user_delete') }}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
+        <button type="submite" class="btn btn-danger mt-2 ml-2"  onclick="return ConfirmDelete()" >eliminar</button>
+      </form>
+
+
+
+    </div>
   </div>
 </div>
 
 {% endblock %}
-

@@ -1,6 +1,6 @@
 from flask import render_template
 
-
+ 
 def not_found_error(e):
     kwargs = {
         "error_name": "404 Not Found Error",
@@ -15,5 +15,3 @@ def unauthorized_error(e):
         "error_description": "No está autorizado para acceder a la url",
     }
     return render_template("error.html", **kwargs), 401
-
-

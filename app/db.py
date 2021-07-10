@@ -6,8 +6,9 @@ from flask import cli
 
 from flask_sqlalchemy import SQLAlchemy
 
-db=SQLAlchemy()
+db = SQLAlchemy()
 
+ 
 def connection():
     if "db_conn" not in g:
         conf = current_app.config
