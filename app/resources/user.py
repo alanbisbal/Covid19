@@ -10,7 +10,11 @@ from app.helpers.auth import authenticated
 from app import db
 from app.models.config import Config
 
+<<<<<<< HEAD
 from app.helpers.forms import ConfigForm 
+=======
+from app.helpers.forms import ConfigForm
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 
 from app.helpers.validates import form_user_new, exist_email, exist_username, form_user_update, exist_email_update, exist_username_update, sanitizar_input
 from app.helpers.permits import has_permit, is_admin
@@ -89,7 +93,14 @@ def create():
         "password": bleach.clean(data['password'])
     }
 
+<<<<<<< HEAD
     User.add(dictUser, estado)
+=======
+    try:
+        User.add(dictUser, estado)
+    except:
+        return redirect(request.referrer)
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 
     user = User.with_email(data['email'])
     roles = request.form.getlist('roles[]')
@@ -136,10 +147,13 @@ def update_new():
     if not form_user_update(data):
         return redirect(request.referrer)
 
+<<<<<<< HEAD
     data = request.form
     if not form_user_update(data):
         return redirect(request.referrer)
 
+=======
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     user = User.with_id(data['user_id'])
     if exist_email_update(data['email'], user.email):
         return redirect(request.referrer)
@@ -155,8 +169,15 @@ def update_new():
         "last_name": bleach.clean(data['last_name']),
         "email": bleach.clean(data['email'])
     }
+<<<<<<< HEAD
 
     user.update(dictUser)
+=======
+    try:
+        user.update(dictUser)
+    except:
+        return redirect(request.referrer)
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     flash("Actualización exitosa.", "success")
 
     return redirect(url_for('user_index'))
@@ -342,4 +363,7 @@ def add_rols():
     flash("Insercion exitosa", "success")
 
     return redirect(request.referrer)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86

@@ -1,4 +1,8 @@
 from app.models.centro import Centro
+<<<<<<< HEAD
+=======
+from app.models.turno import Turno
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 from app.models.tipo_centro import Tipo_centro
 from app.models.estado import Estado
 from app.models.config import Config
@@ -10,7 +14,11 @@ import json
 import io
 
 
+<<<<<<< HEAD
 def center_list():
+=======
+def center_list(): 
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     """
      Devuelve un json que contiene el listado completo de los centros de ayuda social aprobados para la
      publicación y que estan paginados de acuerdo a los elementos almacenados en la configuracion
@@ -24,7 +32,13 @@ def center_list():
         page = 1
 
     try:
+<<<<<<< HEAD
         centros_paginados = Centro.publicados().paginate(page,per_page,error_out=False)
+=======
+        centros_paginados = Centro.publicados().paginate(page,
+                                                         per_page,
+                                                         error_out=False)
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     except:
         return Response(status=500)
 
@@ -55,7 +69,13 @@ def center_list():
             "longitud":
             i.longitud,
             "tipo":
+<<<<<<< HEAD
             str(Tipo_centro.with_id(i.tipo_centro).nombre)
+=======
+            str(Tipo_centro.with_id(i.tipo_centro).nombre),
+            "municipio_id":
+            i.municipio_id,
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
         })
 
     final = json.dumps({
@@ -68,7 +88,10 @@ def center_list():
     return Response(final, mimetype='application/json')
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 def center(id):
     """
     Devuelve un json que contiene el centro de ayuda social aprobado para publicación,
@@ -182,3 +205,58 @@ def center_types():
 
     final = json.dumps({"tipos": data}, indent=2, ensure_ascii=False)
     return Response(final, mimetype='application/json')
+<<<<<<< HEAD
+=======
+
+def turnos_mes(id, fecha):
+    """
+    Devuelve un json que recibe un id de un centro y un año en particular
+    retornando por cada mes la cantidad de turnos que posee.
+    """
+
+    try:
+        centro = Centro.with_id(id)
+        isinstance(int(fecha),int)
+    except:
+        return Response('Error peticion de año',status=400)
+    if not centro:
+        return Response('Error peticion de centro',status=400)
+
+    meses = [0] * 12
+
+    turnos= Turno.with_centro_id(id).all()
+    for i in turnos:
+        if (i.fecha.strftime("%Y") == fecha):
+            meses[int(i.fecha.strftime("%m"))-1]=meses[int(i.fecha.strftime("%m"))-1]+1
+    data = [{"mes":"enero",
+            "cantidad":meses[0]},
+            {"mes":"febrero",
+            "cantidad":meses[1]},
+            {"mes":"marzo",
+            "cantidad":meses[2]},
+            {"mes":"abril",
+            "cantidad":meses[3]},
+            {"mes":"mayo",
+            "cantidad":meses[4]},
+            {"mes":"junio",
+            "cantidad":meses[5]},
+            {"mes":"julio",
+            "cantidad":meses[6]},
+            {"mes":"agosto",
+            "cantidad":meses[7]},
+            {"mes":"septiembre",
+            "cantidad":meses[8]},
+            {"mes":"octubre",
+            "cantidad":meses[9]},
+            {"mes":"noviembre",
+            "cantidad":meses[10]},
+            {"mes":"diciembre",
+            "cantidad":meses[11]},
+            ]
+    final = json.dumps({
+    "data": data,
+        },
+               indent=2,
+               ensure_ascii=False)
+    return Response(final, mimetype='application/json')
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86

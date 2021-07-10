@@ -9,18 +9,37 @@ from app.helpers.auth import authenticated
 
 from app.helpers.forms import TurnoForm, NewTurnoForm, SearchForm
 
+<<<<<<< HEAD
 #from app.helpers.validates import 
+=======
+from app.helpers.validates import sanitizar_input
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 from app.helpers.permits import has_permit, is_admin
 from datetime import datetime, time, timedelta, date
 
 
 def index(centro_id=None):
+<<<<<<< HEAD
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así muestra el listado con los turnos de hoy,mañana y pasado,que estan paginados de acuerdo a 
+    los elementos almacenados en la configuración .
+    Estos turnos pueden ser o no de un centro en particular
+
+    """
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_index'):
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
+<<<<<<< HEAD
     # retorna todos los turnos
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     form = NewTurnoForm()
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
@@ -49,6 +68,16 @@ def index(centro_id=None):
 
 
 def new(centro_id=None):
+<<<<<<< HEAD
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así muestra el formulario para la creacion de un turno seleccionando previamente
+    la fecha para dicho turno a partir de un centro en particular o habiendo seleccionado un centro. 
+
+    """
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_new'):
@@ -71,12 +100,26 @@ def new(centro_id=None):
 
 
 def create():
+<<<<<<< HEAD
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así carga el formulario con los datos ingresados y crea el turno habiendo hecho previamente
+    las validaciones correspondientes para la creación del mismo.
+
+    """
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_new'):
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
     form = TurnoForm()
+<<<<<<< HEAD
+=======
+    sanitizar_input(form)
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     hora = datetime.strptime(form.data['hora_inicio'], '%H:%M')
     if not form.validate_on_submit():
         flash("El tipo de dato ingresado es incorrecto", "danger")
@@ -100,6 +143,16 @@ def create():
 
 
 def update(turno_id):
+<<<<<<< HEAD
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así a partir de un turno en particular muestra la información previamente cargada en
+    la creación del mismo
+
+    """
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_update'):
@@ -109,7 +162,11 @@ def update(turno_id):
     form = TurnoForm()
     form.fecha.data = turno.fecha
     turnos = Turno.bloques_disponibles(turno.centro_id, str(form.fecha.data))
+<<<<<<< HEAD
     turnos.append(turno.hora_inicio)
+=======
+    turnos.append(turno.hora_inicio.strftime("%H:%M"))
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     form.hora_inicio.choices = turnos
     form.hora_inicio.default = turno.hora_inicio
     form.process()
@@ -117,6 +174,15 @@ def update(turno_id):
 
 
 def update_new():
+<<<<<<< HEAD
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así obtiene los nuevos datos cargados en el formulario y realiza la actualización del mismo
+    realizando previamente las validaciones correspondientes a los datos ingresados.
+    """
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_update'):
@@ -127,7 +193,11 @@ def update_new():
     if not form.validate_on_submit() or not turno:
         flash("El tipo de dato ingresado es incorrecto", "danger")
         return redirect(request.referrer)
+<<<<<<< HEAD
     hora = datetime.strptime(form.data['hora_inicio'], '%H:%M:%S')
+=======
+    hora = datetime.strptime(form.data['hora_inicio'], '%H:%M')
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not (hora.minute == 00 or hora.minute == 30):
         flash("El horario debe finalizar con los minutos xx:00 o xx:30",
               "danger")
@@ -142,12 +212,25 @@ def update_new():
 
 
 def delete():
+<<<<<<< HEAD
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así elimina el turno seleccionado.
+
+    """
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_destroy'):
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
+<<<<<<< HEAD
     # se busca el usuario en la base de datos y se lo elimina
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     turno = Turno.with_id(request.form['turno_id'])
     turno.delete()
     flash("Eliminación exitosa.", "success")
@@ -155,30 +238,64 @@ def delete():
 
 
 def show(turno_id):
+<<<<<<< HEAD
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así a partir de un turno en particular muestra los datos del mismo
+
+    """
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not authenticated(session):
         abort(401)
     if not has_permit('turno_show'):
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
+<<<<<<< HEAD
     # validacion de acceso administrador y si lo es retorna el usuario enviado por id
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     turno = Turno.with_id(turno_id)
     return render_template("turno/show.html", turno=turno)
 
 
 def search(centro_id=None):
+<<<<<<< HEAD
     if not authenticated(session):
         abort(401)
     # validacion de acceso
+=======
+    """ 
+    Este método verifica si el usuario esta logueado y tiene permisos para estar en esa sección,
+    de ser así pagina el listado de turnos de acuerdo a los elementos almacenados en la configuración,
+    mostrando los turnos que coincidan con la opción de búsqueda seleccionada y/o ingresada.
+    estas pueden ser o no de un centro en particular
+
+    """
+
+    if not authenticated(session):
+        abort(401)
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     if not has_permit('turno_index'):
         flash("No posee permisos", "danger")
         return redirect(url_for("home"))
 
     email = request.args.get("email")
     filter = request.args.get("filtro")
+<<<<<<< HEAD
     # se aplica filtro independientemente del email
     per_page = Config.getConfig().elementos
     page = request.args.get("page", 1, type=int)
     # para el buscador de  turnos de centro en particular
+=======
+
+    per_page = Config.getConfig().elementos
+    page = request.args.get("page", 1, type=int)
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     centros = Centro.all()
     form = NewTurnoForm()
     form.centro_id.choices = [(e.id, e.nombre) for e in centros]
@@ -193,7 +310,11 @@ def search(centro_id=None):
     centro = request.args.get("centro")
     search = SearchForm()
     search.centro.choices = [(e.nombre) for e in centros]
+<<<<<<< HEAD
     # para el buscador de  turnos de todos los centros
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     data = request.args
     if data['centro'] == "" and data['email'] == "":
         turnos = Turno.query.paginate(page, per_page, error_out=False)

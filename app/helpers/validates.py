@@ -4,7 +4,11 @@ import bleach
 from app.models.user import User
 from app.helpers.upload import upload_pdf
 import datetime
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 def form_user_new(data):
     ok = True
     if not data['username']:
@@ -94,12 +98,18 @@ def form_config_update(data):
     ok = True
     if not data['titulo']:
         flash('El titulo no puede estar vacio', "danger")
+<<<<<<< HEAD
+        ok = False
+    if not data['descripcion']:
+        flash('La descripcion no puede estar vacio', "danger")
+=======
         ok = False
     if not data['descripcion']:
         flash('La descripcion no puede estar vacio', "danger")
         ok = False
     if not data['email']:
         flash('El email no puede estar vacio', "danger")
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
         ok = False
     if ok:
         return True
@@ -107,6 +117,27 @@ def form_config_update(data):
         return False
 
 
+def form_turno(data):
+    ok = True
+    if not data['email']:
+        flash('El email no puede estar vacio', "danger")
+<<<<<<< HEAD
+=======
+        ok = False
+    if not data['bloque']:
+        flash('El horario no puede estar vacio', "danger")
+        ok = False
+    if not data['fecha']:
+        flash('La fecha no puede estar vacia', "danger")
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
+        ok = False
+    if ok:
+        return True
+    else:
+        return False
+
+
+<<<<<<< HEAD
 def form_turno(data):
     ok = True
     if not data['email']:
@@ -124,6 +155,8 @@ def form_turno(data):
         return False
 
 
+=======
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 def validar_municipio(data):
     municipios = requests.get(
         "https://api-referencias.proyecto2020.linti.unlp.edu.ar/municipios"

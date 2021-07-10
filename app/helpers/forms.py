@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from flask_wtf import FlaskForm 
+=======
+from flask_wtf import FlaskForm
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 from wtforms import StringField, SubmitField, \
                     TimeField, IntegerField, SelectField, BooleanField, \
                     DateField, FloatField, DecimalField
@@ -29,12 +33,17 @@ class CenterForm(FlaskForm):
     email = EmailField('Email', validators=[])
     protocolo = FileField(label="Protocolo",
                           validators=[Optional(strip_whitespace=True)])
+<<<<<<< HEAD
     latitud = FloatField('Latitud (coordenadas)',
                          default="-57.9924",
                          widget=NumberInput())
     longitud = FloatField('Longitud (coordenadas)',
                           default="-34.9159",
                           widget=NumberInput())
+=======
+    latitud = FloatField('',validators=[InputRequired()])
+    longitud = FloatField('',validators=[InputRequired()])
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     estado_id = SelectField('Estado', validate_choice=False)
     tipo_centro = SelectField('Tipo', validators=[InputRequired()])
     submit = SubmitField(label="Guardar")

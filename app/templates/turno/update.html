@@ -18,9 +18,16 @@
     {% if form.csrf_token.errors %}
       <div class="warning">You have submitted an invalid CSRF token</div>
     {% endif %}
+<<<<<<< HEAD
  
     <input type="hidden" class="form-control"  id="turno_id" name="turno_id" value="{{turno.id}}">
 
+=======
+
+    <input type="hidden" class="form-control"  id="turno_id" name="turno_id" value="{{turno.id}}">
+
+    {{wtf.form_field(form.centro_id,value=turno.centro_id,hidden="true")}}
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     {{wtf.form_field(form.email,value=turno.email)}}
     {{wtf.form_field(form.telefono,value=turno.telefono)}}
     {{wtf.form_field(form.hora_inicio,type="Time",value=turno.hora_inicio)}}

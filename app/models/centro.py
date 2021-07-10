@@ -1,6 +1,10 @@
 from flask import request
 from sqlalchemy.orm import relationship
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 from app.db import db
 
 from sqlalchemy import Table, Column, Integer, ForeignKey, Float, LargeBinary
@@ -139,6 +143,14 @@ class Centro(db.Model):
         self.estado_id = 2
         db.session.commit()
 
+<<<<<<< HEAD
+=======
+
+    def publicados():
+        return db.session.query(Centro).filter_by(estado_id=1)
+
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     @classmethod
     def count_approved(cls):
         """Retorna la cantidad total de centros aprobados"""

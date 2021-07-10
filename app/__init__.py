@@ -20,7 +20,11 @@ from app.resources.api import centros as api_centros
 from app.resources.api import turnos as api_turnos
 from flask_googlemaps import GoogleMaps
 from flask_cors import CORS
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 db = SQLAlchemy()
 
 
@@ -44,7 +48,11 @@ def create_app(environment="development"):
     # Cors
     CORS(app)
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}}, support_credentials=True)
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     # Configure db
 
     db.init_app(app)
@@ -180,6 +188,10 @@ def create_app(environment="development"):
     app.add_url_rule("/api/centros/tipos", "centro_tipos",
                     api_centros.center_types)
 
+<<<<<<< HEAD
+=======
+    app.add_url_rule("/api/centros/turnos_mes/<id>/<fecha>", "turnos_mes", api_centros.turnos_mes)
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
     # Ruta para la api de turnos
     app.add_url_rule("/api/centros/<id>/turnos_disponibles/<fecha>",
                      "turno_list", api_turnos.turno_list)

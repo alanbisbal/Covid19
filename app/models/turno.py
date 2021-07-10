@@ -8,7 +8,11 @@ from sqlalchemy import Table, Column, Integer, ForeignKey
 from app.models import centro
 from datetime import datetime, time, timedelta, date
 import bleach
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 
 class Turno(db.Model):
     __tablename__ = 'turnos'
@@ -22,8 +26,13 @@ class Turno(db.Model):
     centro = relationship("Centro", backref="centro")
 
     def __init__(self, data):
+<<<<<<< HEAD
         self.email = bleach.clean(data['email'])
         self.telefono = bleach.clean(data['telefono'])
+=======
+        self.email = data['email']
+        self.telefono = data['telefono']
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
         self.hora_inicio = data['hora_inicio']
         self.hora_fin = data['hora_fin']
         self.fecha = data['fecha']
@@ -47,10 +56,16 @@ class Turno(db.Model):
         return db.session.query(Turno).filter(Turno.centro.has(nombre=data))
 
     def with_email_centro(email, centro):
+<<<<<<< HEAD
         con_mail = db.session.query(Turno).filter(Turno.email.contains(email))
         con_centro = db.session.query(Turno).filter(
             Turno.centro.has(nombre=centro))
         return con_mail.intersect(con_centro)
+=======
+        return  db.session.query(Turno).filter(
+            Turno.centro.has(nombre=centro)).filter(Turno.email.contains(email))
+
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
 
     def with_id_fecha(id, fecha):
         return db.session.query(Turno).filter(Turno.centro_id == id).filter(
@@ -115,9 +130,15 @@ class Turno(db.Model):
         if self.hora_inicio != data['hora_inicio']:
             self.hora_inicio = data['hora_inicio']
         if self.hora_fin != datetime.strptime(
+<<<<<<< HEAD
                 data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30):
             self.hora_fin = datetime.strptime(
                 data['hora_inicio'], "%H:%M:%S") + timedelta(minutes=30)
+=======
+                data['hora_inicio'], "%H:%M") + timedelta(minutes=30):
+            self.hora_fin = datetime.strptime(
+                data['hora_inicio'], "%H:%M") + timedelta(minutes=30)
+>>>>>>> 8575660b5a51118cb48d5860bb7bc0a1b3c07c86
         if self.fecha != data['fecha']:
             self.fecha = data['fecha']
         db.session.commit()
